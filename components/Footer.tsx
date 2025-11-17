@@ -42,7 +42,14 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative mt-24 md:mt-32 border-t border-white/[0.06] bg-[#0B0E11]">
+    <footer 
+      className="relative mt-24 md:mt-32 border-t border-white/[0.06] bg-[#0B0E11]"
+      style={{
+        paddingBottom: 'max(3rem, calc(3rem + env(safe-area-inset-bottom)))',
+        paddingLeft: 'max(1.5rem, calc(1.5rem + env(safe-area-inset-left)))',
+        paddingRight: 'max(1.5rem, calc(1.5rem + env(safe-area-inset-right)))',
+      }}
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-12 md:py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-12">

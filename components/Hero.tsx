@@ -9,6 +9,11 @@ export default function Hero() {
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-12"
+      style={{
+        paddingTop: 'max(5rem, calc(5rem + env(safe-area-inset-top)))',
+        paddingBottom: 'max(3rem, calc(3rem + env(safe-area-inset-bottom)))',
+        minHeight: '-webkit-fill-available',
+      }}
     >
       {/* Static background gradient */}
       <div 
@@ -64,7 +69,12 @@ export default function Hero() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-100">
+        <div 
+          className="absolute left-1/2 -translate-x-1/2 opacity-100"
+          style={{
+            bottom: 'max(2rem, calc(2rem + env(safe-area-inset-bottom)))',
+          }}
+        >
           <div className="w-6 h-10 border border-white/20 rounded-full flex items-start justify-center p-1.5">
             <div className="w-1 h-3 bg-white/40 rounded-full" />
           </div>

@@ -147,7 +147,7 @@ footer a[href] {
   }
 }
 
-/* Mobile optimizations */
+/* Mobile optimizations - iPhone & Apple Display */
 @media (max-width: 768px) {
   .glass-card {
     backdrop-filter: blur(2px);
@@ -157,6 +157,30 @@ footer a[href] {
   
   * {
     will-change: auto !important;
+  }
+  
+  /* Better spacing for iPhone */
+  .container {
+    padding-left: max(1rem, calc(1rem + env(safe-area-inset-left)));
+    padding-right: max(1rem, calc(1rem + env(safe-area-inset-right)));
+  }
+  
+  /* Hero mobile layout - stack vertically */
+  section#hero .glass-card {
+    padding: 1.5rem;
+  }
+  
+  /* Ensure text is readable on small screens */
+  h1, h2, h3 {
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  
+  /* Better button spacing */
+  button, a[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1.5rem;
   }
 }
 
@@ -170,11 +194,67 @@ footer a[href] {
   }
 }
 
-/* Safe area for mobile */
+/* Safe area for mobile - iPhone notch support */
 @supports (padding: max(0px)) {
+  html {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
   body {
     padding-left: max(0px, env(safe-area-inset-left));
     padding-right: max(0px, env(safe-area-inset-right));
+  }
+  
+  /* Navigation safe area */
+  nav {
+    padding-top: max(0px, env(safe-area-inset-top));
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+  
+  /* Hero section safe area */
+  section#hero {
+    padding-top: max(80px, calc(80px + env(safe-area-inset-top)));
+    padding-bottom: max(2rem, calc(2rem + env(safe-area-inset-bottom)));
+  }
+  
+  /* Footer safe area */
+  footer {
+    padding-bottom: max(2rem, calc(2rem + env(safe-area-inset-bottom)));
+  }
+}
+
+/* Apple Display Optimizations - Retina & P3 Color */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .glass-card,
+  .glass-profile {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* iPhone-specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific */
+  body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  
+  /* Better scrolling on iOS */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix iOS viewport units */
+  section#hero {
+    min-height: -webkit-fill-available;
   }
 }
 

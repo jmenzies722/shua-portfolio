@@ -36,9 +36,16 @@ export default function Navigation() {
           ? 'bg-[#0B0E11]/95 backdrop-blur-sm border-b border-white/5 shadow-lg'
           : 'bg-transparent'
       }`}
+      style={{
+        paddingTop: 'max(0px, env(safe-area-inset-top))',
+        paddingLeft: 'max(0px, env(safe-area-inset-left))',
+        paddingRight: 'max(0px, env(safe-area-inset-right))',
+      }}
     >
       <div className="container">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 md:h-16" style={{
+          minHeight: 'calc(4rem + max(0px, env(safe-area-inset-top)))',
+        }}>
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
             <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden glass-profile flex-shrink-0">
