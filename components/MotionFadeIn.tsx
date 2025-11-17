@@ -17,20 +17,17 @@ export default function MotionFadeIn({
   y = 20 
 }: MotionFadeInProps) {
   return (
-    <motion.div
-      initial={{ opacity: 1, y: 0 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ 
-        duration: 0.1, 
-        delay: 0,
-        ease: [0.4, 0, 0.2, 1] 
-      }}
+    <div
       className={className}
-      style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }}
+      style={{ 
+        pointerEvents: 'auto', 
+        position: 'relative', 
+        zIndex: 1,
+        opacity: 1,
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 

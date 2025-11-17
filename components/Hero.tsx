@@ -85,24 +85,16 @@ export default function Hero() {
               {/* Animated Identity Line */}
               <div className="overflow-visible">
                 <AnimatedText />
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                <p
                   className="mt-4 md:mt-6 text-xl md:text-2xl text-primary-60 font-light leading-relaxed overflow-visible"
                   style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
                 >
                   Building secure, automated, and observable infrastructure on AWS and Kubernetes.
-                </motion.p>
+                </p>
               </div>
 
               {/* CTA Buttons */}
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-              >
+              <div className="flex flex-col sm:flex-row gap-4">
                 <motion.div
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
@@ -142,16 +134,11 @@ export default function Hero() {
                     />
                   </Link>
                 </motion.div>
-              </motion.div>
+              </div>
             </div>
 
             {/* Right: Avatar with Halo & Orbiting Icons */}
-            <motion.div 
-              className="relative flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-            >
+            <div className="relative flex items-center justify-center">
               <HeroHalo>
                 <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
                   {/* Avatar Container */}
@@ -173,17 +160,14 @@ export default function Hero() {
                   <OrbitIcons />
                 </div>
               </HeroHalo>
-            </motion.div>
+            </div>
           </div>
         </div>
       </motion.div>
 
       {/* Scroll Indicator */}
-      <motion.div
+      <div
         className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.4 }}
         style={{ opacity }}
       >
         <motion.div
@@ -197,7 +181,7 @@ export default function Hero() {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   )
 }

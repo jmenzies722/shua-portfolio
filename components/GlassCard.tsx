@@ -23,15 +23,7 @@ const GlassCard = memo(function GlassCard({ children, className = '', delay = 0,
   const isMobileClass = 'max-md:opacity-100'
 
   return (
-    <motion.div
-      initial={{ opacity: 1, y: 0, scale: 1 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ 
-        duration: 0.15, 
-        delay: 0,
-        ease: [0.4, 0, 0.2, 1],
-      }}
+    <div
       className={`glass-card ${className}`}
       style={{ 
         height: className.includes('h-full') ? '100%' : undefined,
@@ -39,13 +31,12 @@ const GlassCard = memo(function GlassCard({ children, className = '', delay = 0,
         pointerEvents: 'auto',
         position: 'relative',
         zIndex: 1,
+        opacity: 1,
       }}
       onClick={onClick}
-      whileHover={hover && mounted ? { scale: 1.01, y: -2 } : {}}
-      whileTap={{ scale: 0.99 }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 })
 
