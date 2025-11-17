@@ -153,6 +153,11 @@ resource "aws_cloudfront_distribution" "portfolio" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "S3-${aws_s3_bucket.portfolio.bucket}"
 
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.nextjs_routing.arn
+    }
+
     forwarded_values {
       query_string = false
       cookies {
