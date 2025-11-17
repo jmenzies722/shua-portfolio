@@ -36,7 +36,9 @@ export default function RootLayout({
         paddingRight: 'env(safe-area-inset-right)',
       }}>
         <Navigation />
-        <main className="min-h-screen relative z-10">
+        <main className="min-h-screen relative z-10" style={{
+          paddingTop: 'calc(4rem + env(safe-area-inset-top))',
+        }}>
           {children}
         </main>
         <Footer />

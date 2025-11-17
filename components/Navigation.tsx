@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { Menu } from 'lucide-react'
+import MobileMenu from './MobileMenu'
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -29,97 +30,72 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileOpen])
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-150 ${
-        isScrolled
-          ? 'bg-[#0B0E11]/95 backdrop-blur-sm border-b border-white/5 shadow-lg'
-          : 'bg-transparent'
-      }`}
-      style={{
-        paddingTop: 'max(0px, env(safe-area-inset-top))',
-        paddingLeft: 'max(0px, env(safe-area-inset-left))',
-        paddingRight: 'max(0px, env(safe-area-inset-right))',
-      }}
-    >
-      <div className="container">
-        <div className="flex items-center justify-between h-16 md:h-16 w-full" style={{
-          minHeight: 'calc(4rem + max(0px, env(safe-area-inset-top)))',
-        }}>
-          {/* Logo - Ensure side by side on mobile */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
-            <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden glass-profile flex-shrink-0">
-              <img
-                src="/IMG_2897.jpg"
-                alt="Josh Menzies"
-                className="w-full h-full object-cover rounded-full"
-                loading="eager"
-              />
-            </div>
-            <span className="text-base sm:text-lg md:text-xl font-display font-bold gradient-text whitespace-nowrap">
-              Josh M.
-            </span>
-          </Link>
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-200 ${
+          isScrolled
+            ? 'bg-[#0B0E11]/95 backdrop-blur-sm border-b border-white/[0.06]'
+            : 'bg-transparent'
+        }`}
+        style={{
+          paddingTop: 'max(0px, env(safe-area-inset-top))',
+          paddingLeft: 'max(0px, env(safe-area-inset-left))',
+          paddingRight: 'max(0px, env(safe-area-inset-right))',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 md:h-16">
+            {/* Logo - iOS Style Side-by-Side */}
+            <Link 
+              href="/" 
+              className="flex items-center gap-2 sm:gap-3 group flex-shrink-0"
+              style={{ pointerEvents: 'auto' }}
+            >
+              <div className="relative w-8 h-8 sm:w-9 md:w-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.05] flex-shrink-0">
+                <img
+                  src="/IMG_2897.jpg"
+                  alt="Josh Menzies"
+                  className="w-full h-full object-cover rounded-full"
+                  loading="eager"
+                />
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+                <span className="text-base sm:text-lg md:text-xl font-semibold text-white/90 whitespace-nowrap">
+                  Josh M.
+                </span>
+                <span className="hidden sm:inline text-xs text-white/60">
+                  Platform Engineer
+                </span>
+              </div>
+            </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6 relative z-50">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-sm font-medium transition-colors relative group ${
-                    isActive ? 'text-white' : 'text-white/80 hover:text-white'
-                  }`}
-                  style={{
-                    position: 'relative',
-                    zIndex: 50,
-                    pointerEvents: 'auto',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {item.name}
-                  <span className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#007AFF] transition-all duration-200 pointer-events-none ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} />
-                </Link>
-              )
-            })}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="md:hidden p-2 text-white/80 hover:text-white transition-colors"
-            aria-label="Toggle menu"
-            type="button"
-          >
-            {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isMobileOpen && (
-        <div className="md:hidden bg-[#0B0E11]/98 backdrop-blur-sm border-t border-white/5 relative z-50">
-          <div className="container py-4">
-            <nav className="flex flex-col space-y-1">
+            {/* Desktop Nav - Centered */}
+            <div className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
               {navItems.map((item) => {
                 const isActive = pathname === item.href
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
-                    onClick={() => setIsMobileOpen(false)}
-                    className={`block py-3 px-2 text-base transition-colors rounded-lg ${
-                      isActive 
-                        ? 'text-white bg-white/5' 
-                        : 'text-white/80 hover:text-white hover:bg-white/5'
+                    className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
+                      isActive
+                        ? 'text-white bg-white/[0.12]'
+                        : 'text-white/70 hover:text-white hover:bg-white/[0.08]'
                     }`}
                     style={{
-                      position: 'relative',
-                      zIndex: 50,
                       pointerEvents: 'auto',
                       cursor: 'pointer',
                     }}
@@ -128,10 +104,30 @@ export default function Navigation() {
                   </Link>
                 )
               })}
-            </nav>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileOpen(true)}
+              className="lg:hidden p-2 -mr-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors"
+              aria-label="Open menu"
+              type="button"
+              style={{
+                pointerEvents: 'auto',
+              }}
+            >
+              <Menu className="w-6 h-6" />
+            </button>
           </div>
         </div>
-      )}
-    </nav>
+      </nav>
+
+      {/* iOS-Style Mobile Menu */}
+      <MobileMenu
+        isOpen={isMobileOpen}
+        onClose={() => setIsMobileOpen(false)}
+        navItems={navItems}
+      />
+    </>
   )
 }

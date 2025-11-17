@@ -72,13 +72,14 @@ body {
   background-clip: text;
 }
 
-/* Only apply to top navigation bar, not footer nav */
+/* iOS-Style Navigation - Dynamic Island Aware */
 nav:not(footer nav) {
   z-index: 9999;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  /* Safe area padding handled inline */
 }
 
 nav:not(footer nav) a,
@@ -89,7 +90,6 @@ nav:not(footer nav) a[href] {
   text-decoration: none !important;
   display: inline-block !important;
   position: relative !important;
-  z-index: 10000 !important;
 }
 
 nav:not(footer nav) a span {
@@ -100,7 +100,6 @@ nav:not(footer nav) a span {
 nav:not(footer nav) > div {
   pointer-events: auto !important;
   position: relative;
-  z-index: 10000;
 }
 
 /* Footer styling - Apple-like minimal design */
@@ -157,7 +156,16 @@ footer a[href] {
   }
 }
 
-/* Mobile optimizations - iPhone & Apple Display */
+/* iOS-Style Mobile Optimizations */
+@media (max-width: 1024px) {
+  /* Prevent body scroll when menu is open */
+  body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .glass-card {
     backdrop-filter: blur(2px);
@@ -186,17 +194,20 @@ footer a[href] {
     letter-spacing: -0.01em;
   }
   
-  /* Better button spacing */
+  /* Better button spacing - iOS HIG */
   button, a[role="button"] {
     min-height: 44px;
     min-width: 44px;
     padding: 0.75rem 1.5rem;
   }
   
-  /* Navigation mobile fixes */
-  nav .container {
-    padding-left: max(1rem, calc(1rem + env(safe-area-inset-left)));
-    padding-right: max(1rem, calc(1rem + env(safe-area-inset-right)));
+  /* iOS-style navigation */
+  nav:not(footer nav) {
+    height: calc(3.5rem + env(safe-area-inset-top));
+  }
+  
+  nav:not(footer nav) > div > div {
+    height: 3.5rem;
   }
   
   /* Ensure nav logo stays side by side */
@@ -207,17 +218,16 @@ footer a[href] {
     flex-shrink: 0;
   }
   
-  /* Mobile menu alignment */
-  nav .md\\:hidden nav {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
   /* Footer nav links smaller on mobile */
   footer nav a {
     font-size: 0.75rem;
     padding: 0.5rem 0;
+  }
+  
+  /* iOS-style smooth scrolling */
+  html {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 }
 
@@ -231,34 +241,34 @@ footer a[href] {
   }
 }
 
-/* Safe area for mobile - iPhone notch support */
+/* Dynamic Island & Safe Area Support - iOS Native */
 @supports (padding: max(0px)) {
-  html {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+  /* Main content padding for safe areas */
+  main {
+    padding-top: calc(4rem + env(safe-area-inset-top));
   }
   
-  body {
-    padding-left: max(0px, env(safe-area-inset-left));
-    padding-right: max(0px, env(safe-area-inset-right));
-  }
-  
-  /* Navigation safe area */
-  nav {
-    padding-top: max(0px, env(safe-area-inset-top));
-    padding-left: max(0px, env(safe-area-inset-left));
-    padding-right: max(0px, env(safe-area-inset-right));
+  @media (max-width: 768px) {
+    main {
+      padding-top: calc(3.5rem + env(safe-area-inset-top));
+    }
   }
   
   /* Hero section safe area */
   section#hero {
-    padding-top: max(80px, calc(80px + env(safe-area-inset-top)));
-    padding-bottom: max(2rem, calc(2rem + env(safe-area-inset-bottom)));
+    padding-top: max(5rem, calc(5rem + env(safe-area-inset-top)));
+    padding-bottom: max(3rem, calc(3rem + env(safe-area-inset-bottom)));
+  }
+  
+  @media (max-width: 768px) {
+    section#hero {
+      padding-top: max(4rem, calc(4rem + env(safe-area-inset-top)));
+    }
   }
   
   /* Footer safe area */
   footer {
-    padding-bottom: max(2rem, calc(2rem + env(safe-area-inset-bottom)));
+    padding-bottom: max(3rem, calc(3rem + env(safe-area-inset-bottom)));
   }
 }
 
