@@ -28,15 +28,12 @@ export default function AboutContent() {
 
       {/* 2. Description text block */}
       <MotionFadeIn delay={0.1} className="mb-12 md:mb-16">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+        <p
           className="text-lg md:text-xl text-white/75 max-w-[700px] mx-auto text-center leading-relaxed font-light"
           style={{ lineHeight: '1.7' }}
         >
           {resumeData.summary}
-        </motion.p>
+        </p>
       </MotionFadeIn>
 
       {/* 3. HaloAvatar - centered with Apple-style crisp presentation */}

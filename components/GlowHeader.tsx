@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface GlowHeaderProps {
@@ -12,10 +11,7 @@ interface GlowHeaderProps {
 
 export default function GlowHeader({ title, subtitle, children, className = '' }: GlowHeaderProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    <div
       className={`text-center mb-16 md:mb-20 relative ${className}`}
     >
       {/* Apple-style static subtle glow - no animation, no blur */}
@@ -36,7 +32,7 @@ export default function GlowHeader({ title, subtitle, children, className = '' }
         </p>
       )}
       {children}
-    </motion.div>
+    </div>
   )
 }
 

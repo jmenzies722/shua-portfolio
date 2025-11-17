@@ -20,37 +20,13 @@ export default function ProjectsContent() {
         subtitle="Real-world infrastructure solutions with measurable impact on cost, reliability, and performance."
       />
 
-      <motion.div 
+      <div 
         className="grid md:grid-cols-2 gap-8 lg:gap-10"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          visible: {
-            transition: {
-              staggerChildren: 0.1,
-            },
-          },
-        }}
       >
         {projects.map((project, index) => (
-          <motion.div
+          <div
             key={project.id}
             className="h-full"
-            variants={{
-              hidden: { opacity: 0, y: 30 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.5,
-                  ease: [0.4, 0, 0.2, 1],
-                }
-              },
-            }}
-            style={{
-              transform: 'translateZ(0)',
-              willChange: 'transform',
-            }}
           >
             <Link 
               href={`/projects/${project.slug}`} 
@@ -72,37 +48,27 @@ export default function ProjectsContent() {
                   {project.metrics && (
                     <div className="pt-8 border-t border-white/10 mt-auto mb-6">
                       <div className="flex gap-8">
-                        {project.metrics.slice(0, 2).map((metric, idx) => (
-                          <motion.div
-                            key={metric.label}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.3, delay: idx * 0.1 }}
-                          >
+                        {project.metrics.slice(0, 2).map((metric) => (
+                          <div key={metric.label}>
                             <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">
                               <AnimatedNumber value={metric.value} />
                             </div>
                             <div className="text-sm md:text-base text-white/60">{metric.label}</div>
-                          </motion.div>
+                          </div>
                         ))}
                       </div>
                     </div>
                   )}
-                  <motion.div 
-                    className="flex items-center gap-2 text-white/70 text-sm group-hover:text-[#007AFF] transition-colors duration-200"
-                    whileHover={{ x: 4 }}
-                    transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
-                  >
+                  <div className="flex items-center gap-2 text-white/70 text-sm group-hover:text-[#007AFF] transition-colors duration-100">
                     View case study
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                  </motion.div>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-100" />
+                  </div>
                 </div>
               </GlassCard>
             </Link>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
     </SectionContainer>
   )
 }

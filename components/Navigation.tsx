@@ -98,7 +98,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden glass-profile p-0.5 flex-shrink-0 group-hover:ring-2 group-hover:ring-[#007AFF]/40 transition-all duration-300">
+            <div className="relative w-10 h-10 rounded-full overflow-hidden glass-profile p-0.5 flex-shrink-0 group-hover:ring-2 group-hover:ring-[#007AFF]/40 transition-all duration-100">
               <img
                 src="/IMG_2897.jpg"
                 alt="Josh Menzies"
@@ -138,7 +138,7 @@ export default function Navigation() {
                 }}
               >
                 {item.name}
-                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
               </a>
             ))}
           </div>
@@ -149,11 +149,11 @@ export default function Navigation() {
               className="text-primary-80 hover:text-primary transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               whileTap={{ scale: 0.9 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.1 }}
             >
               <motion.div
                 animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.1 }}
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </motion.div>
