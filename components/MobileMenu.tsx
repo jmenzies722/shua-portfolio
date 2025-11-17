@@ -18,7 +18,13 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
     onClose()
     // Use setTimeout to ensure menu closes before navigation
     setTimeout(() => {
-      router.push(href)
+      if (href === '/') {
+        // For home page, scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        router.push(href)
+      } else {
+        router.push(href)
+      }
     }, 100)
   }
 

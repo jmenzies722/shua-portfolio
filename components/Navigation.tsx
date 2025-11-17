@@ -90,6 +90,12 @@ export default function Navigation() {
                         ? 'text-white bg-white/[0.12]'
                         : 'text-white/70 hover:text-white hover:bg-white/[0.08]'
                     }`}
+                    style={{
+                      pointerEvents: 'auto',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      zIndex: 10000,
+                    }}
                   >
                     {item.name}
                   </Link>
