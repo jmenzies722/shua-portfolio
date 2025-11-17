@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
 import Link from 'next/link'
 import { ArrowRight, MessageSquare } from 'lucide-react'
 import AnimatedText from './AnimatedText'
@@ -9,18 +8,8 @@ import HeroHalo from './HeroHalo'
 import OrbitIcons from './OrbitIcons'
 
 export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 50])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-
   return (
     <section
-      ref={containerRef}
       id="hero"
       className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-12 md:pb-20"
     >
@@ -157,7 +146,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
