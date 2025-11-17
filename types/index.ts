@@ -1,18 +1,3 @@
-export interface Experience {
-  id: string
-  role: string
-  company: string
-  location: string
-  startDate: string
-  endDate: string | null
-  technologies: string[]
-  achievements: string[]
-  metrics?: {
-    label: string
-    value: string
-  }[]
-}
-
 export interface Project {
   id: string
   slug: string
@@ -20,21 +5,12 @@ export interface Project {
   description: string
   shortDescription: string
   technologies: string[]
-  metrics: {
-    label: string
-    value: string
-  }[]
+  metrics?: Array<{ label: string; value: string }>
   problem: string
   solution: string
   architecture: string[]
   impact: string[]
   featured?: boolean
-}
-
-export interface Skill {
-  category: string
-  icon: string
-  skills: string[]
 }
 
 export interface BlogPost {
@@ -46,15 +22,20 @@ export interface BlogPost {
   readTime: string
 }
 
-export interface ShuaResponse {
-  model: string
-  mode: 'friendly' | 'technical' | 'casual'
-  response: string
+export interface Experience {
+  id: string
+  role: string
+  company: string
+  location: string
+  startDate: string
+  endDate: string | null
+  technologies: string[]
+  achievements: string[]
+  metrics?: Array<{ label: string; value: string }>
 }
 
-export interface Education {
-  degree: string
-  school: string
-  year: string
+export interface Skill {
+  category: string
+  icon: string
+  skills: string[]
 }
-

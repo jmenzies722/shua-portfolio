@@ -1,11 +1,7 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { BlogPost } from '@/types'
-import { format } from 'date-fns'
-import GlassCard from './GlassCard'
+import Card from './ui/Card'
 
 interface BlogPostContentProps {
   post: BlogPost
@@ -13,8 +9,8 @@ interface BlogPostContentProps {
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
   return (
-    <div className="pt-32 pb-32 px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-20 md:py-32">
+      <div className="container max-w-4xl">
         <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-12"
@@ -23,13 +19,8 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           Back to Blog
         </Link>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          <span className="inline-block px-4 py-2 bg-white/5 rounded-lg text-sm text-white/70 mb-6">
+        <div className="mb-12">
+          <span className="inline-block px-4 py-2 glass-card rounded-lg text-sm text-white/70 mb-6">
             {post.category}
           </span>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
@@ -38,17 +29,17 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           <div className="flex items-center gap-6 text-white/50">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
-              <span>{format(new Date(post.date), 'MMMM d, yyyy')}</span>
+              <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-5 h-5" />
               <span>{post.readTime} read</span>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <GlassCard delay={0.2}>
-          <div className="p-10 prose prose-invert max-w-none">
+        <Card>
+          <div className="prose prose-invert max-w-none">
             <p className="text-xl text-white/70 leading-relaxed mb-8">{post.description}</p>
             <div className="text-white/70 leading-relaxed">
               <p className="mb-6">
@@ -69,9 +60,8 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
               </p>
             </div>
           </div>
-        </GlassCard>
+        </Card>
       </div>
-    </div>
+    </section>
   )
 }
-
