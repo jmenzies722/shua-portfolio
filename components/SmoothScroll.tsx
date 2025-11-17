@@ -4,9 +4,15 @@ import { useEffect } from 'react'
 
 export default function SmoothScroll() {
   useEffect(() => {
-    // Enhanced smooth scroll behavior for anchor links
+    // Enhanced smooth scroll behavior for anchor links ONLY
+    // Only handle links that start with # and are NOT Next.js Link components
     const handleSmoothScroll = () => {
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      document.querySelectorAll('a[href^="#"]:not([data-next-link])').forEach((anchor) => {
+        // Skip Next.js Link components
+        if ((anchor as HTMLElement).closest('[data-nextjs-scroll-focus-boundary]')) {
+          return
+        }
+        
         anchor.addEventListener('click', (e: Event) => {
           const href = (anchor as HTMLAnchorElement).getAttribute('href')
           if (href && href !== '#' && href.startsWith('#')) {

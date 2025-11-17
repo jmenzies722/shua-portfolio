@@ -113,7 +113,11 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={handleNavClick}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleNavClick()
+                  // Ensure Next.js navigation happens - don't prevent default
+                }}
                 className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group cursor-pointer px-2 py-1"
                 style={{ 
                   pointerEvents: 'auto', 
