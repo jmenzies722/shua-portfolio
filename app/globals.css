@@ -91,6 +91,14 @@ nav:not(footer nav) a[href] {
   text-decoration: none !important;
   display: inline-block !important;
   position: relative !important;
+  z-index: 10000 !important;
+}
+
+/* Ensure nav container allows clicks */
+nav:not(footer nav) > div {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10000;
 }
 
 /* Footer */

@@ -85,15 +85,11 @@ export default function Navigation() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
+                    className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 relative z-10 ${
                       isActive
                         ? 'text-white bg-white/[0.12]'
                         : 'text-white/70 hover:text-white hover:bg-white/[0.08]'
                     }`}
-                    style={{
-                      pointerEvents: 'auto',
-                      cursor: 'pointer',
-                    }}
                   >
                     {item.name}
                   </Link>

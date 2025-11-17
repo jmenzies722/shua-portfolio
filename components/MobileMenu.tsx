@@ -16,7 +16,10 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
   
   const handleLinkClick = (href: string) => {
     onClose()
-    router.push(href)
+    // Use setTimeout to ensure menu closes before navigation
+    setTimeout(() => {
+      router.push(href)
+    }, 100)
   }
 
   return (
@@ -47,7 +50,9 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
             className="fixed bottom-0 left-0 right-0 z-[9999] md:hidden"
             style={{
               paddingBottom: 'max(1rem, env(safe-area-inset-bottom))',
+              pointerEvents: 'auto',
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-white/[0.08] border-t border-white/[0.12] backdrop-blur-md rounded-t-3xl shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
               {/* Handle Bar */}
@@ -77,6 +82,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
                     onClick={onClose}
                     className="p-2 -mr-2 rounded-full hover:bg-white/[0.12] transition-colors"
                     aria-label="Close menu"
+                    type="button"
                   >
                     <X className="w-5 h-5 text-white/80" />
                   </button>
@@ -90,13 +96,17 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
                   return (
                     <button
                       key={item.name}
-                      onClick={() => handleLinkClick(item.href)}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        handleLinkClick(item.href)
+                      }}
                       className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-colors text-left ${
                         isActive
                           ? 'bg-white/[0.12] text-white'
                           : 'text-white/80 hover:bg-white/[0.12] hover:text-white'
                       }`}
-                      style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+                      type="button"
                     >
                       <span className="text-base font-medium">{item.name}</span>
                       <ChevronRight className="w-5 h-5 text-white/40" />
