@@ -62,7 +62,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-6 relative z-50">
             {navItems.map((item) => {
               const isActive = pathname === item.href
               return (
@@ -72,6 +72,12 @@ export default function Navigation() {
                   className={`text-sm font-medium transition-colors relative group ${
                     isActive ? 'text-white' : 'text-white/80 hover:text-white'
                   }`}
+                  style={{
+                    position: 'relative',
+                    zIndex: 50,
+                    pointerEvents: 'auto',
+                    cursor: 'pointer',
+                  }}
                 >
                   {item.name}
                   <span className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#007AFF] transition-all duration-200 pointer-events-none ${
