@@ -2,45 +2,29 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
 const navItems = [
-  { name: 'Home', href: '/', sectionId: 'hero' },
-  { name: 'About', href: '/about', sectionId: 'about' },
-  { name: 'Experience', href: '/experience', sectionId: 'experience' },
-  { name: 'Skills', href: '/skills', sectionId: 'skills' },
-  { name: 'Projects', href: '/projects', sectionId: 'projects' },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Experience', href: '/experience' },
+  { name: 'Skills', href: '/skills' },
+  { name: 'Projects', href: '/projects' },
   { name: 'Resume', href: '/resume' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
 ]
 
 export default function Navigation() {
-  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, sectionId?: string) => {
-    // If on home page and section exists, scroll to section
-    if (pathname === '/' && sectionId) {
-      e.preventDefault()
-      const element = document.getElementById(sectionId)
-      if (element) {
-        const offsetTop = element.getBoundingClientRect().top + window.pageYOffset - 80
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth',
-        })
-        setIsMobileMenuOpen(false)
-        return
-      }
-    }
-    // Otherwise, let Next.js Link handle navigation
+  const handleNavClick = () => {
+    // Close mobile menu on navigation
     setIsMobileMenuOpen(false)
   }
 
@@ -114,7 +98,7 @@ export default function Navigation() {
               <div key={item.name}>
                 <Link
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href, item.sectionId)}
+                  onClick={handleNavClick}
                   className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group"
                 >
                   {item.name}
@@ -168,7 +152,7 @@ export default function Navigation() {
                 <div key={item.name}>
                   <Link
                     href={item.href}
-                    onClick={(e) => handleNavClick(e, item.href, item.sectionId)}
+                    onClick={handleNavClick}
                     className="block text-primary-80 hover:text-primary transition-colors"
                   >
                     {item.name}
