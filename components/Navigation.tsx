@@ -71,7 +71,7 @@ export default function Navigation() {
           ? 'bg-[#0a0a0a]/95 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/20'
           : 'bg-transparent'
       }`}
-      style={{ willChange: 'auto' }}
+      style={{ willChange: 'auto', pointerEvents: 'auto' }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -94,17 +94,17 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item, index) => (
-              <div key={item.name}>
-                <Link
-                  href={item.href}
-                  onClick={handleNavClick}
-                  className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group"
-                >
-                  {item.name}
-                  <span className="absolute bottom-0 left-0 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
-                </Link>
-              </div>
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={handleNavClick}
+                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group"
+                style={{ pointerEvents: 'auto', position: 'relative', zIndex: 10 }}
+              >
+                {item.name}
+                <span className="absolute bottom-0 left-0 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
+              </Link>
             ))}
           </div>
 
@@ -148,16 +148,16 @@ export default function Navigation() {
                 },
               }}
             >
-              {navItems.map((item, index) => (
-                <div key={item.name}>
-                  <Link
-                    href={item.href}
-                    onClick={handleNavClick}
-                    className="block text-primary-80 hover:text-primary transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                </div>
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={handleNavClick}
+                  className="block text-primary-80 hover:text-primary transition-colors"
+                  style={{ pointerEvents: 'auto', position: 'relative', zIndex: 10 }}
+                >
+                  {item.name}
+                </Link>
               ))}
             </motion.div>
           </motion.div>
