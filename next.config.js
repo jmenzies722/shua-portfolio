@@ -16,10 +16,6 @@ const nextConfig = {
   poweredByHeader: false,
   // Optimize production builds
   swcMinify: true,
-  // Reduce bundle size
-  experimental: {
-    optimizeCss: true,
-  },
 }
 
 module.exports = nextConfig
