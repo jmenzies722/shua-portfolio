@@ -145,7 +145,12 @@ export default function Hero() {
             </div>
 
             {/* Right: Avatar with Halo & Orbiting Icons */}
-            <div className="relative flex items-center justify-center">
+            <motion.div 
+              className="relative flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <HeroHalo>
                 <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
                   {/* Avatar Container */}
@@ -167,7 +172,7 @@ export default function Hero() {
                   <OrbitIcons />
                 </div>
               </HeroHalo>
-            </div>
+            </motion.div>
           </div>
         </div>
       </motion.div>
