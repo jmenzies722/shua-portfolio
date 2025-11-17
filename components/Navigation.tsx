@@ -58,7 +58,7 @@ export default function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
-            {/* Logo - iOS Style Side-by-Side */}
+            {/* Logo - Profile Pic Left of Josh M. */}
             <Link 
               href="/" 
               className="flex items-center gap-2 sm:gap-3 group flex-shrink-0"
@@ -72,14 +72,9 @@ export default function Navigation() {
                   loading="eager"
                 />
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                <span className="text-base sm:text-lg md:text-xl font-semibold text-white/90 whitespace-nowrap">
-                  Josh M.
-                </span>
-                <span className="hidden sm:inline text-xs text-white/60">
-                  Platform Engineer
-                </span>
-              </div>
+              <span className="text-base sm:text-lg md:text-xl font-semibold text-white/90 whitespace-nowrap">
+                Josh M.
+              </span>
             </Link>
 
             {/* Desktop Nav - Centered */}
