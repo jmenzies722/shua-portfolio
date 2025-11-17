@@ -96,7 +96,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {isMobileOpen && (
-        <div className="md:hidden bg-[#0B0E11]/98 backdrop-blur-sm border-t border-white/5">
+        <div className="md:hidden bg-[#0B0E11]/98 backdrop-blur-sm border-t border-white/5 relative z-50">
           <div className="container py-4 space-y-2">
             {navItems.map((item) => {
               const isActive = pathname === item.href
@@ -108,6 +108,12 @@ export default function Navigation() {
                   className={`block py-2 text-base transition-colors ${
                     isActive ? 'text-white' : 'text-white/80 hover:text-white'
                   }`}
+                  style={{
+                    position: 'relative',
+                    zIndex: 50,
+                    pointerEvents: 'auto',
+                    cursor: 'pointer',
+                  }}
                 >
                   {item.name}
                 </Link>

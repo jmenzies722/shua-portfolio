@@ -82,15 +82,25 @@ nav:not(footer nav) {
 }
 
 nav:not(footer nav) a,
-nav:not(footer nav) Link {
+nav:not(footer nav) Link,
+nav:not(footer nav) a[href] {
   pointer-events: auto !important;
   cursor: pointer !important;
   text-decoration: none !important;
-  display: inline-block;
+  display: inline-block !important;
+  position: relative !important;
+  z-index: 10000 !important;
 }
 
 nav:not(footer nav) a span {
   pointer-events: none !important;
+}
+
+/* Ensure nav container is clickable */
+nav:not(footer nav) > div {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10000;
 }
 
 /* Footer styling - Apple-like minimal design */
