@@ -23,11 +23,6 @@ export default function Navigation() {
   const [mounted, setMounted] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
 
-  const handleNavClick = (e: React.MouseEvent, href: string) => {
-    // Close mobile menu on navigation
-    setIsMobileMenuOpen(false)
-    // Let Next.js Link handle navigation naturally
-  }
 
   useEffect(() => {
     setMounted(true)
@@ -114,7 +109,7 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className="text-sm font-medium text-primary-80 hover:text-primary transition-colors duration-100 relative group cursor-pointer px-2 py-1"
                 style={{ 
                   pointerEvents: 'auto', 
@@ -174,7 +169,7 @@ export default function Navigation() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="block text-primary-80 hover:text-primary transition-colors cursor-pointer"
                   style={{ pointerEvents: 'auto', position: 'relative', zIndex: 100 }}
                 >

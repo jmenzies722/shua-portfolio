@@ -9,20 +9,26 @@ export default function SmoothScroll() {
     const handleSmoothScroll = () => {
       // Only select regular anchor tags with hash links, NOT Next.js Link components
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        // Skip Next.js Link components - they have specific attributes
+        // Skip Next.js Link components and navigation links
         const element = anchor as HTMLElement
+        const href = (anchor as HTMLAnchorElement).getAttribute('href')
+        
+        // Skip if:
+        // 1. Inside a nav element
+        // 2. Has Next.js Link attributes
+        // 3. Is a page route (starts with /)
         if (
+          element.closest('nav') ||
           element.closest('[data-nextjs-scroll-focus-boundary]') ||
           element.hasAttribute('data-next-link') ||
-          element.closest('nav') // Skip navigation links
+          (href && href.startsWith('/'))
         ) {
           return
         }
         
+        // Only handle pure hash links like #section
         anchor.addEventListener('click', (e: Event) => {
-          const href = (anchor as HTMLAnchorElement).getAttribute('href')
-          // Only handle hash links, not page routes
-          if (href && href !== '#' && href.startsWith('#') && !href.startsWith('/')) {
+          if (href && href !== '#' && href.startsWith('#') && !href.includes('/')) {
             e.preventDefault()
             const target = document.querySelector(href)
             if (target) {
