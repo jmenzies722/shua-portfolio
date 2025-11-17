@@ -62,7 +62,7 @@ export default function ShuaContent() {
             Meet Shua
           </h1>
           <p className="text-2xl text-white/70 max-w-3xl mx-auto">
-            Your AI assistant for learning about Josh's work, experience, and projects.
+            Your AI assistant for learning about Josh&apos;s work, experience, and projects.
           </p>
         </motion.div>
 
@@ -184,17 +184,17 @@ export default function ShuaContent() {
               <h2 className="text-3xl font-bold mb-6 gradient-text">Interact with Shua</h2>
               <p className="text-white/70 mb-6">
                 Click the chat button in the bottom-right corner to start a conversation. Shua can
-                answer questions about Josh's experience, projects, skills, and more.
+                answer questions about Josh&apos;s experience, projects, skills, and more.
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 <span className="px-4 py-2 bg-white/5 rounded-lg text-white/70 text-sm">
-                  "Tell me about Josh's experience"
+                  &quot;Tell me about Josh&apos;s experience&quot;
                 </span>
                 <span className="px-4 py-2 bg-white/5 rounded-lg text-white/70 text-sm">
-                  "What projects has he built?"
+                  &quot;What projects has he built?&quot;
                 </span>
                 <span className="px-4 py-2 bg-white/5 rounded-lg text-white/70 text-sm">
-                  "What are his skills?"
+                  &quot;What are his skills?&quot;
                 </span>
               </div>
             </div>

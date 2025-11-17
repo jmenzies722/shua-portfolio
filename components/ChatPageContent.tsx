@@ -58,7 +58,7 @@ export default function ChatPageContent() {
             Ask Shua
           </h1>
           <p className="text-xl text-secondary">
-            Your AI assistant for learning about Josh's work, experience, and projects.
+            Your AI assistant for learning about Josh&apos;s work, experience, and projects.
           </p>
         </motion.div>
 

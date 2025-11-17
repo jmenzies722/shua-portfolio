@@ -8,12 +8,13 @@ terraform {
     }
   }
   
-  backend "s3" {
-    # Configure backend after initial setup
-    # bucket = "your-terraform-state-bucket"
-    # key    = "shua-portfolio/terraform.tfstate"
-    # region = "us-east-1"
-  }
+  # Using local state for now
+  # Uncomment and configure S3 backend for team collaboration:
+  # backend "s3" {
+  #   bucket = "your-terraform-state-bucket"
+  #   key    = "shua-portfolio/terraform.tfstate"
+  #   region = "us-east-1"
+  # }
 }
 
 provider "aws" {
