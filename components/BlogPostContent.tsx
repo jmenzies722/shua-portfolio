@@ -1,7 +1,6 @@
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { BlogPost } from '@/types'
-import Card from './ui/Card'
 
 interface BlogPostContentProps {
   post: BlogPost
@@ -9,8 +8,8 @@ interface BlogPostContentProps {
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
   return (
-    <section className="py-20 md:py-32">
-      <div className="container max-w-4xl">
+    <section className="py-20 md:py-28 lg:py-32">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-12"
@@ -23,10 +22,10 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           <span className="inline-block px-4 py-2 glass-card rounded-lg text-sm text-white/70 mb-6">
             {post.category}
           </span>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 gradient-text">
             {post.title}
           </h1>
-          <div className="flex items-center gap-6 text-white/50">
+          <div className="flex items-center gap-6 text-white/50 text-sm md:text-base">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
               <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -38,10 +37,10 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           </div>
         </div>
 
-        <Card>
+        <div className="glass-card p-8">
           <div className="prose prose-invert max-w-none">
-            <p className="text-xl text-white/70 leading-relaxed mb-8">{post.description}</p>
-            <div className="text-white/70 leading-relaxed">
+            <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-8">{post.description}</p>
+            <div className="text-white/70 leading-relaxed text-base md:text-lg">
               <p className="mb-6">
                 This is a placeholder blog post. In a production environment, you would use MDX to
                 render the full blog content from markdown files.
@@ -51,7 +50,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
                 use Next.js MDX loader to render them. Each blog post would have frontmatter with
                 metadata and the content would be written in markdown.
               </p>
-              <h2 className="text-3xl font-bold gradient-text mb-4 mt-8">
+              <h2 className="text-2xl font-semibold gradient-text mb-4 mt-8">
                 Example Content Structure
               </h2>
               <p className="mb-6">
@@ -60,7 +59,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
               </p>
             </div>
           </div>
-        </Card>
+        </div>
       </div>
     </section>
   )

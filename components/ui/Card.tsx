@@ -4,17 +4,16 @@ interface CardProps {
   children: ReactNode
   className?: string
   hover?: boolean
-  delay?: number
 }
 
 export default function Card({ children, className = '', hover = true }: CardProps) {
   return (
     <div
-      className={`glass-card p-6 ${hover ? 'hover:translate-y-[-2px]' : ''} ${className}`}
+      className={`glass-card p-6 md:p-8 ${hover ? 'hover:bg-white/[0.06]' : ''} ${className}`}
       style={{
         opacity: 1,
         transform: 'translateY(0)',
-        transition: hover ? 'transform 0.15s ease, background 0.15s ease' : 'none',
+        transition: hover ? 'background 0.2s ease, border-color 0.2s ease' : 'none',
       }}
     >
       {children}

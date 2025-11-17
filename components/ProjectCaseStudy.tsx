@@ -1,7 +1,6 @@
 import { ArrowLeft, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 import { Project } from '@/types'
-import Card from './ui/Card'
 
 interface ProjectCaseStudyProps {
   project: Project
@@ -9,8 +8,8 @@ interface ProjectCaseStudyProps {
 
 export default function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
   return (
-    <section className="py-20 md:py-32">
-      <div className="container max-w-5xl">
+    <section className="py-20 md:py-28 lg:py-32">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/projects"
           className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-12"
@@ -20,29 +19,27 @@ export default function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         </Link>
 
         <div className="mb-16">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 gradient-text">
             {project.title}
           </h1>
-          <p className="text-xl md:text-2xl text-white/70 leading-relaxed">{project.description}</p>
+          <p className="text-lg md:text-xl text-white/70 leading-relaxed">{project.description}</p>
         </div>
 
         {/* Metrics */}
         {project.metrics && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
             {project.metrics.map((metric, index) => (
-              <Card key={metric.label}>
-                <div className="text-center">
-                  <div className="text-4xl font-bold gradient-text mb-2">{metric.value}</div>
-                  <div className="text-sm text-white/60">{metric.label}</div>
-                </div>
-              </Card>
+              <div key={metric.label} className="glass-card p-6 text-center">
+                <div className="text-3xl md:text-4xl font-semibold gradient-text mb-2">{metric.value}</div>
+                <div className="text-sm text-white/60">{metric.label}</div>
+              </div>
             ))}
           </div>
         )}
 
         {/* Technologies */}
-        <Card className="mb-8">
-          <h2 className="text-2xl font-bold mb-6 gradient-text">Technologies</h2>
+        <div className="glass-card p-8 mb-8">
+          <h2 className="text-2xl font-semibold mb-6 gradient-text">Technologies</h2>
           <div className="flex flex-wrap gap-3">
             {project.technologies.map((tech) => (
               <span
@@ -53,49 +50,49 @@ export default function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
               </span>
             ))}
           </div>
-        </Card>
+        </div>
 
         {/* Problem */}
-        <Card className="mb-8">
-          <h2 className="text-3xl font-bold mb-6 gradient-text">Problem</h2>
-          <p className="text-white/70 leading-relaxed text-lg">{project.problem}</p>
-        </Card>
+        <div className="glass-card p-8 mb-8">
+          <h2 className="text-2xl font-semibold mb-6 gradient-text">Problem</h2>
+          <p className="text-white/70 leading-relaxed text-base md:text-lg">{project.problem}</p>
+        </div>
 
         {/* Solution */}
-        <Card className="mb-8">
-          <h2 className="text-3xl font-bold mb-6 gradient-text">Solution</h2>
-          <p className="text-white/70 leading-relaxed text-lg">{project.solution}</p>
-        </Card>
+        <div className="glass-card p-8 mb-8">
+          <h2 className="text-2xl font-semibold mb-6 gradient-text">Solution</h2>
+          <p className="text-white/70 leading-relaxed text-base md:text-lg">{project.solution}</p>
+        </div>
 
         {/* Architecture */}
-        <Card className="mb-8">
-          <h2 className="text-3xl font-bold mb-6 gradient-text">Architecture</h2>
+        <div className="glass-card p-8 mb-8">
+          <h2 className="text-2xl font-semibold mb-6 gradient-text">Architecture</h2>
           <div className="space-y-4">
             {project.architecture.map((item, index) => (
               <div key={index} className="flex items-start gap-4">
                 <div className="p-2 glass-card rounded-lg mt-1 flex-shrink-0">
                   <CheckCircle className="w-5 h-5 text-[#007AFF]" />
                 </div>
-                <p className="text-white/70 leading-relaxed flex-1">{item}</p>
+                <p className="text-white/70 leading-relaxed flex-1 text-sm md:text-base">{item}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </div>
 
         {/* Impact */}
-        <Card>
-          <h2 className="text-3xl font-bold mb-6 gradient-text">Impact</h2>
+        <div className="glass-card p-8">
+          <h2 className="text-2xl font-semibold mb-6 gradient-text">Impact</h2>
           <div className="space-y-4">
             {project.impact.map((item, index) => (
               <div key={index} className="flex items-start gap-4">
                 <div className="p-2 glass-card rounded-lg mt-1 flex-shrink-0">
                   <CheckCircle className="w-5 h-5 text-[#007AFF]" />
                 </div>
-                <p className="text-white/70 leading-relaxed flex-1 text-lg">{item}</p>
+                <p className="text-white/70 leading-relaxed flex-1 text-base md:text-lg">{item}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </div>
       </div>
     </section>
   )
