@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import Link from 'next/link'
 import { ArrowRight, MessageSquare } from 'lucide-react'
@@ -24,12 +24,9 @@ export default function Hero() {
       id="hero"
       className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-12 md:pb-20"
     >
-      {/* Animated gradient fog background */}
+      {/* Static gradient fog background - no opacity animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1c] to-[#0a0a0a]"
-          style={{ opacity }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1c] to-[#0a0a0a]" />
         <motion.div
           className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-gradient-to-br from-[#007AFF]/20 via-[#5AC8FA]/10 to-[#8A2BE2]/15 rounded-full blur-3xl"
           animate={{
@@ -42,7 +39,7 @@ export default function Hero() {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          style={{ opacity }}
+          style={{ opacity: 1 }}
         />
         <motion.div
           className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-[#5AC8FA]/15 via-[#8A2BE2]/10 to-[#007AFF]/15 rounded-full blur-3xl"
@@ -56,14 +53,11 @@ export default function Hero() {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          style={{ opacity }}
+          style={{ opacity: 1 }}
         />
       </div>
 
-      <motion.div
-        className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8"
-        style={{ y, opacity }}
-      >
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
         {/* Glass Card Container - Apple Vision Pro style */}
         <div 
           className="p-8 md:p-12 lg:p-16 rounded-2xl"
@@ -166,10 +160,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        style={{ opacity }}
-      >
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
         <motion.div
           className="w-4 h-6 border border-[#007AFF]/25 rounded-full flex items-start justify-center p-1 backdrop-blur-sm"
           animate={{ y: [0, 6, 0] }}
@@ -181,7 +172,7 @@ export default function Hero() {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   )
 }

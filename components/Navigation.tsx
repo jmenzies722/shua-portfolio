@@ -2,26 +2,47 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
 const navItems = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Experience', href: '/experience' },
-  { name: 'Skills', href: '/skills' },
-  { name: 'Projects', href: '/projects' },
+  { name: 'Home', href: '/', sectionId: 'hero' },
+  { name: 'About', href: '/about', sectionId: 'about' },
+  { name: 'Experience', href: '/experience', sectionId: 'experience' },
+  { name: 'Skills', href: '/skills', sectionId: 'skills' },
+  { name: 'Projects', href: '/projects', sectionId: 'projects' },
   { name: 'Resume', href: '/resume' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
 ]
 
 export default function Navigation() {
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, sectionId?: string) => {
+    // If on home page and section exists, scroll to section
+    if (pathname === '/' && sectionId) {
+      e.preventDefault()
+      const element = document.getElementById(sectionId)
+      if (element) {
+        const offsetTop = element.getBoundingClientRect().top + window.pageYOffset - 80
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth',
+        })
+        setIsMobileMenuOpen(false)
+        return
+      }
+    }
+    // Otherwise, let Next.js Link handle navigation
+    setIsMobileMenuOpen(false)
+  }
 
   useEffect(() => {
     setMounted(true)
@@ -58,14 +79,10 @@ export default function Navigation() {
   }
 
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ 
-        y: isVisible ? 0 : -100, 
-        opacity: isVisible ? 1 : 0 
-      }}
-      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-150 ${
+        isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+      } ${
         isScrolled
           ? 'bg-[#0a0a0a]/95 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/20'
           : 'bg-transparent'
@@ -94,25 +111,16 @@ export default function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item, index) => (
-              <motion.div
-                key={item.name}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.02, duration: 0.2 }}
-              >
+              <div key={item.name}>
                 <Link
                   href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href, item.sectionId)}
                   className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group"
                 >
                   {item.name}
-                  <motion.span 
-                    className="absolute bottom-0 left-0 h-0.5 bg-[#007AFF]"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: '100%' }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                  />
+                  <span className="absolute bottom-0 left-0 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -157,34 +165,21 @@ export default function Navigation() {
               }}
             >
               {navItems.map((item, index) => (
-                <motion.div
-                  key={item.name}
-                  variants={{
-                    hidden: { opacity: 0, x: -20 },
-                    visible: { 
-                      opacity: 1, 
-                      x: 0,
-                      transition: {
-                        duration: 0.3,
-                        ease: [0.25, 0.1, 0.25, 1],
-                      }
-                    },
-                  }}
-                >
+                <div key={item.name}>
                   <Link
                     href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href, item.sectionId)}
                     className="block text-primary-80 hover:text-primary transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   )
 }
 
