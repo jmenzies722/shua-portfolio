@@ -31,13 +31,13 @@ export default function RootLayout({
       paddingTop: 'env(safe-area-inset-top)',
       paddingBottom: 'env(safe-area-inset-bottom)',
     }}>
-      <body className="antialiased bg-[#0B0E11] text-white" style={{
+      <body className="antialiased bg-[#0B0B0C] text-white" style={{
         paddingLeft: 'env(safe-area-inset-left)',
         paddingRight: 'env(safe-area-inset-right)',
       }}>
         <Navigation />
         <main className="min-h-screen relative z-10" style={{
-          paddingTop: 'calc(4rem + env(safe-area-inset-top))',
+          paddingTop: 'calc(3.5rem + env(safe-area-inset-top))',
         }}>
           {children}
         </main>

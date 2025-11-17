@@ -43,7 +43,7 @@ export default function Footer() {
 
   return (
     <footer 
-      className="relative mt-24 md:mt-32 border-t border-white/[0.06] bg-[#0B0E11]"
+      className="relative mt-24 md:mt-32 border-t border-white/[0.06] bg-[#0B0B0C]"
       style={{
         paddingBottom: 'max(3rem, calc(3rem + env(safe-area-inset-bottom)))',
         paddingLeft: 'max(1.5rem, calc(1.5rem + env(safe-area-inset-left)))',
@@ -56,7 +56,7 @@ export default function Footer() {
           {/* Left: Profile Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3 mb-4">
-              <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border border-white/[0.08] bg-white/[0.02] p-0.5">
+              <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border border-white/[0.08] bg-white/[0.04] p-0.5">
                 <img
                   src="/IMG_2897.jpg"
                   alt="Josh Menzies"
@@ -65,7 +65,7 @@ export default function Footer() {
                 />
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-display font-bold text-white/90">
+                <h3 className="text-xl md:text-2xl font-semibold text-white/90">
                   Josh M.
                 </h3>
                 <p className="text-xs text-white/60 mt-0.5">Platform Engineer</p>
@@ -81,18 +81,18 @@ export default function Footer() {
             <h4 className="text-xs font-semibold text-white/90 uppercase tracking-wider mb-6">
               Navigation
             </h4>
-            <nav className="flex flex-col space-y-2 md:space-y-3">
+            <div className="flex flex-col space-y-2 md:space-y-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-xs md:text-sm text-white/80 hover:text-blue-400 transition-colors duration-200 w-fit relative z-10 pointer-events-auto py-1 md:py-0"
+                  className="text-xs md:text-sm text-white/80 hover:text-blue-400 transition-colors duration-200 w-fit py-1 md:py-0"
                   style={{ position: 'relative', zIndex: 10 }}
                 >
                   {link.name}
                 </Link>
               ))}
-            </nav>
+            </div>
           </div>
 
           {/* Right: Contact Icons */}
@@ -111,7 +111,7 @@ export default function Footer() {
                     rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="group flex items-center gap-3 text-sm text-white/80 hover:text-blue-400 transition-colors duration-200"
                   >
-                    <div className="h-10 w-10 flex items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-200 group-hover:scale-[1.03]">
+                    <div className="h-10 w-10 flex items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06] transition-all duration-200 group-hover:scale-[1.03]">
                       <Icon className="w-4 h-4 text-white/70 group-hover:text-blue-400 transition-colors duration-200" />
                     </div>
                     <span className="truncate">{social.name === 'Email' ? resumeData.email : social.name}</span>
@@ -130,7 +130,7 @@ export default function Footer() {
           
           <button
             onClick={scrollToTop}
-            className="group h-10 w-10 flex items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-[#0B0E11]"
+            className="group h-10 w-10 flex items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-[#0B0B0C]"
             aria-label="Scroll to top"
             type="button"
           >

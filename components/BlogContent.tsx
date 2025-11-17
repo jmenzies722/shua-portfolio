@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { Calendar, Clock } from 'lucide-react'
-import Card from './ui/Card'
 
 const blogPosts = [
   {
@@ -31,10 +30,10 @@ const blogPosts = [
 
 export default function BlogContent() {
   return (
-    <section className="py-20 md:py-32">
-      <div className="container">
+    <section className="py-20 md:py-28 lg:py-32">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 gradient-text">
             Blog
           </h1>
           <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
@@ -43,29 +42,31 @@ export default function BlogContent() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((post, index) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`}>
-              <Card hover>
-                <div className="h-full flex flex-col">
-                  <div className="mb-4">
-                    <span className="px-3 py-1 text-xs glass-card rounded-full text-white/70">
-                      {post.category}
-                    </span>
+          {blogPosts.map((post) => (
+            <Link
+              key={post.slug}
+              href={`/blog/${post.slug}`}
+              className="glass-card p-6 block hover:bg-white/[0.06] transition-all duration-200"
+            >
+              <div className="h-full flex flex-col">
+                <div className="mb-4">
+                  <span className="px-3 py-1 text-xs glass-card rounded-full text-white/70">
+                    {post.category}
+                  </span>
+                </div>
+                <h2 className="text-xl font-semibold mb-3 gradient-text">{post.title}</h2>
+                <p className="text-white/70 mb-4 flex-grow text-sm leading-relaxed">{post.excerpt}</p>
+                <div className="flex items-center gap-4 text-white/60 text-xs pt-4 border-t border-white/[0.08]">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-3 h-3" />
+                    <span>{new Date(post.date).toLocaleDateString()}</span>
                   </div>
-                  <h2 className="text-xl font-bold mb-3 gradient-text">{post.title}</h2>
-                  <p className="text-white/70 mb-4 flex-grow">{post.excerpt}</p>
-                  <div className="flex items-center gap-4 text-white/60 text-sm pt-4 border-t border-white/10">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{new Date(post.date).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      <span>{post.readTime}</span>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-3 h-3" />
+                    <span>{post.readTime}</span>
                   </div>
                 </div>
-              </Card>
+              </div>
             </Link>
           ))}
         </div>

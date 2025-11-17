@@ -3,8 +3,7 @@
 import { useState } from 'react'
 import { Send, Github, Linkedin, Mail } from 'lucide-react'
 import { resumeData } from '@/content/resume'
-import Card from './ui/Card'
-import Button from './ui/Button'
+import Image from 'next/image'
 
 export default function ContactContent() {
   const [formData, setFormData] = useState({
@@ -26,29 +25,44 @@ export default function ContactContent() {
   }
 
   return (
-    <section className="py-20 md:py-32">
-      <div className="container max-w-4xl">
+    <section className="py-20 md:py-28 lg:py-32">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
+          <div className="flex justify-center mb-8">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-blue-300/5 to-transparent rounded-full blur-xl opacity-30" />
+              <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04] glass-profile">
+                <Image
+                  src="/IMG_2897.jpg"
+                  alt="Josh Menzies"
+                  width={128}
+                  height={128}
+                  className="w-full h-full object-cover rounded-full"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 gradient-text">
             Get in Touch
           </h1>
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-8">
             Interested in discussing infrastructure challenges, opportunities, or just want to connect? Let's talk.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <Card>
-            <h2 className="text-2xl font-bold mb-6 gradient-text">Contact Information</h2>
+        <div className="max-w-2xl mx-auto">
+          <div className="glass-card p-8 mb-8">
+            <h2 className="text-2xl font-semibold mb-6 gradient-text">Contact Information</h2>
             <div className="space-y-4">
               <a
                 href={`mailto:${resumeData.email}`}
                 className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group"
               >
-                <div className="p-3 glass-card rounded-xl group-hover:ring-2 group-hover:ring-[#007AFF]/30 transition-all flex-shrink-0">
+                <div className="p-3 glass-card rounded-xl group-hover:bg-white/[0.08] transition-all flex-shrink-0">
                   <Mail className="w-5 h-5 text-[#007AFF]" />
                 </div>
-                <span className="text-lg">{resumeData.email}</span>
+                <span className="text-base md:text-lg">{resumeData.email}</span>
               </a>
               <a
                 href={resumeData.linkedin}
@@ -56,27 +70,27 @@ export default function ContactContent() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group"
               >
-                <div className="p-3 glass-card rounded-xl group-hover:ring-2 group-hover:ring-[#007AFF]/30 transition-all flex-shrink-0">
+                <div className="p-3 glass-card rounded-xl group-hover:bg-white/[0.08] transition-all flex-shrink-0">
                   <Linkedin className="w-5 h-5 text-[#007AFF]" />
                 </div>
-                <span className="text-lg">LinkedIn</span>
+                <span className="text-base md:text-lg">LinkedIn</span>
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/joshmenzies"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group"
               >
-                <div className="p-3 glass-card rounded-xl group-hover:ring-2 group-hover:ring-[#007AFF]/30 transition-all flex-shrink-0">
+                <div className="p-3 glass-card rounded-xl group-hover:bg-white/[0.08] transition-all flex-shrink-0">
                   <Github className="w-5 h-5 text-[#007AFF]" />
                 </div>
-                <span className="text-lg">GitHub</span>
+                <span className="text-base md:text-lg">GitHub</span>
               </a>
             </div>
-          </Card>
+          </div>
 
-          <Card>
-            <h2 className="text-2xl font-bold mb-6 gradient-text">Send a Message</h2>
+          <div className="glass-card p-8">
+            <h2 className="text-2xl font-semibold mb-6 gradient-text">Send a Message</h2>
             {isSubmitted ? (
               <div className="text-center py-8">
                 <div className="text-green-400 mb-4">✓ Message sent successfully!</div>
@@ -126,18 +140,17 @@ export default function ContactContent() {
                     placeholder="Your message..."
                   />
                 </div>
-                <Button
+                <button
                   type="submit"
-                  variant="primary"
-                  icon={<Send size={18} />}
-                  className="w-full"
                   disabled={isSubmitting}
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded-xl font-medium transition-all duration-200 hover:bg-white/90 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
+                  <Send className="w-4 h-4" />
                   {isSubmitting ? 'Sending...' : 'Send Message'}
-                </Button>
+                </button>
               </form>
             )}
-          </Card>
+          </div>
         </div>
       </div>
     </section>

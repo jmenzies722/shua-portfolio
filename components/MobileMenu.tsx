@@ -1,7 +1,6 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { X, ChevronRight } from 'lucide-react'
 
@@ -59,7 +58,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
               {/* Profile Header */}
               <div className="px-6 py-4 border-b border-white/[0.08]">
                 <div className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.05] flex-shrink-0">
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
                     <img
                       src="/IMG_2897.jpg"
                       alt="Josh Menzies"
@@ -115,4 +114,3 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
     </AnimatePresence>
   )
 }
-

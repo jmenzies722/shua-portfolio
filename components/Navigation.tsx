@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { Menu } from 'lucide-react'
 import MobileMenu from './MobileMenu'
 
@@ -21,6 +21,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +31,6 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (isMobileOpen) {
       document.body.style.overflow = 'hidden'
@@ -47,7 +47,7 @@ export default function Navigation() {
       <nav
         className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-200 ${
           isScrolled
-            ? 'bg-[#0B0E11]/95 backdrop-blur-sm border-b border-white/[0.06]'
+            ? 'bg-[#0B0B0C]/95 backdrop-blur-md border-b border-white/[0.06]'
             : 'bg-transparent'
         }`}
         style={{
@@ -64,7 +64,7 @@ export default function Navigation() {
               className="flex items-center gap-2 sm:gap-3 group flex-shrink-0"
               style={{ pointerEvents: 'auto' }}
             >
-              <div className="relative w-8 h-8 sm:w-9 md:w-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.05] flex-shrink-0">
+              <div className="relative w-8 h-8 sm:w-9 md:w-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
                 <img
                   src="/IMG_2897.jpg"
                   alt="Josh Menzies"
@@ -85,10 +85,6 @@ export default function Navigation() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    onClick={(e) => {
-                      // Ensure navigation works
-                      e.stopPropagation()
-                    }}
                     className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
                       isActive
                         ? 'text-white bg-white/[0.12]'

@@ -3,16 +3,15 @@
 import { useState } from 'react'
 import { ChevronDown, MapPin, Calendar } from 'lucide-react'
 import { resumeData } from '@/content/resume'
-import Card from './ui/Card'
 
 export default function ExperienceContent() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
 
   return (
-    <section className="py-20 md:py-32">
-      <div className="container">
+    <section className="py-20 md:py-28 lg:py-32">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 gradient-text">
             Experience
           </h1>
           <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
@@ -20,46 +19,49 @@ export default function ExperienceContent() {
           </p>
         </div>
 
-        <div className="space-y-6 max-w-4xl mx-auto">
+        <div className="space-y-6">
           {resumeData.experience.map((exp, index) => (
-            <Card key={index}>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-3 gradient-text">{exp.role}</h2>
-                  <div className="flex flex-wrap items-center gap-4 text-white/70 mb-4">
+            <div key={index} className="glass-card p-8">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-2xl md:text-3xl font-semibold mb-4 gradient-text">{exp.role}</h2>
+                  <div className="flex flex-wrap items-center gap-4 text-white/70 mb-6">
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-[#007AFF]" />
-                      <span>{exp.company}</span>
+                      <MapPin className="w-4 h-4 text-[#007AFF] flex-shrink-0" />
+                      <span className="text-sm md:text-base">{exp.company}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-[#007AFF]" />
-                      <span>{exp.period}</span>
+                      <Calendar className="w-4 h-4 text-[#007AFF] flex-shrink-0" />
+                      <span className="text-sm md:text-base">{exp.period}</span>
                     </div>
                   </div>
                   
                   {expandedIndex === index && (
-                    <ul className="mt-6 space-y-3 pt-6 border-t border-white/10">
-                      {exp.highlights.map((highlight, i) => (
-                        <li key={i} className="text-white/70 leading-relaxed flex items-start gap-3">
-                          <span className="text-[#007AFF] mt-1.5">•</span>
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="mt-6 pt-6 border-t border-white/[0.08]">
+                      <ul className="space-y-3">
+                        {exp.highlights.map((highlight, i) => (
+                          <li key={i} className="text-white/70 leading-relaxed flex items-start gap-3 text-sm md:text-base">
+                            <span className="text-[#007AFF] mt-1.5 flex-shrink-0">•</span>
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
                 </div>
                 
                 <button
                   onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
-                  className="ml-4 p-2 glass-card rounded-lg hover:bg-white/[0.05] transition-colors flex-shrink-0"
+                  className="p-2 glass-card rounded-lg hover:bg-white/[0.08] transition-colors flex-shrink-0"
                   aria-label={expandedIndex === index ? 'Collapse' : 'Expand'}
+                  type="button"
                 >
                   <ChevronDown
-                    className={`w-5 h-5 transition-transform ${expandedIndex === index ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 transition-transform duration-200 ${expandedIndex === index ? 'rotate-180' : ''}`}
                   />
                 </button>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       </div>
