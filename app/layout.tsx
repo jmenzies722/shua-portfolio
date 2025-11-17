@@ -3,8 +3,6 @@ import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import ShuaChat from '@/components/ShuaChat'
-import SmoothScroll from '@/components/SmoothScroll'
-import SideNav from '@/components/SideNav'
 
 export const metadata: Metadata = {
   title: 'Josh Menzies | Platform Engineer',
@@ -19,10 +17,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="antialiased bg-[#0a0a0a]">
-        <SmoothScroll />
+      <body className="antialiased bg-[#0B0E11] text-white">
         <Navigation />
-        <SideNav />
         <main className="min-h-screen relative z-10">
           {children}
         </main>
@@ -32,4 +28,3 @@ export default function RootLayout({
     </html>
   )
 }
-

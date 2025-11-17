@@ -1,215 +1,176 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { Download, Mail, Phone, MapPin, Linkedin } from 'lucide-react'
 import { resumeData } from '@/content/resume'
-import GlassCard from './GlassCard'
-import GlowHeader from './GlowHeader'
-import HaloAvatar from './HaloAvatar'
-import PillTag from './PillTag'
-import SectionContainer from './SectionContainer'
-import MotionFadeIn from './MotionFadeIn'
+import Card from './ui/Card'
+import Button from './ui/Button'
 
 export default function ResumeContent() {
   return (
-    <SectionContainer maxWidth="xl">
-      {/* Header with Avatar */}
-      <MotionFadeIn delay={0.1} className="text-center mb-16">
-        <div className="flex flex-col items-center mb-8">
-          <HaloAvatar size="md" className="mb-6">
-            <div className="relative w-full h-full rounded-full overflow-hidden glass-profile p-1">
-              <img
-                src="/IMG_2897.jpg"
-                alt="Josh Menzies"
-                className="w-full h-full object-cover rounded-full"
-                loading="lazy"
-                decoding="async"
-                style={{
-                  objectPosition: 'center center',
-                  transform: 'translateZ(0)',
-                }}
-              />
+    <section className="py-20 md:py-32">
+      <div className="container max-w-4xl">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="flex justify-center mb-8">
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#007AFF]/20 blur-2xl rounded-full" />
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden glass-profile p-1">
+                <img
+                  src="/IMG_2897.jpg"
+                  alt="Josh Menzies"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
             </div>
-          </HaloAvatar>
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-4 gradient-text">
+          </div>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-4 gradient-text">
             {resumeData.name}
           </h1>
-          <p className="text-2xl text-white/70 mb-8">{resumeData.title}</p>
-        </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-6 text-white/70 mb-8">
-          <a href={`mailto:${resumeData.email}`} className="flex items-center gap-2 hover:text-white transition-colors">
-            <Mail className="w-4 h-4" />
-            <span>{resumeData.email}</span>
-          </a>
-          <a href={`tel:${resumeData.phone}`} className="flex items-center gap-2 hover:text-white transition-colors">
-            <Phone className="w-4 h-4" />
-            <span>{resumeData.phone}</span>
-          </a>
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4" />
-            <span>{resumeData.location}</span>
+          <p className="text-xl md:text-2xl text-white/70 mb-8">{resumeData.title}</p>
+          
+          <div className="flex flex-wrap items-center justify-center gap-6 text-white/70 mb-8">
+            <a href={`mailto:${resumeData.email}`} className="flex items-center gap-2 hover:text-white transition-colors">
+              <Mail className="w-4 h-4" />
+              <span className="text-sm">{resumeData.email}</span>
+            </a>
+            <a href={`tel:${resumeData.phone}`} className="flex items-center gap-2 hover:text-white transition-colors">
+              <Phone className="w-4 h-4" />
+              <span className="text-sm">{resumeData.phone}</span>
+            </a>
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4" />
+              <span className="text-sm">{resumeData.location}</span>
+            </div>
+            <a
+              href={resumeData.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-white transition-colors"
+            >
+              <Linkedin className="w-4 h-4" />
+              <span className="text-sm">LinkedIn</span>
+            </a>
           </div>
-          <a
-            href={resumeData.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-white transition-colors"
-          >
-            <Linkedin className="w-4 h-4" />
-            <span>LinkedIn</span>
-          </a>
-        </div>
-        <motion.a
-          href="/resume.pdf"
-          download
-          className="inline-flex items-center gap-3 glass-card px-8 py-4 text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] relative overflow-hidden group"
-          whileHover={{ scale: 1.02, y: -2 }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
-        >
-          <span className="relative z-10 flex items-center gap-2">
-            <Download className="w-5 h-5" />
+          
+          <Button variant="primary" icon={<Download size={18} />}>
             Download PDF
-          </span>
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-[#007AFF]/20 via-[#5AC8FA]/20 to-[#007AFF]/20"
-            initial={{ x: '-100%' }}
-            whileHover={{ x: '100%' }}
-            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          />
-        </motion.a>
-      </MotionFadeIn>
+          </Button>
+        </div>
 
-      {/* Summary */}
-      <MotionFadeIn delay={0.15}>
-        <GlassCard delay={0.1} className="mb-8">
-          <div className="p-10">
-            <h2 className="text-3xl font-bold mb-6 gradient-text">Summary</h2>
-            <p className="text-white/80 leading-relaxed text-lg">{resumeData.summary}</p>
-          </div>
-        </GlassCard>
-      </MotionFadeIn>
+        {/* Summary */}
+        <Card className="mb-8">
+          <h2 className="text-2xl font-bold mb-4 gradient-text">Summary</h2>
+          <p className="text-white/80 leading-relaxed">{resumeData.summary}</p>
+        </Card>
 
-      {/* Experience */}
-      <MotionFadeIn delay={0.2}>
-        <div className="mb-12">
-          <h2 className="text-4xl font-display font-bold mb-8 gradient-text">Experience</h2>
-          <div className="space-y-6">
+        {/* Experience */}
+        <Card className="mb-8">
+          <h2 className="text-2xl font-bold mb-6 gradient-text">Experience</h2>
+          <div className="space-y-8">
             {resumeData.experience.map((exp, index) => (
-              <GlassCard key={index} delay={0.1 + index * 0.1}>
-                <div className="p-10">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
-                    <div>
-                      <h3 className="text-2xl font-bold mb-2 gradient-text">{exp.role}</h3>
-                      <p className="text-xl text-white/70 mb-1">{exp.company}</p>
-                      <p className="text-white/50">{exp.location}</p>
-                    </div>
-                    <span className="text-white/60 text-sm mt-2 md:mt-0">{exp.period}</span>
-                  </div>
-                  <ul className="space-y-3.5">
-                    {exp.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-white/80">
-                        <span className="text-[#007AFF] mt-1.5 text-xl flex-shrink-0">•</span>
-                        <span className="flex-1 leading-relaxed text-lg" style={{ lineHeight: '1.75' }}>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </GlassCard>
+              <div key={index} className={index > 0 ? 'pt-8 border-t border-white/10' : ''}>
+                <h3 className="text-xl font-semibold mb-2">{exp.role}</h3>
+                <p className="text-white/70 mb-2">{exp.company} • {exp.location}</p>
+                <p className="text-white/60 text-sm mb-4">{exp.period}</p>
+                <ul className="space-y-2">
+                  {exp.highlights.map((highlight, i) => (
+                    <li key={i} className="text-white/70 leading-relaxed flex items-start gap-3">
+                      <span className="text-[#007AFF] mt-1.5">•</span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
-        </div>
-      </MotionFadeIn>
+        </Card>
 
-      {/* Projects */}
-      <MotionFadeIn delay={0.25}>
-        <div className="mb-12">
-          <h2 className="text-4xl font-display font-bold mb-8 gradient-text">Projects</h2>
+        {/* Projects */}
+        <Card className="mb-8">
+          <h2 className="text-2xl font-bold mb-6 gradient-text">Projects</h2>
           <div className="space-y-6">
             {resumeData.projects.map((project, index) => (
-              <GlassCard key={index} delay={0.1 + index * 0.1}>
-                <div className="p-10">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                    <div>
-                      <h3 className="text-2xl font-bold mb-2 gradient-text">{project.name}</h3>
-                      <p className="text-white/70 mb-1">{project.company}</p>
-                    </div>
-                    <span className="text-white/60 text-sm mt-2 md:mt-0">{project.period}</span>
-                  </div>
-                  <p className="text-white/80 mb-6 leading-relaxed">{project.description}</p>
-                  <div className="mb-6">
-                    <h4 className="text-lg font-semibold mb-3 text-white/90">Key Highlights</h4>
-                    <ul className="space-y-2">
-                      {project.highlights.map((highlight, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-white/70">
-                          <span className="text-[#007AFF] mt-1.5">✓</span>
-                          <span className="flex-1 text-sm">{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold mb-3 text-white/90">Technologies</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
-                        <PillTag key={tech}>
-                          {tech}
-                        </PillTag>
-                      ))}
-                    </div>
-                  </div>
+              <div key={index} className={index > 0 ? 'pt-6 border-t border-white/10' : ''}>
+                <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
+                <p className="text-white/70 mb-3">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {project.tech.map((tech, i) => (
+                    <span key={i} className="px-3 py-1 text-xs glass-card rounded-full text-white/70">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
-              </GlassCard>
+                <ul className="space-y-2">
+                  {project.highlights.map((highlight, i) => (
+                    <li key={i} className="text-white/70 leading-relaxed flex items-start gap-3">
+                      <span className="text-[#007AFF] mt-1.5">•</span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
-        </div>
-      </MotionFadeIn>
+        </Card>
 
-      {/* Skills */}
-      <MotionFadeIn delay={0.3}>
-        <div className="mb-20">
-          <h2 className="text-4xl font-display font-bold mb-8 gradient-text">Skills</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {Object.entries(resumeData.skills).map(([category, skills], index) => (
-              <GlassCard key={category} delay={0.1 + index * 0.1}>
-                <div className="p-8">
-                  <h3 className="text-xl font-bold mb-4 gradient-text capitalize">
-                    {category.replace('_', ' ')}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((skill) => (
-                      <PillTag key={skill}>
-                        {skill}
-                      </PillTag>
-                    ))}
-                  </div>
-                </div>
-              </GlassCard>
-            ))}
-          </div>
-        </div>
-      </MotionFadeIn>
-
-      {/* Education */}
-      {resumeData.education && resumeData.education.length > 0 && (
-        <MotionFadeIn delay={0.35}>
-          <div>
-            <h2 className="text-4xl font-display font-bold mb-8 gradient-text">Education</h2>
-            <div className="space-y-6">
-              {resumeData.education.map((edu, index) => (
-                <GlassCard key={index} delay={0.1 + index * 0.1}>
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold mb-2 gradient-text">{edu.degree}</h3>
-                    <p className="text-white/70 text-lg mb-1">{edu.school}</p>
-                    <p className="text-white/50 text-sm">{edu.year}</p>
-                  </div>
-                </GlassCard>
-              ))}
+        {/* Skills */}
+        <Card className="mb-8">
+          <h2 className="text-2xl font-bold mb-6 gradient-text">Skills</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Languages</h3>
+              <div className="flex flex-wrap gap-2">
+                {resumeData.skills.languages.map((skill, i) => (
+                  <span key={i} className="px-3 py-1.5 text-sm glass-card rounded-lg text-white/80">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Cloud & DevOps</h3>
+              <div className="flex flex-wrap gap-2">
+                {resumeData.skills.cloud_devops.map((skill, i) => (
+                  <span key={i} className="px-3 py-1.5 text-sm glass-card rounded-lg text-white/80">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Monitoring & Security</h3>
+              <div className="flex flex-wrap gap-2">
+                {resumeData.skills.monitoring_security.map((skill, i) => (
+                  <span key={i} className="px-3 py-1.5 text-sm glass-card rounded-lg text-white/80">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Collaboration</h3>
+              <div className="flex flex-wrap gap-2">
+                {resumeData.skills.collaboration.map((skill, i) => (
+                  <span key={i} className="px-3 py-1.5 text-sm glass-card rounded-lg text-white/80">
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-        </MotionFadeIn>
-      )}
-    </SectionContainer>
+        </Card>
+
+        {/* Education */}
+        <Card>
+          <h2 className="text-2xl font-bold mb-6 gradient-text">Education</h2>
+          {resumeData.education.map((edu, index) => (
+            <div key={index}>
+              <h3 className="text-lg font-semibold mb-1">{edu.degree}</h3>
+              <p className="text-white/70">{edu.school} • {edu.year}</p>
+            </div>
+          ))}
+        </Card>
+      </div>
+    </section>
   )
 }

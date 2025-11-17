@@ -1,74 +1,52 @@
 'use client'
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { projects } from '@/content/projects'
-import GlassCard from './GlassCard'
-import GlowHeader from './GlowHeader'
-import PillTag from './PillTag'
-import AnimatedNumber from './AnimatedNumber'
-import SectionContainer from './SectionContainer'
-import MotionFadeIn from './MotionFadeIn'
+import { resumeData } from '@/content/resume'
+import Card from './ui/Card'
 
 export default function ProjectsContent() {
-
   return (
-    <SectionContainer>
-      <GlowHeader 
-        title="Projects" 
-        subtitle="Real-world infrastructure solutions with measurable impact on cost, reliability, and performance."
-      />
+    <section className="py-20 md:py-32">
+      <div className="container">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
+            Projects
+          </h1>
+          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
+            Infrastructure solutions with measurable impact
+          </p>
+        </div>
 
-      <div 
-        className="grid md:grid-cols-2 gap-8 lg:gap-10"
-      >
-        {projects.map((project, index) => (
-          <div
-            key={project.id}
-            className="h-full"
-          >
-            <Link 
-              href={`/projects/${project.slug}`} 
-              className="group block h-full focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] rounded-2xl"
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {resumeData.projects.map((project, index) => (
+            <Link
+              key={index}
+              href={`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
-              <GlassCard delay={index * 0.1} className="h-full">
-                <div className="p-8 lg:p-10 h-full flex flex-col">
-                  <div className="mb-8 flex-grow">
-                    <h3 className="text-2xl lg:text-3xl font-bold mb-4 gradient-text">{project.title}</h3>
-                    <p className="text-white/80 mb-6 leading-relaxed text-lg" style={{ lineHeight: '1.75' }}>{project.shortDescription}</p>
-                    <div className="flex flex-wrap gap-2.5 mb-6">
-                      {project.technologies.slice(0, 6).map((tech) => (
-                        <PillTag key={tech} variant="glow">
+              <Card delay={index * 0.1} hover>
+                <div className="h-full flex flex-col">
+                  <div className="mb-6 flex-grow">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4 gradient-text">{project.name}</h2>
+                    <p className="text-white/70 leading-relaxed mb-4">{project.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tech.map((tech, i) => (
+                        <span key={i} className="px-3 py-1 text-xs glass-card rounded-full text-white/70">
                           {tech}
-                        </PillTag>
+                        </span>
                       ))}
                     </div>
                   </div>
-                  {project.metrics && (
-                    <div className="pt-8 border-t border-white/10 mt-auto mb-6">
-                      <div className="flex gap-8">
-                        {project.metrics.slice(0, 2).map((metric) => (
-                          <div key={metric.label}>
-                            <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">
-                              <AnimatedNumber value={metric.value} />
-                            </div>
-                            <div className="text-sm md:text-base text-white/60">{metric.label}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-2 text-white/70 text-sm group-hover:text-[#007AFF] transition-colors duration-100">
+                  <div className="pt-6 border-t border-white/10 flex items-center gap-2 text-white/60 text-sm group-hover:text-white transition-colors">
                     View case study
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-100" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </GlassCard>
+              </Card>
             </Link>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </SectionContainer>
+    </section>
   )
 }

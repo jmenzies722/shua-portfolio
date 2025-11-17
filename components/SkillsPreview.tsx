@@ -1,82 +1,59 @@
 'use client'
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
-import { skills } from '@/content/skills'
-import GlassCard from './GlassCard'
-import * as LucideIcons from 'lucide-react'
+import { ArrowRight, Code, Cloud, Shield, Users } from 'lucide-react'
+import { resumeData } from '@/content/resume'
+import Card from './ui/Card'
+import Button from './ui/Button'
+
+const skillCategories = [
+  { name: 'Languages', icon: Code, skills: resumeData.skills.languages },
+  { name: 'Cloud & DevOps', icon: Cloud, skills: resumeData.skills.cloud_devops },
+  { name: 'Monitoring & Security', icon: Shield, skills: resumeData.skills.monitoring_security },
+  { name: 'Collaboration', icon: Users, skills: resumeData.skills.collaboration },
+]
 
 export default function SkillsPreview() {
-  const featuredSkills = skills.slice(0, 4)
+  const featured = skillCategories.slice(0, 4)
 
   return (
-    <section id="skills" className="py-32 md:py-48 px-6 lg:px-8 relative glass-section">
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 1, y: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-200px' }}
-          transition={{ duration: 0.1, ease: [0.4, 0, 0.2, 1] }}
-          className="text-center mb-20"
-          style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }}
-        >
-          <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-bold mb-6 gradient-text tracking-tight">
+    <section id="skills" className="py-20 md:py-32">
+      <div className="container">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
             Skills
           </h2>
-          <p className="text-xl md:text-2xl text-secondary max-w-3xl mx-auto font-light">
+          <p className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto">
             Cloud infrastructure, automation, and DevOps
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {featuredSkills.map((skill, index) => {
-            const IconComponent =
-              (LucideIcons as any)[skill.icon] || LucideIcons.Code
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {featured.map((category, index) => {
+            const Icon = category.icon
             return (
-              <motion.div
-                key={skill.category}
-                initial={{ opacity: 1, y: 0 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-200px' }}
-                transition={{ duration: 0.1, delay: 0, ease: [0.4, 0, 0.2, 1] }}
-                className="h-full"
-                style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }}
-              >
-                <GlassCard delay={index * 0.1} className="h-full">
-                  <div className="p-8 text-center h-full flex flex-col justify-center">
-                    <div className="flex justify-center mb-4">
-                      <div className="p-4 glass-badge rounded-2xl">
-                        <IconComponent className="w-8 h-8 text-primary-80" />
-                      </div>
+              <Card key={category.name} delay={index * 0.1}>
+                <div className="text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="p-4 glass-card rounded-2xl">
+                      <Icon className="w-8 h-8 text-[#007AFF]" />
                     </div>
-                    <h3 className="text-xl font-bold mb-2 text-primary">{skill.category}</h3>
-                    <p className="text-tertiary text-sm">
-                      {skill.skills.length} skills
-                    </p>
                   </div>
-                </GlassCard>
-              </motion.div>
+                  <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
+                  <p className="text-white/60 text-sm">
+                    {category.skills.length} skills
+                  </p>
+                </div>
+              </Card>
             )
           })}
         </div>
 
-        <motion.div
-          initial={{ opacity: 1 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-200px' }}
-          transition={{ duration: 0.1, delay: 0 }}
-          className="text-center"
-          style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }}
-        >
-          <Link
-            href="/skills"
-            className="inline-flex items-center gap-2 text-lg text-primary-60 hover:text-primary transition-colors duration-200 group glass-card px-6 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
-          >
+        <div className="text-center">
+          <Button href="/skills" variant="secondary" icon={<ArrowRight size={18} />}>
             View all skills
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-          </Link>
-        </motion.div>
+          </Button>
+        </div>
       </div>
     </section>
   )

@@ -1,82 +1,78 @@
 'use client'
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { Calendar, Clock } from 'lucide-react'
-import { blogPosts } from '@/content/blog'
-import GlassCard from './GlassCard'
-import GlowHeader from './GlowHeader'
-import PillTag from './PillTag'
-import SectionContainer from './SectionContainer'
-import MotionFadeIn from './MotionFadeIn'
-import { format } from 'date-fns'
+import Card from './ui/Card'
+
+// Mock blog posts - replace with actual data source
+const blogPosts = [
+  {
+    slug: 'devops-philosophy',
+    title: 'The DevOps Philosophy',
+    excerpt: 'Building reliable systems through automation and observability.',
+    date: '2024-01-15',
+    readTime: '5 min',
+    category: 'DevOps',
+  },
+  {
+    slug: 'aws-cost-optimization',
+    title: 'AWS Cost Optimization Strategies',
+    excerpt: 'Practical approaches to reducing cloud infrastructure costs.',
+    date: '2024-02-20',
+    readTime: '8 min',
+    category: 'AWS',
+  },
+  {
+    slug: 'kubernetes-best-practices',
+    title: 'Kubernetes Best Practices',
+    excerpt: 'Lessons learned from running production workloads on K8s.',
+    date: '2024-03-10',
+    readTime: '6 min',
+    category: 'Kubernetes',
+  },
+]
 
 export default function BlogContent() {
-
   return (
-    <SectionContainer>
-      <GlowHeader 
-        title="Blog" 
-        subtitle="Thoughts on DevOps, infrastructure, cloud engineering, and building reliable systems."
-      />
+    <section className="py-20 md:py-32">
+      <div className="container">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 gradient-text">
+            Blog
+          </h1>
+          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
+            Thoughts on DevOps, infrastructure, cloud engineering, and building reliable systems.
+          </p>
+        </div>
 
-      <motion.div 
-        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          visible: {
-            transition: {
-              staggerChildren: 0.08,
-            },
-          },
-        }}
-      >
-        {blogPosts.map((post, index) => (
-          <motion.div
-            key={post.slug}
-            className="h-full"
-            variants={{
-              hidden: { opacity: 0, y: 30 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.5,
-                  ease: [0.4, 0, 0.2, 1],
-                }
-              },
-            }}
-          >
-            <Link 
-              href={`/blog/${post.slug}`} 
-              className="group block h-full focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] rounded-2xl"
-            >
-              <GlassCard delay={index * 0.08} className="h-full">
-                <div className="p-8 h-full flex flex-col">
-                  <div className="flex items-center gap-4 mb-5 text-sm text-white/50">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {blogPosts.map((post, index) => (
+            <Link key={post.slug} href={`/blog/${post.slug}`}>
+              <Card delay={index * 0.1} hover>
+                <div className="h-full flex flex-col">
+                  <div className="mb-4">
+                    <span className="px-3 py-1 text-xs glass-card rounded-full text-white/70">
+                      {post.category}
+                    </span>
+                  </div>
+                  <h2 className="text-xl font-bold mb-3 gradient-text">{post.title}</h2>
+                  <p className="text-white/70 mb-4 flex-grow">{post.excerpt}</p>
+                  <div className="flex items-center gap-4 text-white/60 text-sm pt-4 border-t border-white/10">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
-                      <span>{format(new Date(post.date), 'MMM d, yyyy')}</span>
+                      <span>{new Date(post.date).toLocaleDateString()}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="w-4 h-4" />
                       <span>{post.readTime}</span>
                     </div>
                   </div>
-                  <PillTag variant="glow" className="mb-5 w-fit">
-                    {post.category}
-                  </PillTag>
-                  <h3 className="text-2xl font-bold mb-4 gradient-text group-hover:text-[#007AFF] transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-white/70 leading-relaxed flex-grow" style={{ lineHeight: '1.7' }}>{post.description}</p>
                 </div>
-              </GlassCard>
+              </Card>
             </Link>
-          </motion.div>
-        ))}
-      </motion.div>
-    </SectionContainer>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
