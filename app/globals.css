@@ -226,6 +226,15 @@ body:hover::before {
   opacity: 1;
 }
 
+/* Ensure navigation links are always clickable */
+nav a,
+nav Link {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 100 !important;
+  position: relative !important;
+}
+
 /* Enhanced smooth scrolling */
 @media (prefers-reduced-motion: no-preference) {
   html {

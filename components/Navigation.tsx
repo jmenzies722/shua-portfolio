@@ -65,13 +65,13 @@ export default function Navigation() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-150 ${
-        isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
       } ${
         isScrolled
           ? 'bg-[#0a0a0a]/95 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/20'
           : 'bg-transparent'
       }`}
-      style={{ willChange: 'auto', pointerEvents: 'auto' }}
+      style={{ willChange: 'auto', pointerEvents: isVisible ? 'auto' : 'none' }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -93,20 +93,20 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8" style={{ pointerEvents: 'auto', zIndex: 100 }}>
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={handleNavClick}
-                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group"
-                style={{ pointerEvents: 'auto', position: 'relative', zIndex: 10 }}
+                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group cursor-pointer"
+                style={{ pointerEvents: 'auto', position: 'relative', zIndex: 100 }}
               >
                 {item.name}
                 <span className="absolute bottom-0 left-0 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
               </Link>
             ))}
-          </div>
+          </nav>
 
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center gap-4">
@@ -153,8 +153,8 @@ export default function Navigation() {
                   key={item.name}
                   href={item.href}
                   onClick={handleNavClick}
-                  className="block text-primary-80 hover:text-primary transition-colors"
-                  style={{ pointerEvents: 'auto', position: 'relative', zIndex: 10 }}
+                  className="block text-primary-80 hover:text-primary transition-colors cursor-pointer"
+                  style={{ pointerEvents: 'auto', position: 'relative', zIndex: 100 }}
                 >
                   {item.name}
                 </Link>
