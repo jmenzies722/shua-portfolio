@@ -13,37 +13,9 @@ export default function Hero() {
       id="hero"
       className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-12 md:pb-20"
     >
-      {/* Static gradient fog background - no opacity animation */}
+      {/* Simple dark background - no blue gradients */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1c] to-[#0a0a0a]" />
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-gradient-to-br from-[#007AFF]/20 via-[#5AC8FA]/10 to-[#8A2BE2]/15 rounded-full blur-3xl"
-          animate={{
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ opacity: 1 }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-[#5AC8FA]/15 via-[#8A2BE2]/10 to-[#007AFF]/15 rounded-full blur-3xl"
-          animate={{
-            x: [0, -80, 0],
-            y: [0, -40, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ opacity: 1 }}
-        />
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
