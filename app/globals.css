@@ -216,13 +216,15 @@ nav {
 
 nav a,
 nav a[href],
-nav Link {
+nav Link,
+nav a[href^="/"] {
   pointer-events: auto !important;
   cursor: pointer !important;
   z-index: 10000 !important;
   position: relative !important;
   display: inline-block !important;
   -webkit-tap-highlight-color: transparent !important;
+  text-decoration: none !important;
 }
 
 /* Ensure desktop nav container is clickable */

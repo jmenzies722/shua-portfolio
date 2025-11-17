@@ -109,7 +109,6 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
                 className="text-sm font-medium text-primary-80 hover:text-primary transition-colors duration-100 relative group cursor-pointer px-2 py-1"
                 style={{ 
                   pointerEvents: 'auto', 
