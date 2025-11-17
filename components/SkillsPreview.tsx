@@ -16,7 +16,7 @@ export default function SkillsPreview() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ once: true, margin: '0px' }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           className="text-center mb-20"
         >
@@ -37,7 +37,7 @@ export default function SkillsPreview() {
                 key={skill.category}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
+                viewport={{ once: true, margin: '0px' }}
                 transition={{ duration: 0.3, delay: index * 0.03, ease: [0.4, 0, 0.2, 1] }}
                 className="h-full"
               >
@@ -62,7 +62,7 @@ export default function SkillsPreview() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ once: true, margin: '0px' }}
           transition={{ duration: 0.2, delay: 0.1 }}
           className="text-center"
         >

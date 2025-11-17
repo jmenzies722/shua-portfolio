@@ -14,7 +14,7 @@ export default function AboutPreview() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ once: true, margin: '0px' }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           className="text-center mb-20"
         >
@@ -26,7 +26,7 @@ export default function AboutPreview() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ once: true, margin: '0px' }}
           transition={{ duration: 0.3, delay: 0.05, ease: [0.4, 0, 0.2, 1] }}
           className="max-w-4xl mx-auto mb-16"
         >
@@ -42,7 +42,7 @@ export default function AboutPreview() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ once: true, margin: '0px' }}
           transition={{ duration: 0.2, delay: 0.1 }}
           className="text-center"
         >

@@ -15,8 +15,9 @@ export default function HeroHalo({ children }: HeroHaloProps) {
   const springY = useSpring(mouseY, { damping: 30, stiffness: 150 })
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
     // Disable on mobile for performance
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+    if (window.innerWidth <= 768) {
       return
     }
 

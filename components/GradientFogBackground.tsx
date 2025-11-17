@@ -9,8 +9,12 @@ interface GradientFogBackgroundProps {
 
 export default function GradientFogBackground({ fixed = false }: GradientFogBackgroundProps) {
   const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+    if (typeof window === 'undefined') return
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
@@ -27,7 +31,7 @@ export default function GradientFogBackground({ fixed = false }: GradientFogBack
       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1c] to-[#0a0a0a]" />
       
       {/* Mobile: Static gradient fog (no animation) */}
-      {isMobile ? (
+      {!mounted || isMobile ? (
         <>
           <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-[#007AFF]/15 via-[#5AC8FA]/8 to-[#8A2BE2]/10 rounded-full blur-2xl" />
           <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-br from-[#8A2BE2]/10 via-[#007AFF]/8 to-[#5AC8FA]/8 rounded-full blur-2xl" />

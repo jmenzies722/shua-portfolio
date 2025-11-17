@@ -410,6 +410,12 @@ body:hover::before {
   * {
     scroll-behavior: inherit;
   }
+  
+  /* Ensure sections are always visible when scrolling */
+  section {
+    scroll-margin-top: 80px;
+    min-height: 100vh;
+  }
 }
 
 /* Mobile scroll optimization */
@@ -422,12 +428,18 @@ body:hover::before {
   /* Reduce repaints on mobile */
   * {
     will-change: auto !important;
-    transform: none !important;
   }
   
-  /* Only essential transforms */
-  .glass-card {
-    transform: none;
+  /* Ensure sections are visible */
+  section {
+    min-height: 100vh;
+    scroll-margin-top: 80px;
+    overflow: visible;
+  }
+  
+  /* Prevent animations from blocking scroll */
+  [data-framer-component] {
+    pointer-events: auto;
   }
 }
 

@@ -31,8 +31,12 @@ export default function AboutOrbit() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+    if (typeof window === 'undefined') return
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
@@ -41,8 +45,8 @@ export default function AboutOrbit() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // On mobile, use static layout (no animation)
-  if (isMobile) {
+  // On mobile or not mounted, use static layout (no animation)
+  if (!mounted || isMobile) {
     return (
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="absolute inset-0 flex items-center justify-center">

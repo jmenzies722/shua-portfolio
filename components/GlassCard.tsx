@@ -14,8 +14,12 @@ interface GlassCardProps {
 
 const GlassCard = memo(function GlassCard({ children, className = '', delay = 0, onClick, hover = true }: GlassCardProps) {
   const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+    if (typeof window === 'undefined') return
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
@@ -28,7 +32,7 @@ const GlassCard = memo(function GlassCard({ children, className = '', delay = 0,
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.98 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: true, margin: '0px' }}
       transition={{ 
         duration: isMobile ? 0.2 : 0.35, 
         delay: delay * (isMobile ? 0.02 : 0.05), 
@@ -38,7 +42,7 @@ const GlassCard = memo(function GlassCard({ children, className = '', delay = 0,
       className={`glass-card ${className}`}
               style={{ 
                 height: className.includes('h-full') ? '100%' : undefined,
-                ...(typeof window !== 'undefined' && window.innerWidth > 768 ? {
+                ...(mounted && !isMobile ? {
                   willChange: 'transform, opacity',
                   transform: 'translateZ(0)',
                   backfaceVisibility: 'hidden',
@@ -49,7 +53,7 @@ const GlassCard = memo(function GlassCard({ children, className = '', delay = 0,
                 }),
               }}
       onClick={onClick}
-              whileHover={hover && typeof window !== 'undefined' && window.innerWidth > 768 ? { 
+              whileHover={hover && mounted && !isMobile ? { 
                 y: -4, 
                 scale: 1.02,
                 transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }

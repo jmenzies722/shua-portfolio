@@ -17,8 +17,12 @@ export default function MotionFadeIn({
   y = 20 
 }: MotionFadeInProps) {
   const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+    if (typeof window === 'undefined') return
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
@@ -33,7 +37,7 @@ export default function MotionFadeIn({
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: '-50px' }}
+        viewport={{ once: true, margin: '0px' }}
         transition={{ 
           duration: 0.15, 
           delay: delay * 0.3, // Much faster delays

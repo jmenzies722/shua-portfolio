@@ -32,8 +32,12 @@ export default function OrbitIcons() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+    if (typeof window === 'undefined') return
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
@@ -42,8 +46,8 @@ export default function OrbitIcons() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // On mobile, use simpler static layout or very fast animation
-  if (isMobile) {
+  // On mobile or not mounted, use simpler static layout
+  if (!mounted || isMobile) {
     return (
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="absolute inset-0 flex items-center justify-center">

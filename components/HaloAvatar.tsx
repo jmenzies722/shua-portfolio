@@ -27,9 +27,25 @@ export default function HaloAvatar({ children, size = 'md', className = '' }: Ha
     xl: 'w-96 h-96 md:w-[28rem] md:h-[28rem]',
   }
 
+  const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
   useEffect(() => {
+    setMounted(true)
+    if (typeof window === 'undefined') return
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
     // Only enable parallax on desktop (not mobile)
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+    if (isMobile) {
       return
     }
 
@@ -45,38 +61,27 @@ export default function HaloAvatar({ children, size = 'md', className = '' }: Ha
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [mouseX, mouseY])
-
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [mouseX, mouseY, isMobile, mounted])
 
   return (
     <motion.div 
       className={`relative inline-block ${sizeClasses[size]} ${className}`}
-      animate={isMobile ? {} : {
+      animate={!mounted || isMobile ? {} : {
         y: [0, -3, 0], // Floating effect: disabled on mobile
       }}
-      transition={isMobile ? {} : {
+      transition={!mounted || isMobile ? {} : {
         duration: 4,
         repeat: Infinity,
         ease: 'easeInOut',
       }}
-      style={isMobile ? {} : {
+      style={!mounted || isMobile ? {} : {
         rotateX,
         rotateY,
         transformStyle: 'preserve-3d',
       }}
     >
       {/* Cinematic radial glow halo - disabled on mobile for performance */}
-      {!isMobile && (
+      {mounted && !isMobile && (
         <>
           <motion.div
             className="absolute inset-0 rounded-full pointer-events-none -z-10"
@@ -108,8 +113,8 @@ export default function HaloAvatar({ children, size = 'md', className = '' }: Ha
         className="absolute -inset-4 rounded-full pointer-events-none -z-10"
         style={{
           background: 'radial-gradient(circle, rgba(0, 122, 255, 0.15) 0%, transparent 70%)',
-          filter: isMobile ? 'blur(20px)' : 'blur(40px)',
-          opacity: isMobile ? 0.4 : 0.6,
+          filter: !mounted || isMobile ? 'blur(20px)' : 'blur(40px)',
+          opacity: !mounted || isMobile ? 0.4 : 0.6,
         }}
       />
 
