@@ -31,20 +31,24 @@ const mobileOrbitDuration = 12 // Faster on mobile
 export default function OrbitIcons() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    if (typeof window === 'undefined') return
-    
+  }, [])
+
+  // Use CSS media query to detect mobile - render static on mobile
+  const [isMobile, setIsMobile] = useState(true) // Default to mobile to prevent flash
+
+  useEffect(() => {
+    if (!mounted) return
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [mounted])
 
   // On mobile or not mounted, use simpler static layout
   if (!mounted || isMobile) {

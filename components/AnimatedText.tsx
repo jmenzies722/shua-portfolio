@@ -12,19 +12,10 @@ const phrases = [
 
 export default function AnimatedText() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    if (typeof window === 'undefined') return
-    
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
   useEffect(() => {
@@ -32,10 +23,10 @@ export default function AnimatedText() {
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % phrases.length)
-    }, isMobile ? 3000 : 2500) // Faster transitions
+    }, 2500) // Consistent timing
 
     return () => clearInterval(interval)
-  }, [isMobile, mounted])
+  }, [mounted])
 
   return (
     <div className="relative min-h-[80px] md:min-h-[100px] lg:min-h-[110px] overflow-visible flex items-center">
@@ -46,7 +37,7 @@ export default function AnimatedText() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ 
-            duration: isMobile ? 0.2 : 0.4, 
+            duration: 0.3, 
             ease: [0.25, 0.1, 0.25, 1] // Smoother easing
           }}
           className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] gradient-text w-full"

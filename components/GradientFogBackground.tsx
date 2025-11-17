@@ -8,12 +8,15 @@ interface GradientFogBackgroundProps {
 }
 
 export default function GradientFogBackground({ fixed = false }: GradientFogBackgroundProps) {
-  const [isMobile, setIsMobile] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(true) // Default to mobile
 
   useEffect(() => {
     setMounted(true)
-    if (typeof window === 'undefined') return
+  }, [])
+
+  useEffect(() => {
+    if (!mounted || typeof window === 'undefined') return
     
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
@@ -21,7 +24,7 @@ export default function GradientFogBackground({ fixed = false }: GradientFogBack
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [mounted])
 
   return (
     <div 

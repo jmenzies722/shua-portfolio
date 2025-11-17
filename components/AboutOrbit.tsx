@@ -30,20 +30,22 @@ const orbitDuration = 25
 export default function AboutOrbit() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(true) // Default to mobile
 
   useEffect(() => {
     setMounted(true)
-    if (typeof window === 'undefined') return
-    
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [mounted])
 
   // On mobile or not mounted, use static layout (no animation)
   if (!mounted || isMobile) {

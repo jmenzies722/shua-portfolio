@@ -13,20 +13,14 @@ interface GlassCardProps {
 }
 
 const GlassCard = memo(function GlassCard({ children, className = '', delay = 0, onClick, hover = true }: GlassCardProps) {
-  const [isMobile, setIsMobile] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    if (typeof window === 'undefined') return
-    
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+  // Use CSS media query instead of JS for mobile detection to avoid hydration issues
+  const isMobileClass = 'max-md:opacity-100'
 
   return (
     <motion.div
@@ -34,30 +28,18 @@ const GlassCard = memo(function GlassCard({ children, className = '', delay = 0,
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '0px' }}
       transition={{ 
-        duration: isMobile ? 0.2 : 0.35, 
-        delay: delay * (isMobile ? 0.02 : 0.05), 
+        duration: 0.2, 
+        delay: delay * 0.02, 
         ease: [0.4, 0, 0.2, 1],
-        scale: { duration: isMobile ? 0.15 : 0.3 }
+        scale: { duration: 0.15 }
       }}
       className={`glass-card ${className}`}
-              style={{ 
-                height: className.includes('h-full') ? '100%' : undefined,
-                ...(mounted && !isMobile ? {
-                  willChange: 'transform, opacity',
-                  transform: 'translateZ(0)',
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  perspective: '1000px',
-                } : {
-                  willChange: 'auto',
-                }),
-              }}
+      style={{ 
+        height: className.includes('h-full') ? '100%' : undefined,
+        willChange: 'auto',
+      }}
       onClick={onClick}
-              whileHover={hover && mounted && !isMobile ? { 
-                y: -4, 
-                scale: 1.02,
-                transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
-              } : {}}
+      whileHover={hover && mounted ? {} : {}}
       whileTap={{ scale: 0.99 }}
     >
       {children}

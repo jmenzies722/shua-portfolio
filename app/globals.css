@@ -61,6 +61,11 @@
     will-change: auto !important;
   }
   
+  /* Prevent layout shifts */
+  [data-framer-component] {
+    contain: layout style paint;
+  }
+  
   /* Reduce animation complexity on mobile - super fast */
   @media (prefers-reduced-motion: no-preference) {
     * {
@@ -72,6 +77,12 @@
     [class*="animate-"] {
       animation-duration: 0.1s !important;
     }
+  }
+  
+  /* Prevent glitches from transforms */
+  body {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 }
 
@@ -140,6 +151,23 @@ h1, h2, h3, h4, h5, h6, p {
   overflow-wrap: break-word;
   word-wrap: break-word;
   hyphens: auto;
+}
+
+/* Prevent mobile glitches - stabilize layout */
+@media (max-width: 768px) {
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /* Prevent reflows */
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 }
 
 /* Remove focus outlines on body/html */

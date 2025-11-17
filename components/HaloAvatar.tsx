@@ -27,12 +27,15 @@ export default function HaloAvatar({ children, size = 'md', className = '' }: Ha
     xl: 'w-96 h-96 md:w-[28rem] md:h-[28rem]',
   }
 
-  const [isMobile, setIsMobile] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(true) // Default to mobile
 
   useEffect(() => {
     setMounted(true)
-    if (typeof window === 'undefined') return
+  }, [])
+
+  useEffect(() => {
+    if (!mounted || typeof window === 'undefined') return
     
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
@@ -40,7 +43,7 @@ export default function HaloAvatar({ children, size = 'md', className = '' }: Ha
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [mounted])
 
   useEffect(() => {
     if (!mounted) return
