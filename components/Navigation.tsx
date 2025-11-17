@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 
 const navItems = [
@@ -18,16 +19,22 @@ const navItems = [
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
-    setMounted(true)
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    setIsMobileOpen(false)
+    router.push(href)
+  }
 
   return (
     <nav
@@ -56,16 +63,24 @@ export default function Navigation() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group"
-              >
-                {item.name}
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-200 pointer-events-none" />
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className={`text-sm font-medium transition-colors relative group cursor-pointer ${
+                    isActive ? 'text-white' : 'text-white/80 hover:text-white'
+                  }`}
+                >
+                  {item.name}
+                  <span className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#007AFF] transition-all duration-200 pointer-events-none ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
+                </a>
+              )
+            })}
           </div>
 
           {/* Mobile Menu Button */}
@@ -73,6 +88,7 @@ export default function Navigation() {
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             className="md:hidden p-2 text-white/80 hover:text-white transition-colors"
             aria-label="Toggle menu"
+            type="button"
           >
             {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -83,16 +99,21 @@ export default function Navigation() {
       {isMobileOpen && (
         <div className="md:hidden bg-[#0B0E11]/98 backdrop-blur-sm border-t border-white/5">
           <div className="container py-4 space-y-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsMobileOpen(false)}
-                className="block py-2 text-base text-white/80 hover:text-white transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className={`block py-2 text-base transition-colors cursor-pointer ${
+                    isActive ? 'text-white' : 'text-white/80 hover:text-white'
+                  }`}
+                >
+                  {item.name}
+                </a>
+              )
+            })}
           </div>
         </div>
       )}
