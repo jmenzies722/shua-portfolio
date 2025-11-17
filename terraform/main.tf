@@ -100,6 +100,38 @@ resource "aws_cloudfront_origin_access_control" "portfolio" {
   signing_protocol                  = "sigv4"
 }
 
+# CloudFront Function for Next.js App Router routing
+# Rewrites /experience to experience.html, /about to about.html, etc.
+resource "aws_cloudfront_function" "nextjs_routing" {
+  name    = "${var.bucket_name}-nextjs-routing"
+  runtime = "cloudfront-js-1.0"
+  code    = <<-EOF
+function handler(event) {
+  var request = event.request;
+  var uri = request.uri;
+  
+  // If URI ends with /, serve index.html
+  if (uri.endsWith('/')) {
+    request.uri = uri + 'index.html';
+    return request;
+  }
+  
+  // If URI doesn't have an extension and is a root-level route, add .html
+  if (!uri.includes('.')) {
+    var parts = uri.split('/').filter(function(part) { return part.length > 0; });
+    // Root-level routes like /experience, /about, etc.
+    if (parts.length === 1) {
+      request.uri = uri + '.html';
+      return request;
+    }
+  }
+  
+  return request;
+}
+  EOF
+  publish = true
+}
+
 # CloudFront Distribution
 resource "aws_cloudfront_distribution" "portfolio" {
   enabled             = true
