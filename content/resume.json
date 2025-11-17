@@ -1,0 +1,117 @@
+{
+  "name": "Josh Menzies",
+  "title": "Infrastructure Software Engineer",
+  "location": "United States",
+  "email": "jmenzies722@gmail.com",
+  "phone": "(631) 332-4945",
+  "linkedin": "https://www.linkedin.com/in/josh-m123456",
+  "summary": "Infrastructure Software Engineer specializing in building automated, observable, and developer-friendly cloud platforms on AWS and Kubernetes. Skilled in Go and Python for backend services and automation tooling. Experienced in designing scalable systems, improving platform reliability, and empowering engineering teams through software-defined infrastructure.",
+  "experience": [
+    {
+      "role": "Infrastructure Software Engineer",
+      "company": "Nectar Services Corp",
+      "location": "Jericho, NY",
+      "period": "Feb 2024 – Present",
+      "highlights": [
+        "Developed serverless data-masking services using AWS Glue, Lambda, S3, Athena, and Macie, sanitizing 1 TB+ PostgreSQL data and cutting ETL time by 40%.",
+        "Architected a secure artifact-delivery platform using API Gateway, S3, CloudFront, and Cognito, serving 500+ builds per month and reducing release cycles by 35%.",
+        "Instrumented and optimized observability for EKS microservices via Datadog and OpenTelemetry, reducing detection latency by 40% and MTTR by 25%.",
+        "Implemented custom Datadog WAF using automated trace-based actions, blocking XSS/SQLi attempts and reducing vulnerabilities by 60%.",
+        "Standardized Terraform and GitLab CI/CD pipelines across 5 AWS accounts, boosting provisioning speed by 25% and eliminating configuration drift.",
+        "Integrated observability, compliance scanning, and cost metrics directly into CI/CD workflows in collaboration with data and QA teams."
+      ]
+    },
+    {
+      "role": "System Support Engineer",
+      "company": "Nectar Services Corp",
+      "location": "Jericho, NY",
+      "period": "Nov 2023 – Feb 2024",
+      "highlights": [
+        "Automated Terraform and Python workflows across CI/CD, compute, and data pipelines, accelerating deployments by 15% and reducing manual tickets by 20%.",
+        "Migrated legacy on-prem workloads to AWS, achieving 99.9% uptime and implementing automated health checks in Python.",
+        "Enhanced CI/CD reliability and standardized IaC configurations for cross-team environments."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "AI Data Pipeline Automation",
+      "company": "Nectar Services Corp",
+      "period": "Aug 2025 – Present",
+      "description": "A serverless, PII-compliant data pipeline for AI experimentation and analytics.",
+      "highlights": [
+        "Reduced ETL runtime by 40% using AWS Glue, Lambda, Athena, Macie, and SageMaker.",
+        "Automated schema discovery and query validation using Glue Crawlers and Athena.",
+        "Implemented Macie-based scans for 1 TB+ PostgreSQL exports to enhance compliance posture.",
+        "Optimized S3 storage with lifecycle policies, reducing cost by 20%."
+      ],
+      "tech": [
+        "AWS Glue",
+        "AWS Lambda",
+        "Amazon Athena",
+        "Amazon Macie",
+        "Amazon SageMaker",
+        "S3 Lifecycle Policies",
+        "Python"
+      ]
+    },
+    {
+      "name": "Serverless Distribution Platform",
+      "company": "Nectar Services Corp",
+      "period": "Mar 2025 – Present",
+      "description": "A secure serverless platform for delivering private and public artifacts at scale.",
+      "highlights": [
+        "Delivered 500+ artifacts monthly and reduced release cycles by 35% using Lambda, API Gateway, S3, CloudFront, and Route53.",
+        "Integrated Cognito and IAM RBAC for end-to-end access control and traceability.",
+        "Automated provisioning with CloudFormation and Python Lambda functions, reducing setup time by 60%.",
+        "Integrated monitoring and alerting hooks into deployment workflows for real-time visibility."
+      ],
+      "tech": [
+        "AWS Lambda",
+        "API Gateway",
+        "AWS S3",
+        "Amazon CloudFront",
+        "Amazon Route 53",
+        "Amazon Cognito",
+        "IAM RBAC",
+        "CloudFormation",
+        "Python"
+      ]
+    }
+  ],
+  "skills": {
+    "languages": ["Go", "Python", "Bash", "JavaScript", "TypeScript"],
+    "cloud_infra": [
+      "AWS Lambda",
+      "Amazon EKS",
+      "Amazon S3",
+      "RDS",
+      "AWS Glue",
+      "Amazon Athena",
+      "Amazon Macie",
+      "IAM",
+      "KMS",
+      "Terraform",
+      "CloudFormation",
+      "Docker",
+      "Helm",
+      "Kafka"
+    ],
+    "monitoring_security": [
+      "Datadog",
+      "Prometheus",
+      "OpenTelemetry",
+      "HashiCorp Vault",
+      "WAF",
+      "AWS Secrets Manager"
+    ],
+    "collaboration": [
+      "Jira",
+      "Slack",
+      "Confluence",
+      "GitLab CI/CD",
+      "Agile Workflows"
+    ]
+  }
+}
+

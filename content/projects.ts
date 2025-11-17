@@ -1,0 +1,68 @@
+import { Project } from '@/types'
+
+export const projects: Project[] = [
+  {
+    id: '1',
+    slug: 'ai-data-pipeline-automation',
+    title: 'AI Data Pipeline Automation',
+    description: 'A serverless, PII-compliant data pipeline for AI experimentation and analytics.',
+    shortDescription: 'Serverless data pipeline reducing ETL runtime by 40% with automated compliance scanning',
+    technologies: ['AWS Glue', 'AWS Lambda', 'Amazon Athena', 'Amazon Macie', 'Amazon SageMaker', 'S3', 'Python'],
+    metrics: [
+      { label: 'ETL Runtime Reduction', value: '40%' },
+      { label: 'Data Processed', value: '1 TB+' },
+      { label: 'Cost Reduction', value: '20%' },
+    ],
+    problem: 'Data pipelines required manual intervention for schema discovery, query validation, and compliance scanning. ETL processes were slow and lacked automated PII detection for large PostgreSQL exports.',
+    solution: 'Built a serverless data pipeline using AWS Glue for ETL, Lambda for orchestration, Athena for querying, and Macie for automated PII scanning. Implemented Glue Crawlers for schema discovery and S3 lifecycle policies for cost optimization.',
+    architecture: [
+      'AWS Glue for ETL processing and schema discovery',
+      'Lambda functions for orchestration and automation',
+      'Athena for SQL querying and data analysis',
+      'Macie for automated PII detection and compliance scanning',
+      'S3 with intelligent lifecycle policies for cost optimization',
+      'SageMaker integration for AI experimentation workflows',
+    ],
+    impact: [
+      'Reduced ETL runtime by 40% through optimized Glue jobs',
+      'Automated schema discovery and query validation',
+      'Enhanced compliance posture with Macie-based scans for 1 TB+ data',
+      'Reduced storage costs by 20% with lifecycle policies',
+      'Enabled secure AI experimentation workflows',
+    ],
+    featured: true,
+  },
+  {
+    id: '2',
+    slug: 'serverless-distribution-platform',
+    title: 'Serverless Distribution Platform',
+    description: 'A secure serverless platform for delivering private and public artifacts at scale.',
+    shortDescription: 'Secure artifact delivery platform serving 500+ builds monthly, reducing release cycles by 35%',
+    technologies: ['AWS Lambda', 'API Gateway', 'AWS S3', 'Amazon CloudFront', 'Amazon Route 53', 'Amazon Cognito', 'IAM', 'CloudFormation', 'Python'],
+    metrics: [
+      { label: 'Artifacts/Month', value: '500+' },
+      { label: 'Release Cycle Reduction', value: '35%' },
+      { label: 'Setup Time Reduction', value: '60%' },
+    ],
+    problem: 'Artifact delivery required manual setup, lacked proper access control, and had no automated provisioning. Release cycles were slow and there was no traceability for artifact access.',
+    solution: 'Architected a serverless platform using Lambda, API Gateway, S3, and CloudFront for global distribution. Integrated Cognito and IAM RBAC for access control, and automated provisioning with CloudFormation and Python Lambda functions.',
+    architecture: [
+      'API Gateway for RESTful artifact endpoints',
+      'Lambda functions for request processing and automation',
+      'S3 for artifact storage with versioning',
+      'CloudFront for global edge distribution',
+      'Route53 for DNS management',
+      'Cognito and IAM for end-to-end RBAC',
+      'CloudFormation for automated provisioning',
+      'Monitoring and alerting hooks in deployment workflows',
+    ],
+    impact: [
+      'Delivered 500+ artifacts monthly with 35% faster release cycles',
+      'Integrated Cognito and IAM RBAC for complete access control and traceability',
+      'Automated provisioning reducing setup time by 60%',
+      'Integrated real-time monitoring and alerting into workflows',
+      'Scalable serverless architecture eliminating infrastructure management',
+    ],
+    featured: true,
+  },
+]
