@@ -30,8 +30,16 @@ export default function Navigation() {
     e.stopPropagation()
     // Close mobile menu on navigation
     setIsMobileMenuOpen(false)
-    // Use Next.js router to navigate
-    router.push(href)
+    // Use Next.js router to navigate - ensure it works correctly
+    if (href && href !== window.location.pathname) {
+      router.push(href)
+      // Force navigation if router.push doesn't work
+      setTimeout(() => {
+        if (window.location.pathname !== href) {
+          window.location.href = href
+        }
+      }, 100)
+    }
   }
 
   useEffect(() => {
@@ -70,7 +78,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 transition-all duration-150 ${
+      className={`fixed top-0 left-0 right-0 transition-all duration-75 ${
         isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
       } ${
         isScrolled
@@ -120,7 +128,7 @@ export default function Navigation() {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group cursor-pointer px-2 py-1"
+                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors duration-100 relative group cursor-pointer px-2 py-1"
                 style={{ 
                   pointerEvents: 'auto', 
                   position: 'relative', 

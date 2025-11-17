@@ -66,16 +66,16 @@
     contain: layout style paint;
   }
   
-  /* Reduce animation complexity on mobile - super fast */
+  /* Reduce animation complexity - super fast everywhere */
   @media (prefers-reduced-motion: no-preference) {
     * {
-      animation-duration: 0.15s !important;
-      transition-duration: 0.1s !important;
+      animation-duration: 0.1s !important;
+      transition-duration: 0.08s !important;
     }
     
-    /* Disable most animations on mobile */
+    /* Disable most animations */
     [class*="animate-"] {
-      animation-duration: 0.1s !important;
+      animation-duration: 0.08s !important;
     }
   }
   
@@ -238,19 +238,24 @@ nav * {
   pointer-events: auto !important;
 }
 
-/* Enhanced smooth scrolling */
+/* Faster scrolling - instant feel */
+html {
+  scroll-behavior: auto;
+}
+
+* {
+  scroll-behavior: auto;
+}
+
+/* Smooth scroll only for anchor links */
 @media (prefers-reduced-motion: no-preference) {
   html {
-    scroll-behavior: smooth;
-  }
-  
-  * {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
   
   /* Smooth scroll for all scrollable containers */
   [data-scroll-container] {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     -webkit-overflow-scrolling: touch;
   }
 }
@@ -261,11 +266,11 @@ nav * {
       @apply relative;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px) saturate(150%);
-      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
       @apply rounded-2xl;
       box-shadow: 
-        0 4px 24px 0 rgba(0, 0, 0, 0.3),
+        0 2px 16px 0 rgba(0, 0, 0, 0.25),
         0 0 0 1px rgba(255, 255, 255, 0.08),
         inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
       transform: translate3d(0, 0, 0);
@@ -276,7 +281,7 @@ nav * {
       position: relative;
       z-index: 1;
       opacity: 1 !important;
-      will-change: transform;
+      will-change: auto;
     }
 
     @media (hover: hover) {
@@ -284,26 +289,26 @@ nav * {
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.18);
         box-shadow: 
-          0 8px 32px 0 rgba(0, 0, 0, 0.4),
+          0 4px 20px 0 rgba(0, 0, 0, 0.3),
           0 0 0 1px rgba(255, 255, 255, 0.12),
           inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-        transform: translate3d(0, -2px, 0) scale(1.01);
-        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+        transform: translate3d(0, -1px, 0);
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
       }
     }
 
     .glass-card:active {
-      transform: translate3d(0, 0, 0) scale(0.99);
-      transition-duration: 0.1s;
+      transform: translate3d(0, 0, 0);
+      transition-duration: 0.05s;
     }
 
     /* Mobile optimization - minimal blur, reduced shadows */
     @media (max-width: 768px) {
       .glass-card {
-        backdrop-filter: blur(8px) saturate(120%);
-        -webkit-backdrop-filter: blur(8px) saturate(120%);
+        backdrop-filter: blur(4px) saturate(110%);
+        -webkit-backdrop-filter: blur(4px) saturate(110%);
         box-shadow: 
-          0 2px 12px 0 rgba(0, 0, 0, 0.25),
+          0 1px 8px 0 rgba(0, 0, 0, 0.2),
           0 0 0 1px rgba(255, 255, 255, 0.08),
           inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
       }
@@ -334,14 +339,14 @@ nav * {
     @apply relative;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px) saturate(150%);
-    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    backdrop-filter: blur(6px) saturate(120%);
+    -webkit-backdrop-filter: blur(6px) saturate(120%);
     box-shadow: 
-      0 2px 12px 0 rgba(0, 0, 0, 0.2),
+      0 1px 8px 0 rgba(0, 0, 0, 0.2),
       0 0 0 1px rgba(255, 255, 255, 0.08),
       inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
-    will-change: transform;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    will-change: auto;
     transform: translate3d(0, 0, 0);
   }
   
@@ -373,10 +378,10 @@ nav * {
     }
   }
   
-  /* Desktop: smooth gradient animation */
+  /* Desktop: faster gradient animation */
   @media (min-width: 769px) {
     .gradient-text {
-      animation: gradient-shift 10s ease infinite;
+      animation: gradient-shift 8s ease infinite;
     }
   }
 
