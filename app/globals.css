@@ -92,6 +92,28 @@ nav a span {
   pointer-events: none !important;
 }
 
+/* Footer spacing for mobile */
+footer {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding-bottom: 4rem;
+    margin-top: 3rem;
+  }
+  
+  footer nav {
+    margin-top: 1rem;
+  }
+  
+  footer a {
+    padding: 0.5rem 0;
+  }
+}
+
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .glass-card {
