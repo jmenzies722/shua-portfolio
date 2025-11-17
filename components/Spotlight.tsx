@@ -12,6 +12,12 @@ export default function Spotlight() {
   const springConfig = { damping: 30, stiffness: 150 }
   const x = useSpring(mouseX, springConfig)
   const y = useSpring(mouseY, springConfig)
+  
+  // Always call useTransform - hooks must be called unconditionally
+  const background = useTransform(
+    [x, y],
+    ([xVal, yVal]) => `radial-gradient(400px circle at ${xVal}px ${yVal}px, rgba(0, 122, 255, 0.15), transparent 50%)`
+  )
 
   useEffect(() => {
     setMounted(true)
@@ -34,8 +40,6 @@ export default function Spotlight() {
     if (isMobile) return
 
     let rafId: number | null = null
-    let lastX = 0
-    let lastY = 0
 
     const handleMouseMove = (e: MouseEvent) => {
       if (rafId === null) {
@@ -66,11 +70,6 @@ export default function Spotlight() {
 
   // Don't render on mobile or before mount
   if (!mounted || isMobile) return null
-
-  const background = useTransform(
-    [x, y],
-    ([xVal, yVal]) => `radial-gradient(400px circle at ${xVal}px ${yVal}px, rgba(0, 122, 255, 0.15), transparent 50%)`
-  )
 
   return (
     <motion.div
