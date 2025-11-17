@@ -22,7 +22,7 @@ export default function Hero() {
     <section
       ref={containerRef}
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-12 md:pb-20"
     >
       {/* Animated gradient fog background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -86,10 +86,10 @@ export default function Hero() {
               <div>
                 <AnimatedText />
                 <motion.p
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
-                  className="mt-6 text-xl md:text-2xl text-primary-60 font-light leading-relaxed"
+                  transition={{ delay: 0.2, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="mt-4 md:mt-6 text-xl md:text-2xl text-primary-60 font-light leading-relaxed"
                 >
                   Building secure, automated, and observable infrastructure on AWS and Kubernetes.
                 </motion.p>
@@ -98,9 +98,9 @@ export default function Hero() {
               {/* CTA Buttons */}
               <motion.div
                 className="flex flex-col sm:flex-row gap-4"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
+                transition={{ delay: 0.3, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
               >
                 <motion.div
                   whileHover={{ scale: 1.02, y: -2 }}
@@ -112,12 +112,12 @@ export default function Hero() {
                     className="group relative glass-card px-8 py-4 flex items-center gap-3 text-white font-medium rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
                   >
                     <span className="relative z-10">View Projects</span>
-                    <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-200" />
+                    <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-150" />
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-[#007AFF]/20 via-[#5AC8FA]/20 to-[#007AFF]/20"
                       initial={{ x: '-100%' }}
                       whileHover={{ x: '100%' }}
-                      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
                     />
                   </Link>
                 </motion.div>
@@ -132,12 +132,12 @@ export default function Hero() {
                     className="group relative glass-card px-8 py-4 flex items-center gap-3 text-white font-medium rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
                   >
                     <span className="relative z-10">Ask Shua</span>
-                    <MessageSquare className="w-5 h-5 relative z-10 group-hover:scale-110 transition-transform duration-200" />
+                    <MessageSquare className="w-5 h-5 relative z-10 group-hover:scale-110 transition-transform duration-150" />
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-[#007AFF]/20 via-[#5AC8FA]/20 to-[#007AFF]/20"
                       initial={{ x: '-100%' }}
                       whileHover={{ x: '100%' }}
-                      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
                     />
                   </Link>
                 </motion.div>
