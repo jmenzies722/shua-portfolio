@@ -46,7 +46,7 @@ export default function Footer() {
             <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-6">
               Navigation
             </h4>
-            <nav className="flex flex-col space-y-3">
+            <div className="flex flex-col space-y-3">
               {[
                 { name: 'About', href: '/about' },
                 { name: 'Experience', href: '/experience' },
@@ -63,7 +63,7 @@ export default function Footer() {
                   {item.name}
                 </Link>
               ))}
-            </nav>
+            </div>
           </div>
 
           {/* Contact & Social */}

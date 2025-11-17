@@ -72,7 +72,8 @@ body {
   background-clip: text;
 }
 
-nav {
+/* Only apply to top navigation bar, not footer nav */
+nav:not(footer nav) {
   z-index: 9999;
   position: fixed;
   top: 0;
@@ -80,16 +81,23 @@ nav {
   right: 0;
 }
 
-nav a,
-nav Link {
+nav:not(footer nav) a,
+nav:not(footer nav) Link {
   pointer-events: auto !important;
   cursor: pointer !important;
   text-decoration: none !important;
   display: inline-block;
 }
 
-nav a span {
+nav:not(footer nav) a span {
   pointer-events: none !important;
+}
+
+/* Footer nav should be static */
+footer nav {
+  position: static !important;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Footer spacing for mobile */
@@ -105,7 +113,7 @@ footer {
     margin-top: 3rem;
   }
   
-  footer nav {
+  footer div[class*="flex flex-col"] {
     margin-top: 1rem;
   }
   
@@ -149,12 +157,32 @@ section {
   scroll-margin-top: 80px;
   min-height: 100vh;
   padding: 4rem 1rem;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 @media (min-width: 768px) {
   section {
     padding: 6rem 2rem;
   }
+}
+
+/* Ensure all content renders immediately - no blur outlines */
+section > *,
+section > div > * {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: none !important;
+}
+
+/* Only allow transitions on hover, not initial render */
+.glass-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.glass-card:hover {
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
