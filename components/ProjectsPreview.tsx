@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { resumeData } from '@/content/resume'
@@ -24,7 +22,7 @@ export default function ProjectsPreview() {
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {featured.map((project, index) => (
             <Link key={index} href={`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`}>
-              <Card delay={index * 0.1} hover>
+              <Card hover>
                 <div className="h-full flex flex-col">
                   <div className="mb-6 flex-grow">
                     <h3 className="text-2xl font-bold mb-4 gradient-text">{project.name}</h3>

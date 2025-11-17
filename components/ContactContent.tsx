@@ -38,7 +38,6 @@ export default function ContactContent() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {/* Contact Info */}
           <Card>
             <h2 className="text-2xl font-bold mb-6 gradient-text">Contact Information</h2>
             <div className="space-y-4">
@@ -76,7 +75,6 @@ export default function ContactContent() {
             </div>
           </Card>
 
-          {/* Contact Form */}
           <Card>
             <h2 className="text-2xl font-bold mb-6 gradient-text">Send a Message</h2>
             {isSubmitted ? (

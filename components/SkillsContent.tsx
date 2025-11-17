@@ -1,5 +1,3 @@
-'use client'
-
 import { Code, Cloud, Shield, Users } from 'lucide-react'
 import { resumeData } from '@/content/resume'
 import Card from './ui/Card'
@@ -28,7 +26,7 @@ export default function SkillsContent() {
           {skillCategories.map((category, index) => {
             const Icon = category.icon
             return (
-              <Card key={category.name} delay={index * 0.1}>
+              <Card key={category.name}>
                 <div className="flex items-start gap-4">
                   <div className="p-4 glass-card rounded-xl flex-shrink-0">
                     <Icon className="w-8 h-8 text-[#007AFF]" />

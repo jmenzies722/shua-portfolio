@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { ChevronDown, MapPin, Calendar } from 'lucide-react'
 import { resumeData } from '@/content/resume'
 import Card from './ui/Card'
-import { motion, AnimatePresence } from 'framer-motion'
 
 export default function ExperienceContent() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
@@ -23,7 +22,7 @@ export default function ExperienceContent() {
 
         <div className="space-y-6 max-w-4xl mx-auto">
           {resumeData.experience.map((exp, index) => (
-            <Card key={index} delay={index * 0.1}>
+            <Card key={index}>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h2 className="text-2xl md:text-3xl font-bold mb-3 gradient-text">{exp.role}</h2>
@@ -38,26 +37,16 @@ export default function ExperienceContent() {
                     </div>
                   </div>
                   
-                  <AnimatePresence>
-                    {expandedIndex === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <ul className="mt-6 space-y-3 pt-6 border-t border-white/10">
-                          {exp.highlights.map((highlight, i) => (
-                            <li key={i} className="text-white/70 leading-relaxed flex items-start gap-3">
-                              <span className="text-[#007AFF] mt-1.5">•</span>
-                              <span>{highlight}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {expandedIndex === index && (
+                    <ul className="mt-6 space-y-3 pt-6 border-t border-white/10">
+                      {exp.highlights.map((highlight, i) => (
+                        <li key={i} className="text-white/70 leading-relaxed flex items-start gap-3">
+                          <span className="text-[#007AFF] mt-1.5">•</span>
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
                 
                 <button

@@ -1,6 +1,7 @@
+'use client'
+
 import Link from 'next/link'
 import { ReactNode } from 'react'
-import { motion } from 'framer-motion'
 
 interface ButtonProps {
   children: ReactNode
@@ -39,31 +40,23 @@ export default function Button({
   
   if (href) {
     return (
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+      <Link
+        href={href}
+        className={`${baseClasses} ${variantClasses[variant]} ${className}`}
       >
-        <Link
-          href={href}
-          className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-        >
-          {content}
-        </Link>
-      </motion.div>
+        {content}
+      </Link>
     )
   }
   
   return (
-    <motion.button
+    <button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      whileHover={disabled ? {} : { scale: 1.02 }}
-      whileTap={disabled ? {} : { scale: 0.98 }}
       className={`${baseClasses} ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
     >
       {content}
-    </motion.button>
+    </button>
   )
 }
-

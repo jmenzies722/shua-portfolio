@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { resumeData } from '@/content/resume'
@@ -23,7 +21,7 @@ export default function ExperiencePreview() {
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {featured.map((exp, index) => (
-            <Card key={index} delay={index * 0.1}>
+            <Card key={index}>
               <div className="h-full flex flex-col">
                 <div className="mb-6 flex-grow">
                   <h3 className="text-2xl font-bold mb-2 gradient-text">{exp.role}</h3>

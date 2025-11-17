@@ -1,5 +1,3 @@
-'use client'
-
 import { Download, Mail, Phone, MapPin, Linkedin } from 'lucide-react'
 import { resumeData } from '@/content/resume'
 import Card from './ui/Card'
@@ -9,16 +7,16 @@ export default function ResumeContent() {
   return (
     <section className="py-20 md:py-32">
       <div className="container max-w-4xl">
-        {/* Header */}
         <div className="text-center mb-16">
           <div className="flex justify-center mb-8">
             <div className="relative">
-              <div className="absolute inset-0 bg-[#007AFF]/20 blur-2xl rounded-full" />
+              <div className="absolute inset-0 bg-[#007AFF]/10 blur-2xl rounded-full" />
               <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden glass-profile p-1">
                 <img
                   src="/IMG_2897.jpg"
                   alt="Josh Menzies"
                   className="w-full h-full object-cover rounded-full"
+                  loading="eager"
                 />
               </div>
             </div>
@@ -57,13 +55,11 @@ export default function ResumeContent() {
           </Button>
         </div>
 
-        {/* Summary */}
         <Card className="mb-8">
           <h2 className="text-2xl font-bold mb-4 gradient-text">Summary</h2>
           <p className="text-white/80 leading-relaxed">{resumeData.summary}</p>
         </Card>
 
-        {/* Experience */}
         <Card className="mb-8">
           <h2 className="text-2xl font-bold mb-6 gradient-text">Experience</h2>
           <div className="space-y-8">
@@ -85,7 +81,6 @@ export default function ResumeContent() {
           </div>
         </Card>
 
-        {/* Projects */}
         <Card className="mb-8">
           <h2 className="text-2xl font-bold mb-6 gradient-text">Projects</h2>
           <div className="space-y-6">
@@ -113,7 +108,6 @@ export default function ResumeContent() {
           </div>
         </Card>
 
-        {/* Skills */}
         <Card className="mb-8">
           <h2 className="text-2xl font-bold mb-6 gradient-text">Skills</h2>
           <div className="space-y-6">
@@ -160,7 +154,6 @@ export default function ResumeContent() {
           </div>
         </Card>
 
-        {/* Education */}
         <Card>
           <h2 className="text-2xl font-bold mb-6 gradient-text">Education</h2>
           {resumeData.education.map((edu, index) => (

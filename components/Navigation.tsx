@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -30,26 +29,11 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (!mounted) {
-    return (
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B0E11]/95 backdrop-blur-md border-b border-white/5">
-        <div className="container">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/5 animate-pulse" />
-              <div className="h-4 w-24 bg-white/5 rounded animate-pulse" />
-            </div>
-          </div>
-        </div>
-      </nav>
-    )
-  }
-
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-150 ${
         isScrolled
-          ? 'bg-[#0B0E11]/95 backdrop-blur-md border-b border-white/5 shadow-lg'
+          ? 'bg-[#0B0E11]/95 backdrop-blur-sm border-b border-white/5 shadow-lg'
           : 'bg-transparent'
       }`}
     >
@@ -96,29 +80,22 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0B0E11]/98 backdrop-blur-md border-t border-white/5"
-          >
-            <div className="container py-4 space-y-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsMobileOpen(false)}
-                  className="block py-2 text-base text-white/80 hover:text-white transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isMobileOpen && (
+        <div className="md:hidden bg-[#0B0E11]/98 backdrop-blur-sm border-t border-white/5">
+          <div className="container py-4 space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setIsMobileOpen(false)}
+                className="block py-2 text-base text-white/80 hover:text-white transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   )
 }

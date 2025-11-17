@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { ArrowRight, Code, Cloud, Shield, Users } from 'lucide-react'
 import { resumeData } from '@/content/resume'
@@ -32,7 +30,7 @@ export default function SkillsPreview() {
           {featured.map((category, index) => {
             const Icon = category.icon
             return (
-              <Card key={category.name} delay={index * 0.1}>
+              <Card key={category.name}>
                 <div className="text-center">
                   <div className="flex justify-center mb-4">
                     <div className="p-4 glass-card rounded-2xl">

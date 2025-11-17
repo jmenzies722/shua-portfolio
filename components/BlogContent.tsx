@@ -1,10 +1,7 @@
-'use client'
-
 import Link from 'next/link'
 import { Calendar, Clock } from 'lucide-react'
 import Card from './ui/Card'
 
-// Mock blog posts - replace with actual data source
 const blogPosts = [
   {
     slug: 'devops-philosophy',
@@ -48,7 +45,7 @@ export default function BlogContent() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogPosts.map((post, index) => (
             <Link key={post.slug} href={`/blog/${post.slug}`}>
-              <Card delay={index * 0.1} hover>
+              <Card hover>
                 <div className="h-full flex flex-col">
                   <div className="mb-4">
                     <span className="px-3 py-1 text-xs glass-card rounded-full text-white/70">
