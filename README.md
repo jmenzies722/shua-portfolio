@@ -136,11 +136,43 @@ Place your resume PDF at `public/resume.pdf` for the download link to work.
 
 ## 📦 Deployment
 
-### S3 + CloudFront
-1. Build the static site: `npm run build`
-2. Upload `out/` directory to S3 bucket
-3. Configure CloudFront distribution
-4. Set up custom domain (optional)
+### AWS S3 + CloudFront (Recommended)
+
+This project includes Terraform infrastructure and GitHub Actions CI/CD for automated deployments.
+
+#### Quick Setup
+
+1. **Set up Terraform infrastructure:**
+   ```bash
+   ./scripts/setup-terraform.sh
+   cd terraform
+   terraform plan
+   terraform apply
+   ```
+
+2. **Configure GitHub Secrets:**
+   - Go to: `Settings → Secrets and variables → Actions`
+   - Add secrets from Terraform outputs:
+     - `AWS_ACCESS_KEY_ID`
+     - `AWS_SECRET_ACCESS_KEY`
+     - `AWS_S3_BUCKET`
+     - `AWS_CLOUDFRONT_DISTRIBUTION_ID`
+
+3. **Deploy:**
+   ```bash
+   git push origin main
+   ```
+   GitHub Actions will automatically build and deploy!
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
+
+#### Manual Deployment
+
+```bash
+npm run build
+aws s3 sync out/ s3://your-bucket-name/ --delete
+aws cloudfront create-invalidation --distribution-id YOUR_ID --paths "/*"
+```
 
 ### Vercel
 Simply connect your repository to Vercel for automatic deployments.
