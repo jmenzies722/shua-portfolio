@@ -79,7 +79,8 @@ export default function Footer() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-sm text-white/80 hover:text-blue-400 transition-colors duration-200 w-fit"
+                  className="text-sm text-white/80 hover:text-blue-400 transition-colors duration-200 w-fit relative z-10 pointer-events-auto"
+                  style={{ position: 'relative', zIndex: 10 }}
                 >
                   {link.name}
                 </Link>

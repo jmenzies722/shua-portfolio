@@ -19,8 +19,8 @@ export default function Hero() {
       />
 
       <div className="container relative z-10">
-        {/* Glass Hero Card - immediate render */}
-        <div className="glass-card p-8 md:p-12 lg:p-16 max-w-5xl mx-auto" style={{ opacity: 1, transform: 'translateY(0)' }}>
+        {/* Glass Hero Card - wider to accommodate longer text */}
+        <div className="glass-card p-8 md:p-12 lg:p-16 max-w-6xl mx-auto" style={{ opacity: 1, transform: 'translateY(0)' }}>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left: Text & CTAs */}
             <div className="space-y-8">
