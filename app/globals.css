@@ -80,10 +80,12 @@ nav {
   right: 0;
 }
 
-nav a {
+nav a,
+nav Link {
   pointer-events: auto !important;
   cursor: pointer !important;
   text-decoration: none !important;
+  display: inline-block;
 }
 
 nav a span {

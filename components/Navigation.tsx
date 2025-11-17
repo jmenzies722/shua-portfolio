@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 
 const navItems = [
@@ -20,7 +20,6 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const pathname = usePathname()
-  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,12 +28,6 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    setIsMobileOpen(false)
-    router.push(href)
-  }
 
   return (
     <nav
@@ -66,11 +59,10 @@ export default function Navigation() {
             {navItems.map((item) => {
               const isActive = pathname === item.href
               return (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className={`text-sm font-medium transition-colors relative group cursor-pointer ${
+                  className={`text-sm font-medium transition-colors relative group ${
                     isActive ? 'text-white' : 'text-white/80 hover:text-white'
                   }`}
                 >
@@ -78,7 +70,7 @@ export default function Navigation() {
                   <span className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#007AFF] transition-all duration-200 pointer-events-none ${
                     isActive ? 'w-full' : 'w-0 group-hover:w-full'
                   }`} />
-                </a>
+                </Link>
               )
             })}
           </div>
@@ -102,16 +94,16 @@ export default function Navigation() {
             {navItems.map((item) => {
               const isActive = pathname === item.href
               return (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className={`block py-2 text-base transition-colors cursor-pointer ${
+                  onClick={() => setIsMobileOpen(false)}
+                  className={`block py-2 text-base transition-colors ${
                     isActive ? 'text-white' : 'text-white/80 hover:text-white'
                   }`}
                 >
                   {item.name}
-                </a>
+                </Link>
               )
             })}
           </div>
