@@ -210,21 +210,32 @@ section:focus, div:focus {
 /* Removed blue spotlight effect for performance */
 
 /* Ensure navigation links are always clickable */
+nav {
+  z-index: 9999 !important;
+}
+
 nav a,
-nav Link,
-nav a[href] {
+nav a[href],
+nav Link {
   pointer-events: auto !important;
   cursor: pointer !important;
-  z-index: 100 !important;
+  z-index: 10000 !important;
   position: relative !important;
-  display: block !important;
+  display: inline-block !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 /* Ensure desktop nav container is clickable */
-nav > div[class*="hidden md:flex"] {
+nav > div[class*="hidden md:flex"],
+nav > div[class*="flex items-center space-x-8"] {
   pointer-events: auto !important;
-  z-index: 100 !important;
+  z-index: 10000 !important;
   position: relative !important;
+}
+
+/* Prevent any overlays from blocking nav */
+nav * {
+  pointer-events: auto !important;
 }
 
 /* Enhanced smooth scrolling */

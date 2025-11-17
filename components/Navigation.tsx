@@ -64,7 +64,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-150 ${
+      className={`fixed top-0 left-0 right-0 transition-all duration-150 ${
         isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
       } ${
         isScrolled
@@ -75,7 +75,10 @@ export default function Navigation() {
         willChange: 'auto', 
         pointerEvents: isVisible ? 'auto' : 'none',
         position: 'fixed',
-        zIndex: 50,
+        zIndex: 9999,
+        top: 0,
+        left: 0,
+        right: 0,
       }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -98,22 +101,37 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8" style={{ pointerEvents: 'auto', zIndex: 100, position: 'relative' }}>
+          <div 
+            className="hidden md:flex items-center space-x-8" 
+            style={{ 
+              pointerEvents: 'auto', 
+              zIndex: 10000, 
+              position: 'relative',
+            }}
+          >
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={handleNavClick}
-                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group cursor-pointer"
+                onClick={(e) => {
+                  handleNavClick()
+                  // Ensure navigation happens
+                  if (!item.href.startsWith('#')) {
+                    // Let Next.js handle the navigation
+                    return
+                  }
+                }}
+                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group cursor-pointer px-2 py-1"
                 style={{ 
                   pointerEvents: 'auto', 
                   position: 'relative', 
-                  zIndex: 100,
-                  display: 'block',
+                  zIndex: 10000,
+                  display: 'inline-block',
+                  WebkitTapHighlightColor: 'transparent',
                 }}
               >
                 {item.name}
-                <span className="absolute bottom-0 left-0 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
               </Link>
             ))}
           </div>
