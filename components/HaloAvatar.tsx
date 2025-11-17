@@ -28,6 +28,11 @@ export default function HaloAvatar({ children, size = 'md', className = '' }: Ha
   }
 
   useEffect(() => {
+    // Only enable parallax on desktop (not mobile)
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      return
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       const centerX = window.innerWidth / 2
       const centerY = window.innerHeight / 2

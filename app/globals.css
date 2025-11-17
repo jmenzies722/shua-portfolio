@@ -40,6 +40,52 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  /* Reduce backdrop-filter on mobile for better performance */
+  .glass-card {
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+  }
+  
+  /* Reduce shadows on mobile */
+  .glass-card {
+    box-shadow: 
+      0 4px 16px 0 rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(0, 122, 255, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Disable will-change on mobile to reduce memory usage */
+  * {
+    will-change: auto !important;
+  }
+  
+  /* Reduce animation complexity on mobile */
+  @media (prefers-reduced-motion: no-preference) {
+    * {
+      animation-duration: 0.3s !important;
+      transition-duration: 0.2s !important;
+    }
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .glass-card:hover {
+    transform: none !important;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
@@ -293,12 +339,22 @@ body:hover::before {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* GPU acceleration for animations */
-.gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+/* GPU acceleration for animations - only on desktop */
+@media (min-width: 769px) {
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Mobile: disable GPU acceleration to save battery */
+@media (max-width: 768px) {
+  .gpu-accelerated {
+    will-change: auto;
+    transform: none;
+  }
 }
 
 /* Consistent spacing rhythm (28-36px pattern) */
@@ -317,9 +373,11 @@ body:hover::before {
     scroll-behavior: smooth;
   }
   
-  /* Optimize scroll performance */
-  * {
-    will-change: auto;
+  /* Optimize scroll performance - desktop only */
+  @media (min-width: 769px) {
+    * {
+      will-change: auto;
+    }
   }
   
   /* Smooth scroll momentum */
@@ -331,6 +389,25 @@ body:hover::before {
   /* Smooth scroll for all elements */
   * {
     scroll-behavior: inherit;
+  }
+}
+
+/* Mobile scroll optimization */
+@media (max-width: 768px) {
+  html, body {
+    scroll-behavior: auto; /* Faster on mobile */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Reduce repaints on mobile */
+  * {
+    will-change: auto !important;
+    transform: none !important;
+  }
+  
+  /* Only essential transforms */
+  .glass-card {
+    transform: none;
   }
 }
 

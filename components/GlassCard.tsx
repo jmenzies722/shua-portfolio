@@ -25,20 +25,24 @@ const GlassCard = memo(function GlassCard({ children, className = '', delay = 0,
         scale: { duration: 0.3 }
       }}
       className={`glass-card ${className}`}
-      style={{ 
-        height: className.includes('h-full') ? '100%' : undefined,
-        willChange: 'transform, opacity',
-        transform: 'translateZ(0)',
-        backfaceVisibility: 'hidden',
-        WebkitBackfaceVisibility: 'hidden',
-        perspective: '1000px',
-      }}
+              style={{ 
+                height: className.includes('h-full') ? '100%' : undefined,
+                ...(typeof window !== 'undefined' && window.innerWidth > 768 ? {
+                  willChange: 'transform, opacity',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  perspective: '1000px',
+                } : {
+                  willChange: 'auto',
+                }),
+              }}
       onClick={onClick}
-      whileHover={hover ? { 
-        y: -4, 
-        scale: 1.02,
-        transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
-      } : {}}
+              whileHover={hover && typeof window !== 'undefined' && window.innerWidth > 768 ? { 
+                y: -4, 
+                scale: 1.02,
+                transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
+              } : {}}
       whileTap={{ scale: 0.99 }}
     >
       {children}

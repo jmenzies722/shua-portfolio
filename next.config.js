@@ -11,6 +11,15 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  // Performance optimizations
+  compress: true,
+  poweredByHeader: false,
+  // Optimize production builds
+  swcMinify: true,
+  // Reduce bundle size
+  experimental: {
+    optimizeCss: true,
+  },
 }
 
 module.exports = nextConfig
