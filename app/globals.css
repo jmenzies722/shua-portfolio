@@ -226,6 +226,13 @@ nav a[href^="/"] {
   display: inline-block !important;
   -webkit-tap-highlight-color: transparent !important;
   text-decoration: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* Ensure nav link children don't block clicks */
+nav a span {
+  pointer-events: none !important;
 }
 
 /* Ensure desktop nav container is clickable */

@@ -146,7 +146,7 @@ export default function Navigation() {
                 }}
               >
                 {item.name}
-                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)] pointer-events-none" />
               </Link>
             ))}
           </div>
