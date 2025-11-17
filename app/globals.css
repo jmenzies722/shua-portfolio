@@ -212,6 +212,7 @@ section:focus, div:focus {
 /* Ensure navigation links are always clickable */
 nav {
   z-index: 9999 !important;
+  position: relative !important;
 }
 
 nav a,
@@ -238,6 +239,26 @@ nav > div[class*="flex items-center space-x-8"] {
 /* Prevent any overlays from blocking nav */
 nav * {
   pointer-events: auto !important;
+}
+
+/* Mobile menu positioning */
+nav > div[class*="md:hidden"] {
+  position: relative !important;
+  z-index: 10001 !important;
+}
+
+/* Ensure logo and text stay side by side */
+nav a[href="/"] {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  min-width: 0 !important;
+}
+
+nav a[href="/"] span {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 /* Faster scrolling - instant feel */

@@ -77,10 +77,11 @@ export default function Navigation() {
         right: 0,
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden glass-profile p-0.5 flex-shrink-0 group-hover:ring-2 group-hover:ring-[#007AFF]/40 transition-all duration-100">
+          {/* Logo/Brand - Always visible */}
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0 min-w-0">
+            <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden glass-profile p-0.5 flex-shrink-0 group-hover:ring-2 group-hover:ring-[#007AFF]/40 transition-all duration-100">
               <img
                 src="/IMG_2897.jpg"
                 alt="Josh Menzies"
@@ -93,12 +94,12 @@ export default function Navigation() {
                 }}
               />
             </div>
-            <span className="text-2xl font-display font-bold gradient-text">Josh M.</span>
+            <span className="text-lg sm:text-xl md:text-2xl font-display font-bold gradient-text whitespace-nowrap">Josh M.</span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Hidden on mobile */}
           <div 
-            className="hidden md:flex items-center space-x-8" 
+            className="hidden md:flex items-center space-x-6 lg:space-x-8 flex-shrink-0" 
             style={{ 
               pointerEvents: 'auto', 
               zIndex: 10000, 
@@ -109,7 +110,7 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors duration-100 relative group cursor-pointer px-2 py-1"
+                className="text-sm font-medium text-primary-80 hover:text-primary transition-colors duration-100 relative group cursor-pointer px-2 py-1 whitespace-nowrap"
                 style={{ 
                   pointerEvents: 'auto', 
                   position: 'relative', 
@@ -124,13 +125,14 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden flex items-center gap-4">
+          {/* Mobile Menu Button - Hidden on desktop */}
+          <div className="md:hidden flex items-center flex-shrink-0 ml-2">
             <motion.button
-              className="text-primary-80 hover:text-primary transition-colors"
+              className="text-primary-80 hover:text-primary transition-colors p-2 -mr-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               whileTap={{ scale: 0.9 }}
               transition={{ duration: 0.1 }}
+              aria-label="Toggle menu"
             >
               <motion.div
                 animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
@@ -143,17 +145,24 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Only visible on mobile */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0a0a0a]/95 backdrop-blur-xl border-t border-primary"
+            className="md:hidden bg-[#0a0a0a]/95 backdrop-blur-xl border-t border-white/10"
+            style={{ 
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              right: 0,
+              zIndex: 10000,
+            }}
           >
             <motion.div 
-              className="px-6 py-4 space-y-4"
+              className="px-4 sm:px-6 py-4 space-y-3"
               initial="hidden"
               animate="visible"
               variants={{
@@ -169,7 +178,7 @@ export default function Navigation() {
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block text-primary-80 hover:text-primary transition-colors cursor-pointer"
+                  className="block text-base text-primary-80 hover:text-primary transition-colors cursor-pointer py-2"
                   style={{ pointerEvents: 'auto', position: 'relative', zIndex: 100 }}
                 >
                   {item.name}
