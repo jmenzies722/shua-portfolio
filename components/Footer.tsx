@@ -81,12 +81,12 @@ export default function Footer() {
             <h4 className="text-xs font-semibold text-white/90 uppercase tracking-wider mb-6">
               Navigation
             </h4>
-            <nav className="flex flex-col space-y-3">
+            <nav className="flex flex-col space-y-2 md:space-y-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-sm text-white/80 hover:text-blue-400 transition-colors duration-200 w-fit relative z-10 pointer-events-auto"
+                  className="text-xs md:text-sm text-white/80 hover:text-blue-400 transition-colors duration-200 w-fit relative z-10 pointer-events-auto py-1 md:py-0"
                   style={{ position: 'relative', zIndex: 10 }}
                 >
                   {link.name}

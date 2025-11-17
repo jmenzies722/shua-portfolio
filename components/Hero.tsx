@@ -68,9 +68,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
+        {/* Scroll Indicator - Hidden on mobile */}
         <div 
-          className="absolute left-1/2 -translate-x-1/2 opacity-100"
+          className="hidden md:block absolute left-1/2 -translate-x-1/2 opacity-100"
           style={{
             bottom: 'max(2rem, calc(2rem + env(safe-area-inset-bottom)))',
           }}

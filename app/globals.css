@@ -192,6 +192,33 @@ footer a[href] {
     min-width: 44px;
     padding: 0.75rem 1.5rem;
   }
+  
+  /* Navigation mobile fixes */
+  nav .container {
+    padding-left: max(1rem, calc(1rem + env(safe-area-inset-left)));
+    padding-right: max(1rem, calc(1rem + env(safe-area-inset-right)));
+  }
+  
+  /* Ensure nav logo stays side by side */
+  nav a[href="/"] {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+  
+  /* Mobile menu alignment */
+  nav .md\\:hidden nav {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  /* Footer nav links smaller on mobile */
+  footer nav a {
+    font-size: 0.75rem;
+    padding: 0.5rem 0;
+  }
 }
 
 /* Reduced motion */

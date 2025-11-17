@@ -43,11 +43,11 @@ export default function Navigation() {
       }}
     >
       <div className="container">
-        <div className="flex items-center justify-between h-16 md:h-16" style={{
+        <div className="flex items-center justify-between h-16 md:h-16 w-full" style={{
           minHeight: 'calc(4rem + max(0px, env(safe-area-inset-top)))',
         }}>
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+          {/* Logo - Ensure side by side on mobile */}
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
             <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden glass-profile flex-shrink-0">
               <img
                 src="/IMG_2897.jpg"
@@ -56,7 +56,7 @@ export default function Navigation() {
                 loading="eager"
               />
             </div>
-            <span className="text-lg sm:text-xl font-display font-bold gradient-text whitespace-nowrap">
+            <span className="text-base sm:text-lg md:text-xl font-display font-bold gradient-text whitespace-nowrap">
               Josh M.
             </span>
           </Link>
@@ -103,28 +103,32 @@ export default function Navigation() {
       {/* Mobile Menu */}
       {isMobileOpen && (
         <div className="md:hidden bg-[#0B0E11]/98 backdrop-blur-sm border-t border-white/5 relative z-50">
-          <div className="container py-4 space-y-2">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsMobileOpen(false)}
-                  className={`block py-2 text-base transition-colors ${
-                    isActive ? 'text-white' : 'text-white/80 hover:text-white'
-                  }`}
-                  style={{
-                    position: 'relative',
-                    zIndex: 50,
-                    pointerEvents: 'auto',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {item.name}
-                </Link>
-              )
-            })}
+          <div className="container py-4">
+            <nav className="flex flex-col space-y-1">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    className={`block py-3 px-2 text-base transition-colors rounded-lg ${
+                      isActive 
+                        ? 'text-white bg-white/5' 
+                        : 'text-white/80 hover:text-white hover:bg-white/5'
+                    }`}
+                    style={{
+                      position: 'relative',
+                      zIndex: 50,
+                      pointerEvents: 'auto',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              })}
+            </nav>
           </div>
         </div>
       )}
