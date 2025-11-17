@@ -14,11 +14,12 @@ export default function SkillsPreview() {
     <section id="skills" className="py-32 md:py-48 px-6 lg:px-8 relative glass-section">
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '0px' }}
-          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          viewport={{ once: true, margin: '-200px' }}
+          transition={{ duration: 0.1, ease: [0.4, 0, 0.2, 1] }}
           className="text-center mb-20"
+          style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }}
         >
           <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-bold mb-6 gradient-text tracking-tight">
             Skills
@@ -35,11 +36,12 @@ export default function SkillsPreview() {
             return (
               <motion.div
                 key={skill.category}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '0px' }}
-                transition={{ duration: 0.3, delay: index * 0.03, ease: [0.4, 0, 0.2, 1] }}
+                viewport={{ once: true, margin: '-200px' }}
+                transition={{ duration: 0.1, delay: 0, ease: [0.4, 0, 0.2, 1] }}
                 className="h-full"
+                style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }}
               >
                 <GlassCard delay={index * 0.1} className="h-full">
                   <div className="p-8 text-center h-full flex flex-col justify-center">
@@ -60,11 +62,12 @@ export default function SkillsPreview() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '0px' }}
-          transition={{ duration: 0.2, delay: 0.1 }}
+          viewport={{ once: true, margin: '-200px' }}
+          transition={{ duration: 0.1, delay: 0 }}
           className="text-center"
+          style={{ pointerEvents: 'auto', position: 'relative', zIndex: 1 }}
         >
           <Link
             href="/skills"

@@ -24,22 +24,24 @@ const GlassCard = memo(function GlassCard({ children, className = '', delay = 0,
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.98 }}
+      initial={{ opacity: 1, y: 0, scale: 1 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '0px' }}
+      viewport={{ once: true, margin: '-100px' }}
       transition={{ 
-        duration: 0.2, 
-        delay: delay * 0.02, 
+        duration: 0.15, 
+        delay: 0,
         ease: [0.4, 0, 0.2, 1],
-        scale: { duration: 0.15 }
       }}
       className={`glass-card ${className}`}
       style={{ 
         height: className.includes('h-full') ? '100%' : undefined,
         willChange: 'auto',
+        pointerEvents: 'auto',
+        position: 'relative',
+        zIndex: 1,
       }}
       onClick={onClick}
-      whileHover={hover && mounted ? {} : {}}
+      whileHover={hover && mounted ? { scale: 1.01, y: -2 } : {}}
       whileTap={{ scale: 0.99 }}
     >
       {children}
