@@ -217,16 +217,19 @@ resource "aws_cloudfront_distribution" "portfolio" {
   }
 
   # Custom error responses
+  # Note: For Next.js App Router static export, routes like /experience
+  # generate experience.html files. CloudFront should serve these directly.
+  # Only redirect to index.html for actual 404s (not found pages)
   custom_error_response {
     error_code         = 404
-    response_code      = 200
-    response_page_path = "/index.html"
+    response_code      = 404
+    response_page_path = "/404.html"
   }
 
   custom_error_response {
     error_code         = 403
-    response_code      = 200
-    response_page_path = "/index.html"
+    response_code      = 403
+    response_page_path = "/404.html"
   }
 
   restrictions {
