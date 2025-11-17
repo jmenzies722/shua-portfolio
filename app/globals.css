@@ -93,32 +93,47 @@ nav:not(footer nav) a span {
   pointer-events: none !important;
 }
 
-/* Footer nav should be static */
+/* Footer styling - Apple-like minimal design */
+footer {
+  position: relative;
+  z-index: 1;
+  background: #0B0E11;
+}
+
 footer nav {
   position: static !important;
   display: flex;
   flex-direction: column;
 }
 
-/* Footer spacing for mobile */
-footer {
-  position: relative;
-  z-index: 1;
-  padding-bottom: 2rem;
-}
-
+/* Footer responsive spacing */
 @media (max-width: 768px) {
   footer {
-    padding-bottom: 4rem;
-    margin-top: 3rem;
-  }
-  
-  footer div[class*="flex flex-col"] {
-    margin-top: 1rem;
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
   }
   
   footer a {
     padding: 0.5rem 0;
+    min-height: 44px; /* Apple HIG tap target */
+    display: flex;
+    align-items: center;
+  }
+  
+  footer button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  footer * {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  footer button:hover {
+    transform: none !important;
   }
 }
 
