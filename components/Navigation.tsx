@@ -26,21 +26,39 @@ export default function Navigation() {
 
   useEffect(() => {
     setMounted(true)
+    let scrollTimeout: NodeJS.Timeout | null = null
+    
     const handleScroll = () => {
       const currentScrollY = window.scrollY
       setIsScrolled(currentScrollY > 20)
       
-      // Hide nav on scroll down, show on scroll up
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false)
+      // Clear any existing timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
+      
+      // Always show nav when scrolling
+      setIsVisible(true)
+      
+      // Hide nav on scroll down after a delay, but keep it visible if user is near top
+      if (currentScrollY > lastScrollY && currentScrollY > 200) {
+        scrollTimeout = setTimeout(() => {
+          setIsVisible(false)
+        }, 150)
       } else {
         setIsVisible(true)
       }
       
       setLastScrollY(currentScrollY)
     }
+    
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
+    }
   }, [lastScrollY])
 
   if (!mounted) {
@@ -67,6 +85,7 @@ export default function Navigation() {
           ? 'bg-[#0a0a0a]/95 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/20'
           : 'bg-transparent'
       }`}
+      onMouseEnter={() => setIsVisible(true)}
       style={{ 
         willChange: 'auto', 
         pointerEvents: isVisible ? 'auto' : 'none',
@@ -110,6 +129,12 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
+                onClick={(e) => {
+                  // Ensure navigation happens
+                  if (!isVisible) {
+                    setIsVisible(true)
+                  }
+                }}
                 className="text-sm font-medium text-primary-80 hover:text-primary transition-colors duration-100 relative group cursor-pointer px-2 py-1 whitespace-nowrap"
                 style={{ 
                   pointerEvents: 'auto', 
@@ -117,6 +142,7 @@ export default function Navigation() {
                   zIndex: 10000,
                   display: 'inline-block',
                   WebkitTapHighlightColor: 'transparent',
+                  touchAction: 'manipulation',
                 }}
               >
                 {item.name}
