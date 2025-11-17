@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
@@ -18,28 +17,16 @@ const navItems = [
 ]
 
 export default function Navigation() {
-  const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    e.stopPropagation()
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
     // Close mobile menu on navigation
     setIsMobileMenuOpen(false)
-    // Use Next.js router to navigate - ensure it works correctly
-    if (href && href !== window.location.pathname) {
-      router.push(href)
-      // Force navigation if router.push doesn't work
-      setTimeout(() => {
-        if (window.location.pathname !== href) {
-          window.location.href = href
-        }
-      }, 100)
-    }
+    // Let Next.js Link handle navigation naturally
   }
 
   useEffect(() => {
@@ -124,7 +111,7 @@ export default function Navigation() {
             }}
           >
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
@@ -139,7 +126,7 @@ export default function Navigation() {
               >
                 {item.name}
                 <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -184,7 +171,7 @@ export default function Navigation() {
               }}
             >
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
@@ -192,7 +179,7 @@ export default function Navigation() {
                   style={{ pointerEvents: 'auto', position: 'relative', zIndex: 100 }}
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </motion.div>
           </motion.div>
