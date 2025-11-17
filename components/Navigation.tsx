@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
@@ -17,15 +18,20 @@ const navItems = [
 ]
 
 export default function Navigation() {
+  const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
 
-  const handleNavClick = () => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    e.stopPropagation()
     // Close mobile menu on navigation
     setIsMobileMenuOpen(false)
+    // Use Next.js router to navigate
+    router.push(href)
   }
 
   useEffect(() => {
@@ -110,14 +116,10 @@ export default function Navigation() {
             }}
           >
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.name}
                 href={item.href}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  handleNavClick()
-                  // Ensure Next.js navigation happens - don't prevent default
-                }}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className="text-sm font-medium text-primary-80 hover:text-primary transition-colors relative group cursor-pointer px-2 py-1"
                 style={{ 
                   pointerEvents: 'auto', 
@@ -129,7 +131,7 @@ export default function Navigation() {
               >
                 {item.name}
                 <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#007AFF] w-0 group-hover:w-full transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -174,15 +176,15 @@ export default function Navigation() {
               }}
             >
               {navItems.map((item) => (
-                <Link
+                <a
                   key={item.name}
                   href={item.href}
-                  onClick={handleNavClick}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className="block text-primary-80 hover:text-primary transition-colors cursor-pointer"
                   style={{ pointerEvents: 'auto', position: 'relative', zIndex: 100 }}
                 >
                   {item.name}
-                </Link>
+                </a>
               ))}
             </motion.div>
           </motion.div>
