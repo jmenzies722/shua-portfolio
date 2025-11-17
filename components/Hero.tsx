@@ -81,15 +81,16 @@ export default function Hero() {
         >
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left: Animated Text & CTA */}
-            <div className="space-y-8">
+            <div className="space-y-8 overflow-visible">
               {/* Animated Identity Line */}
-              <div>
+              <div className="overflow-visible">
                 <AnimatedText />
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                  className="mt-4 md:mt-6 text-xl md:text-2xl text-primary-60 font-light leading-relaxed"
+                  className="mt-4 md:mt-6 text-xl md:text-2xl text-primary-60 font-light leading-relaxed overflow-visible"
+                  style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
                 >
                   Building secure, automated, and observable infrastructure on AWS and Kubernetes.
                 </motion.p>

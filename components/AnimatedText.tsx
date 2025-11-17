@@ -32,7 +32,7 @@ export default function AnimatedText() {
   }, [isMobile])
 
   return (
-    <div className="relative h-[80px] md:h-[100px] lg:h-[110px] overflow-hidden flex items-center">
+    <div className="relative min-h-[80px] md:min-h-[100px] lg:min-h-[110px] overflow-visible flex items-center">
       <AnimatePresence mode="wait">
         <motion.h1
           key={currentIndex}
@@ -43,8 +43,8 @@ export default function AnimatedText() {
             duration: isMobile ? 0.2 : 0.4, 
             ease: [0.25, 0.1, 0.25, 1] // Smoother easing
           }}
-          className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] gradient-text absolute inset-0 flex items-center"
-          style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
+          className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] gradient-text w-full"
+          style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}
         >
           {phrases[currentIndex]}
         </motion.h1>
