@@ -15,6 +15,11 @@ export default function HeroHalo({ children }: HeroHaloProps) {
   const springY = useSpring(mouseY, { damping: 30, stiffness: 150 })
 
   useEffect(() => {
+    // Disable on mobile for performance
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      return
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       const rect = (e.currentTarget as Window).innerWidth
       const centerX = window.innerWidth / 2

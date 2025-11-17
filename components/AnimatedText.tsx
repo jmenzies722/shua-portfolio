@@ -12,14 +12,24 @@ const phrases = [
 
 export default function AnimatedText() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % phrases.length)
-    }, 3000)
+    }, isMobile ? 4000 : 3000) // Slower on mobile to reduce CPU usage
 
     return () => clearInterval(interval)
-  }, [])
+  }, [isMobile])
 
   return (
     <div className="relative min-h-[80px] md:min-h-[100px] lg:min-h-[120px] overflow-visible">
@@ -29,7 +39,7 @@ export default function AnimatedText() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: isMobile ? 0.3 : 0.6, ease: [0.4, 0, 0.2, 1] }}
           className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] gradient-text"
           style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
         >

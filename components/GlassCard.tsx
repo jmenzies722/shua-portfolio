@@ -1,6 +1,6 @@
 'use client'
 
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
@@ -13,16 +13,27 @@ interface GlassCardProps {
 }
 
 const GlassCard = memo(function GlassCard({ children, className = '', delay = 0, onClick, hover = true }: GlassCardProps) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.98 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ 
-        duration: 0.35, 
-        delay: delay * 0.05, 
+        duration: isMobile ? 0.2 : 0.35, 
+        delay: delay * (isMobile ? 0.02 : 0.05), 
         ease: [0.4, 0, 0.2, 1],
-        scale: { duration: 0.3 }
+        scale: { duration: isMobile ? 0.15 : 0.3 }
       }}
       className={`glass-card ${className}`}
               style={{ 

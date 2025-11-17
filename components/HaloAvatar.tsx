@@ -47,54 +47,69 @@ export default function HaloAvatar({ children, size = 'md', className = '' }: Ha
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [mouseX, mouseY])
 
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <motion.div 
       className={`relative inline-block ${sizeClasses[size]} ${className}`}
-      animate={{
-        y: [0, -3, 0], // Floating effect: 2-4px up-down motion
+      animate={isMobile ? {} : {
+        y: [0, -3, 0], // Floating effect: disabled on mobile
       }}
-      transition={{
+      transition={isMobile ? {} : {
         duration: 4,
         repeat: Infinity,
         ease: 'easeInOut',
       }}
-      style={{
+      style={isMobile ? {} : {
         rotateX,
         rotateY,
         transformStyle: 'preserve-3d',
       }}
     >
-      {/* Cinematic radial glow halo - circular, matching hero section */}
-      <motion.div
-        className="absolute inset-0 rounded-full pointer-events-none -z-10"
-        style={{
-          x: springX,
-          y: springY,
-          background: 'radial-gradient(circle, rgba(0, 122, 255, 0.5) 0%, rgba(90, 200, 250, 0.35) 25%, rgba(138, 43, 226, 0.25) 50%, transparent 75%)',
-          filter: 'blur(80px)',
-          transform: 'translateZ(0)',
-        }}
-      />
+      {/* Cinematic radial glow halo - disabled on mobile for performance */}
+      {!isMobile && (
+        <>
+          <motion.div
+            className="absolute inset-0 rounded-full pointer-events-none -z-10"
+            style={{
+              x: springX,
+              y: springY,
+              background: 'radial-gradient(circle, rgba(0, 122, 255, 0.5) 0%, rgba(90, 200, 250, 0.35) 25%, rgba(138, 43, 226, 0.25) 50%, transparent 75%)',
+              filter: 'blur(80px)',
+              transform: 'translateZ(0)',
+            }}
+          />
+          
+          {/* Secondary softer glow layer */}
+          <motion.div
+            className="absolute inset-0 rounded-full pointer-events-none -z-10"
+            style={{
+              x: springX,
+              y: springY,
+              background: 'radial-gradient(circle, rgba(90, 200, 250, 0.2) 0%, transparent 60%)',
+              filter: 'blur(100px)',
+              transform: 'translateZ(0)',
+            }}
+          />
+        </>
+      )}
       
-      {/* Secondary softer glow layer */}
-      <motion.div
-        className="absolute inset-0 rounded-full pointer-events-none -z-10"
-        style={{
-          x: springX,
-          y: springY,
-          background: 'radial-gradient(circle, rgba(90, 200, 250, 0.2) 0%, transparent 60%)',
-          filter: 'blur(100px)',
-          transform: 'translateZ(0)',
-        }}
-      />
-      
-      {/* HaloAura - subtle depth effect - circular */}
+      {/* HaloAura - subtle depth effect - simplified on mobile */}
       <motion.div
         className="absolute -inset-4 rounded-full pointer-events-none -z-10"
         style={{
           background: 'radial-gradient(circle, rgba(0, 122, 255, 0.15) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-          opacity: 0.6,
+          filter: isMobile ? 'blur(20px)' : 'blur(40px)',
+          opacity: isMobile ? 0.4 : 0.6,
         }}
       />
 

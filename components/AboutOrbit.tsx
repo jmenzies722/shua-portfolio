@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Code2, 
@@ -30,7 +30,50 @@ const orbitDuration = 25
 export default function AboutOrbit() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // On mobile, use static layout (no animation)
+  if (isMobile) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center">
+          {icons.map(({ Icon, label, color }, index) => {
+            const angle = (index / icons.length) * Math.PI * 2
+            const x = Math.cos(angle) * (radius * 0.7) // Smaller radius on mobile
+            const y = Math.sin(angle) * (radius * 0.7)
+
+            return (
+              <div
+                key={index}
+                className="absolute pointer-events-none"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                  opacity: 0.5,
+                }}
+              >
+                <div className="glass-badge p-1.5 rounded-lg">
+                  <Icon className="w-3 h-3" style={{ color }} />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  // Desktop: Full orbit animation
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
       <motion.div
@@ -65,8 +108,8 @@ export default function AboutOrbit() {
                 scale: hoveredIndex === index ? 1.4 : 0.9,
               }}
               transition={{
-                opacity: { duration: 0.3 },
-                scale: { duration: 0.3 },
+                opacity: { duration: 0.15 },
+                scale: { duration: 0.15 },
               }}
               onHoverStart={() => {
                 setHoveredIndex(index)
@@ -80,7 +123,7 @@ export default function AboutOrbit() {
               <motion.div
                 className="glass-badge p-2 rounded-lg cursor-pointer backdrop-blur-xl"
                 whileHover={{ scale: 1.15, rotate: 5 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.15 }}
               >
                 <Icon className="w-4 h-4" style={{ color }} />
               </motion.div>
