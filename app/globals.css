@@ -61,11 +61,16 @@
     will-change: auto !important;
   }
   
-  /* Reduce animation complexity on mobile */
+  /* Reduce animation complexity on mobile - super fast */
   @media (prefers-reduced-motion: no-preference) {
     * {
-      animation-duration: 0.3s !important;
-      transition-duration: 0.2s !important;
+      animation-duration: 0.15s !important;
+      transition-duration: 0.1s !important;
+    }
+    
+    /* Disable most animations on mobile */
+    [class*="animate-"] {
+      animation-duration: 0.1s !important;
     }
   }
 }

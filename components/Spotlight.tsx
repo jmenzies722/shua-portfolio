@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 export default function Spotlight() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const springConfig = { damping: 30, stiffness: 150 }
@@ -12,6 +13,18 @@ export default function Spotlight() {
   const y = useSpring(mouseY, springConfig)
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    // Disable on mobile for performance
+    if (isMobile) return
+
     let rafId: number | null = null
     let lastX = 0
     let lastY = 0
@@ -41,7 +54,10 @@ export default function Spotlight() {
       window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [mouseX, mouseY])
+  }, [mouseX, mouseY, isMobile])
+
+  // Don't render on mobile
+  if (isMobile) return null
 
   const background = useTransform(
     [x, y],
