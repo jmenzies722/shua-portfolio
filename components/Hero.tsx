@@ -166,7 +166,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Scroll Indicator */}
-      <div
+      <motion.div
         className="absolute bottom-10 left-1/2 -translate-x-1/2"
         style={{ opacity }}
       >
@@ -181,7 +181,7 @@ export default function Hero() {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   )
 }
