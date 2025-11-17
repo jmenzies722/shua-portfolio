@@ -85,6 +85,10 @@ export default function Navigation() {
                   <Link
                     key={item.name}
                     href={item.href}
+                    onClick={(e) => {
+                      // Ensure navigation works
+                      e.stopPropagation()
+                    }}
                     className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
                       isActive
                         ? 'text-white bg-white/[0.12]'

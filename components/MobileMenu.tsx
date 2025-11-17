@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { X, ChevronRight } from 'lucide-react'
 
 interface MobileMenuProps {
@@ -13,6 +13,12 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  
+  const handleLinkClick = (href: string) => {
+    onClose()
+    router.push(href)
+  }
 
   return (
     <AnimatePresence>
@@ -83,19 +89,19 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
                 {navItems.map((item) => {
                   const isActive = pathname === item.href
                   return (
-                    <Link
+                    <button
                       key={item.name}
-                      href={item.href}
-                      onClick={onClose}
-                      className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+                      onClick={() => handleLinkClick(item.href)}
+                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-colors text-left ${
                         isActive
                           ? 'bg-white/[0.12] text-white'
                           : 'text-white/80 hover:bg-white/[0.12] hover:text-white'
                       }`}
+                      style={{ pointerEvents: 'auto', cursor: 'pointer' }}
                     >
                       <span className="text-base font-medium">{item.name}</span>
                       <ChevronRight className="w-5 h-5 text-white/40" />
-                    </Link>
+                    </button>
                   )
                 })}
               </nav>

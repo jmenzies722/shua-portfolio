@@ -30,16 +30,14 @@ export default function AnimatedText() {
 
   if (!mounted) {
     return (
-      <div className="relative min-h-[80px] md:min-h-[100px] lg:min-h-[120px] overflow-visible flex items-center">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] gradient-text w-full">
-          {phrases[0]}
-        </h1>
-      </div>
+      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] gradient-text">
+        {phrases[0]}
+      </h1>
     )
   }
 
   return (
-    <div className="relative min-h-[80px] md:min-h-[100px] lg:min-h-[120px] overflow-visible w-full">
+    <div className="relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] lg:min-h-[4.5rem]">
       <AnimatePresence mode="wait" initial={false}>
         <motion.h1
           key={currentIndex}
@@ -50,12 +48,11 @@ export default function AnimatedText() {
             duration: 0.4,
             ease: [0.4, 0, 0.2, 1]
           }}
-          className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] gradient-text w-full"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] gradient-text"
           style={{ 
-            whiteSpace: 'normal', 
-            wordBreak: 'break-word', 
+            whiteSpace: 'normal',
+            wordBreak: 'normal',
             overflowWrap: 'break-word',
-            hyphens: 'auto',
           }}
         >
           {phrases[currentIndex]}
