@@ -4,6 +4,8 @@
  */
 import Image from 'next/image'
 import { resumeData } from '@/content/resume'
+import SectionShell from '@/components/SectionShell'
+import Card from '@/components/ui/Card'
 
 const aboutSections = [
   {
@@ -46,7 +48,7 @@ const aboutSections = [
 
 export default function Page() {
   return (
-    <div className="section-wrapper space-y-10">
+    <SectionShell className="section-wrapper space-y-10">
       <div className="text-center space-y-6">
         <p className="text-sm uppercase tracking-[0.3em] text-white/60">About</p>
         <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">Shaping resilient cloud platforms.</h1>
@@ -71,8 +73,8 @@ export default function Page() {
 
       <div className="grid gap-6 md:grid-cols-2">
         {aboutSections.map((section) => (
-          <div key={section.title} className="glass-card p-6 sm:p-8 flex flex-col">
-            <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
+          <Card key={section.title} className="flex flex-col space-y-3">
+            <h2 className="text-2xl font-semibold">{section.title}</h2>
             <ul className="space-y-3 text-white/70 text-base">
               {section.bullets.map((item) => (
                 <li key={item} className="flex items-start gap-3">
@@ -81,9 +83,9 @@ export default function Page() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Card>
         ))}
       </div>
-    </div>
+    </SectionShell>
   )
 }

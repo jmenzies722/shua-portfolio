@@ -1,4 +1,9 @@
+'use client'
+
 import { ReactNode } from 'react'
+import { motion } from 'framer-motion'
+import { hoverMotion } from '@/lib/motion'
+import { cn } from '@/lib/utils'
 
 interface CardProps {
   children: ReactNode
@@ -6,17 +11,15 @@ interface CardProps {
   hover?: boolean
 }
 
-export default function Card({ children, className = '', hover = true }: CardProps) {
+export default function Card({ children, className, hover = true }: CardProps) {
   return (
-    <div
-      className={`glass-card p-6 md:p-8 ${hover ? 'hover:bg-white/[0.06]' : ''} ${className}`}
-      style={{
-        opacity: 1,
-        transform: 'translateY(0)',
-        transition: hover ? 'background 0.2s ease, border-color 0.2s ease' : 'none',
-      }}
+    <motion.div
+      className={cn('glass-card p-6 sm:p-8', className)}
+      whileHover={hover ? hoverMotion.whileHover : undefined}
+      whileTap={hover ? hoverMotion.whileTap : undefined}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }

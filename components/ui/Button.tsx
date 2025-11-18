@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { motion } from 'framer-motion'
 
 interface ButtonProps {
   children: ReactNode
@@ -27,10 +28,13 @@ export default function Button({
   const baseClasses =
     'inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5ac8fa]/70 disabled:opacity-60 disabled:cursor-not-allowed'
 
-  const variantClasses = {
-    primary: 'bg-white text-black hover:bg-white/90',
-    secondary: 'border border-white/15 text-white hover:border-white/30',
-  }
+const variantClasses = {
+  primary: 'bg-white text-black hover:bg-white/90',
+  secondary: 'border border-white/15 text-white hover:border-white/30',
+}
+
+const MotionLink = motion(Link)
+const MotionButton = motion.button
 
   const content = (
     <>
@@ -41,23 +45,29 @@ export default function Button({
   
   if (href) {
     return (
-      <Link
+      <MotionLink
         href={href}
         className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+        whileHover={{ scale: 1.015 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
         {content}
-      </Link>
+      </MotionLink>
     )
   }
   
   return (
-    <button
+    <MotionButton
       type={type}
       onClick={onClick}
       disabled={disabled}
       className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+      whileHover={{ scale: disabled ? 1 : 1.015 }}
+      whileTap={{ scale: disabled ? 1 : 0.98 }}
+      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
     >
       {content}
-    </button>
+    </MotionButton>
   )
 }

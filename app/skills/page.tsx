@@ -3,6 +3,8 @@
  * Categories: Languages, Cloud & DevOps, Monitoring & Security, Collaboration
  */
 import { resumeData } from '@/content/resume'
+import SectionShell from '@/components/SectionShell'
+import Card from '@/components/ui/Card'
 
 const categories = [
   {
@@ -25,7 +27,7 @@ const categories = [
 
 export default function Page() {
   return (
-    <div className="section-wrapper space-y-10">
+    <SectionShell className="section-wrapper space-y-10">
       <div className="text-center space-y-4">
         <p className="text-sm uppercase tracking-[0.3em] text-white/60">Skills</p>
         <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">Systems thinking. Hands-on skills.</h1>
@@ -37,7 +39,7 @@ export default function Page() {
 
       <div className="grid gap-6 md:grid-cols-2">
         {categories.map((category) => (
-          <div key={category.title} className="glass-card p-6 space-y-4">
+          <Card key={category.title} className="space-y-4">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-white/60">{category.title}</p>
               <h2 className="text-2xl font-semibold mt-1">Core tools</h2>
@@ -49,9 +51,9 @@ export default function Page() {
                 </span>
               ))}
             </div>
-          </div>
+          </Card>
         ))}
       </div>
-    </div>
+    </SectionShell>
   )
 }

@@ -5,11 +5,13 @@
 import Link from 'next/link'
 import { Download, Mail, Phone, MapPin, Linkedin, Github } from 'lucide-react'
 import { resumeData } from '@/content/resume'
+import SectionShell from '@/components/SectionShell'
+import Card from '@/components/ui/Card'
 
 export default function Page() {
   return (
-    <div className="section-wrapper space-y-8">
-      <div className="glass-card p-8 space-y-6 text-center">
+    <SectionShell className="section-wrapper space-y-8">
+      <Card className="space-y-6 text-center">
         <div className="space-y-2">
           <p className="text-sm uppercase tracking-[0.3em] text-white/60">Résumé</p>
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">{resumeData.name}</h1>
@@ -43,14 +45,14 @@ export default function Page() {
             Download PDF
           </Link>
         </div>
-      </div>
+      </Card>
 
-      <section className="glass-card p-8 space-y-4">
+      <Card className="space-y-4">
         <h2 className="text-2xl font-semibold">Summary</h2>
         <p className="text-white/75">{resumeData.summary}</p>
-      </section>
+      </Card>
 
-      <section className="glass-card p-8 space-y-6">
+      <Card className="space-y-6">
         <h2 className="text-2xl font-semibold">Experience</h2>
         <div className="space-y-6">
           {resumeData.experience.map((experience) => (
@@ -75,9 +77,9 @@ export default function Page() {
             </div>
           ))}
         </div>
-      </section>
+      </Card>
 
-      <section className="glass-card p-8 space-y-6">
+      <Card className="space-y-6">
         <h2 className="text-2xl font-semibold">Projects</h2>
         <div className="space-y-6">
           {resumeData.projects.map((project) => (
@@ -105,9 +107,9 @@ export default function Page() {
             </div>
           ))}
         </div>
-      </section>
+      </Card>
 
-      <section className="glass-card p-8 space-y-6">
+      <Card className="space-y-6">
         <h2 className="text-2xl font-semibold">Skills</h2>
         <div className="grid gap-6 sm:grid-cols-2">
           {Object.entries(resumeData.skills).map(([category, skills]) => (
@@ -125,9 +127,9 @@ export default function Page() {
             </div>
           ))}
         </div>
-      </section>
+      </Card>
 
-      <section className="glass-card p-8 space-y-4">
+      <Card className="space-y-4">
         <h2 className="text-2xl font-semibold">Education</h2>
         {resumeData.education.map((edu) => (
           <div key={edu.degree} className="space-y-1">
@@ -137,7 +139,7 @@ export default function Page() {
             </p>
           </div>
         ))}
-      </section>
-    </div>
+      </Card>
+    </SectionShell>
   )
 }

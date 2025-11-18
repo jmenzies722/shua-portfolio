@@ -3,10 +3,12 @@
  * Each project: Title, Description, Stack, Metrics, Link to case study
  */
 import { resumeData } from '@/content/resume'
+import SectionShell from '@/components/SectionShell'
+import Card from '@/components/ui/Card'
 
 export default function Page() {
   return (
-    <div className="section-wrapper space-y-10">
+    <SectionShell className="section-wrapper space-y-10">
       <div className="text-center space-y-4">
         <p className="text-sm uppercase tracking-[0.3em] text-white/60">Projects</p>
         <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
@@ -19,7 +21,7 @@ export default function Page() {
 
       <div className="grid gap-6 md:grid-cols-2">
         {resumeData.projects.map((project) => (
-          <article key={project.name} className="glass-card p-8 space-y-6">
+          <Card key={project.name} className="space-y-6">
             <div>
               <p className="text-xs uppercase tracking-[0.4em] text-white/60">{project.company}</p>
               <h2 className="text-2xl font-semibold mt-2">{project.name}</h2>
@@ -46,9 +48,9 @@ export default function Page() {
             >
               View details →
             </a>
-          </article>
+          </Card>
         ))}
       </div>
-    </div>
+    </SectionShell>
   )
 }

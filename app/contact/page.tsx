@@ -4,10 +4,12 @@
  */
 import { Mail, Linkedin, Github } from 'lucide-react'
 import { resumeData } from '@/content/resume'
+import SectionShell from '@/components/SectionShell'
+import Card from '@/components/ui/Card'
 
 export default function Page() {
   return (
-    <div className="section-wrapper space-y-10">
+    <SectionShell className="section-wrapper space-y-10">
       <div className="text-center space-y-4">
         <p className="text-sm uppercase tracking-[0.3em] text-white/60">Contact</p>
         <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
@@ -19,7 +21,7 @@ export default function Page() {
         </p>
       </div>
 
-      <div className="glass-card p-8 space-y-6">
+      <Card className="space-y-6">
         <div className="space-y-3">
           <a href={`mailto:${resumeData.email}`} className="flex items-center gap-4 rounded-2xl border border-white/10 p-4 hover:border-white/25 transition-colors">
             <Mail className="h-5 w-5 text-[#5ac8fa]" />
@@ -60,7 +62,7 @@ export default function Page() {
             ))}
           </ul>
         </div>
-      </div>
-    </div>
+      </Card>
+    </SectionShell>
   )
 }

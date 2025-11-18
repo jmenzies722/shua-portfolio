@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
   title: 'Josh Menzies | Platform Engineer',
@@ -39,10 +40,11 @@ export default function RootLayout({
         paddingRight: 'env(safe-area-inset-right)',
       }}>
         <Navigation />
-        <main className="min-h-screen relative z-10" style={{
-          paddingTop: 'calc(3.5rem + env(safe-area-inset-top))',
-        }}>
-          {children}
+        <main
+          className="min-h-screen relative z-10"
+          style={{ paddingTop: 'calc(3.5rem + env(safe-area-inset-top))' }}
+        >
+          <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
       </body>
