@@ -5,7 +5,7 @@
 import { MapPin, Calendar } from 'lucide-react'
 import { resumeData } from '@/content/resume'
 
-export default function ExperiencePage() {
+export default function Page() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
       {/* Header */}

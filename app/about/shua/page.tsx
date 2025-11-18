@@ -1,6 +1,6 @@
 import ShuaContent from '@/components/ShuaContent'
 
-export default function ShuaPage() {
+export default function Page() {
   return <ShuaContent />
 }
 

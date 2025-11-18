@@ -1,6 +1,6 @@
 import ChatPageContent from '@/components/ChatPageContent'
 
-export default function ChatPage() {
+export default function Page() {
   return <ChatPageContent />
 }
 
