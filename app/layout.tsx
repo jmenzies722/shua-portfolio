@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import ShuaChat from '@/components/ShuaChat'
 
 export const metadata: Metadata = {
   title: 'Josh Menzies | Platform Engineer',
@@ -12,9 +11,9 @@ export const metadata: Metadata = {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 5,
-    viewportFit: 'cover', // iPhone notch support
+    viewportFit: 'cover',
   },
-  themeColor: '#0B0E11',
+  themeColor: '#050608',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -34,7 +33,7 @@ export default function RootLayout({
       paddingTop: 'env(safe-area-inset-top)',
       paddingBottom: 'env(safe-area-inset-bottom)',
     }}>
-      <body className="antialiased bg-[#0B0B0C] text-white" style={{
+      <body className="antialiased bg-[#050608] text-white" style={{
         paddingLeft: 'env(safe-area-inset-left)',
         paddingRight: 'env(safe-area-inset-right)',
       }}>
@@ -45,7 +44,6 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <ShuaChat />
       </body>
     </html>
   )

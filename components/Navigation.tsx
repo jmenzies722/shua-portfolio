@@ -1,10 +1,15 @@
 'use client'
 
+/**
+ * Apple-style Navigation Bar
+ * Desktop: Avatar + Name | Nav Links (centered/right)
+ * Mobile: Avatar + Name + Menu Button | Bottom Sheet Menu
+ */
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { Menu } from 'lucide-react'
-import MobileMenu from './MobileMenu'
+import { usePathname } from 'next/navigation'
+import { Menu, X } from 'lucide-react'
+import Image from 'next/image'
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -21,7 +26,6 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const pathname = usePathname()
-  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +51,7 @@ export default function Navigation() {
       <nav
         className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-200 ${
           isScrolled
-            ? 'bg-[#0B0B0C]/95 backdrop-blur-md border-b border-white/[0.06]'
+            ? 'bg-[#050608]/95 backdrop-blur-md border-b border-white/[0.06]'
             : 'bg-transparent'
         }`}
         style={{
@@ -58,30 +62,30 @@ export default function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
-            {/* Logo - Profile Pic Left of Josh M. */}
-            <Link 
-              href="/" 
-              className="flex items-center gap-2 sm:gap-3 group flex-shrink-0"
-              style={{ pointerEvents: 'auto' }}
-            >
+            {/* Left: Avatar + Name + Role */}
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group">
               <div className="relative w-8 h-8 sm:w-9 md:w-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
-                <img
+                <Image
                   src="/IMG_2897.jpg"
                   alt="Josh Menzies"
+                  width={40}
+                  height={40}
                   className="w-full h-full object-cover rounded-full"
-                  loading="eager"
+                  priority
                 />
               </div>
-              <span className="text-base sm:text-lg md:text-xl font-semibold text-white/90 whitespace-nowrap">
-                Josh M.
-              </span>
+              <div className="flex flex-col">
+                <span className="text-sm sm:text-base md:text-lg font-semibold text-white/90 leading-tight">
+                  Josh M.
+                </span>
+                <span className="text-xs text-white/60 leading-tight hidden sm:block">
+                  Platform Engineer
+                </span>
+              </div>
             </Link>
 
-            {/* Desktop Nav - Centered */}
-            <div 
-              className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2"
-              style={{ pointerEvents: 'auto', zIndex: 10000 }}
-            >
+            {/* Desktop Nav - Right */}
+            <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
                 const isActive = pathname === item.href
                 return (
@@ -106,9 +110,6 @@ export default function Navigation() {
               className="lg:hidden p-2 -mr-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors"
               aria-label="Open menu"
               type="button"
-              style={{
-                pointerEvents: 'auto',
-              }}
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -116,12 +117,69 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* iOS-Style Mobile Menu */}
-      <MobileMenu
-        isOpen={isMobileOpen}
-        onClose={() => setIsMobileOpen(false)}
-        navItems={navItems}
-      />
+      {/* Mobile Menu Sheet */}
+      {isMobileOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] lg:hidden"
+            onClick={() => setIsMobileOpen(false)}
+          />
+          <div
+            className="fixed bottom-0 left-0 right-0 z-[9999] lg:hidden bg-white/[0.08] border-t border-white/[0.12] backdrop-blur-md rounded-t-3xl shadow-[0_8px_30px_rgb(0,0,0,0.4)]"
+            style={{
+              paddingBottom: 'max(1rem, env(safe-area-inset-bottom))',
+            }}
+          >
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-12 h-1 bg-white/30 rounded-full" />
+            </div>
+            <div className="px-6 py-4 border-b border-white/[0.08] flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04]">
+                  <Image
+                    src="/IMG_2897.jpg"
+                    alt="Josh Menzies"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white/90">Josh M.</h3>
+                  <p className="text-xs text-white/60">Platform Engineer</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsMobileOpen(false)}
+                className="p-2 rounded-full hover:bg-white/[0.12] transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-5 h-5 text-white/80" />
+              </button>
+            </div>
+            <nav className="px-2 py-2">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    className={`block w-full px-4 py-3 rounded-xl transition-colors text-left ${
+                      isActive
+                        ? 'bg-white/[0.12] text-white'
+                        : 'text-white/80 hover:bg-white/[0.12] hover:text-white'
+                    }`}
+                  >
+                    <span className="text-base font-medium">{item.name}</span>
+                  </Link>
+                )
+              })}
+            </nav>
+            <div className="h-2" />
+          </div>
+        </>
+      )}
     </>
   )
 }

@@ -1,23 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+/* Apple-Level Dark Design System - Tahoe Glass */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg-base: #0B0B0C;
-  --bg-elevated: #15181D;
-  --glass-bg: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-hover: rgba(255, 255, 255, 0.06);
+  --bg-base: #050608;
+  --bg-elevated: #0B0B0C;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-hover: rgba(255, 255, 255, 0.08);
   
   --text-primary: #FFFFFF;
   --text-secondary: rgba(255, 255, 255, 0.85);
   --text-tertiary: rgba(255, 255, 255, 0.65);
   
   --accent-blue: #007AFF;
-  --accent-blue-light: #5AC8FA;
-  --accent-blue-dark: #0051D5;
 }
 
 * {
@@ -34,9 +33,9 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #0B0B0C;
-  background-image: linear-gradient(135deg, rgba(56, 120, 255, 0.02) 0%, transparent 40%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  background: #050608;
+  background-image: linear-gradient(135deg, rgba(56, 120, 255, 0.03) 0%, transparent 50%);
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
@@ -45,28 +44,21 @@ body {
 
 /* Apple Tahoe Glass Card */
 .glass-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 1.5rem;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
-.glass-profile {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
+/* Gradient Text */
 .gradient-text {
   background: linear-gradient(135deg, #5AC8FA 0%, #007AFF 50%, #0051D5 100%);
   -webkit-background-clip: text;
@@ -83,204 +75,14 @@ nav:not(footer nav) {
   right: 0;
 }
 
-nav:not(footer nav) a,
-nav:not(footer nav) Link,
-nav:not(footer nav) a[href] {
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  text-decoration: none !important;
-  display: inline-block !important;
-  position: relative !important;
-  z-index: 10000 !important;
-}
-
-/* Ensure nav container allows clicks */
-nav:not(footer nav) > div {
-  pointer-events: auto !important;
-  position: relative;
-  z-index: 10000;
-}
-
-/* Footer */
-footer {
-  position: relative;
-  z-index: 1;
-  background: #0B0B0C;
-}
-
-footer nav {
-  position: static !important;
-  display: flex;
-  flex-direction: column;
-}
-
-footer nav a,
-footer a[href] {
-  position: relative;
-  z-index: 10;
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  display: inline-block;
-}
-
-/* Sections */
-section {
-  scroll-margin-top: 80px;
-  min-height: 100vh;
-  padding: 5rem 1rem;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-@media (min-width: 768px) {
-  section {
-    padding: 7rem 2rem;
-  }
-}
-
-/* Content renders immediately - no blur outlines */
-section > *,
-section > div > * {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  transition: none !important;
-}
-
-.glass-card {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-.glass-card:hover {
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-}
-
-h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-}
-
-h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-}
-
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding: 0 2rem;
-  }
-}
-
-/* Mobile optimizations - iPhone 15 Dynamic Island */
+/* Mobile optimizations */
 @media (max-width: 768px) {
   .glass-card {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    padding: 1rem;
   }
   
-  * {
-    will-change: auto !important;
+  body {
+    background-image: linear-gradient(135deg, rgba(56, 120, 255, 0.02) 0%, transparent 40%);
   }
-  
-  .container {
-    padding-left: max(1rem, calc(1rem + env(safe-area-inset-left)));
-    padding-right: max(1rem, calc(1rem + env(safe-area-inset-right)));
-  }
-  
-  h1, h2, h3 {
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-  
-  button, a[role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0.75rem 1.5rem;
-  }
-  
-  nav:not(footer nav) {
-    height: calc(3.5rem + env(safe-area-inset-top));
-  }
-  
-  nav:not(footer nav) > div > div {
-    height: 3.5rem;
-  }
-  
-  nav a[href="/"] {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.5rem;
-    flex-shrink: 0;
-  }
-  
-  footer nav a {
-    font-size: 0.75rem;
-    padding: 0.5rem 0;
-  }
-  
-  html {
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-}
-
-/* Dynamic Island & Safe Area Support */
-@supports (padding: max(0px)) {
-  main {
-    padding-top: calc(4rem + env(safe-area-inset-top));
-  }
-  
-  @media (max-width: 768px) {
-    main {
-      padding-top: calc(3.5rem + env(safe-area-inset-top));
-    }
-  }
-  
-  section#hero {
-    padding-top: max(5rem, calc(5rem + env(safe-area-inset-top)));
-    padding-bottom: max(4rem, calc(4rem + env(safe-area-inset-bottom)));
-  }
-  
-  @media (max-width: 768px) {
-    section#hero {
-      padding-top: max(4rem, calc(4rem + env(safe-area-inset-top)));
-    }
-  }
-  
-  footer {
-    padding-bottom: max(3rem, calc(3rem + env(safe-area-inset-bottom)));
-  }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-/* Focus states */
-*:focus-visible {
-  outline: 2px solid var(--accent-blue);
-  outline-offset: 2px;
 }
