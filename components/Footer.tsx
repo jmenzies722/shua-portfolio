@@ -6,6 +6,7 @@
  */
 import Link from 'next/link'
 import { resumeData } from '@/content/resume'
+import { withTrailingSlash } from '@/lib/utils'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -25,25 +26,25 @@ export default function Footer() {
             © {currentYear} {resumeData.name}. All rights reserved.
           </div>
           <nav className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-            <Link href="/about" className="text-sm text-white/60 hover:text-white transition-colors">
+            <Link href={withTrailingSlash('/about')} className="text-sm text-white/60 hover:text-white transition-colors">
               About
             </Link>
-            <Link href="/experience" className="text-sm text-white/60 hover:text-white transition-colors">
+            <Link href={withTrailingSlash('/experience')} className="text-sm text-white/60 hover:text-white transition-colors">
               Experience
             </Link>
-            <Link href="/skills" className="text-sm text-white/60 hover:text-white transition-colors">
+            <Link href={withTrailingSlash('/skills')} className="text-sm text-white/60 hover:text-white transition-colors">
               Skills
             </Link>
-            <Link href="/projects" className="text-sm text-white/60 hover:text-white transition-colors">
+            <Link href={withTrailingSlash('/projects')} className="text-sm text-white/60 hover:text-white transition-colors">
               Projects
             </Link>
-            <Link href="/resume" className="text-sm text-white/60 hover:text-white transition-colors">
+            <Link href={withTrailingSlash('/resume')} className="text-sm text-white/60 hover:text-white transition-colors">
               Resume
             </Link>
-            <Link href="/blog" className="text-sm text-white/60 hover:text-white transition-colors">
+            <Link href={withTrailingSlash('/blog')} className="text-sm text-white/60 hover:text-white transition-colors">
               Blog
             </Link>
-            <Link href="/contact" className="text-sm text-white/60 hover:text-white transition-colors">
+            <Link href={withTrailingSlash('/contact')} className="text-sm text-white/60 hover:text-white transition-colors">
               Contact
             </Link>
           </nav>

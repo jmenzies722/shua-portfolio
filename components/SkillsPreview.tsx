@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight, Code, Cloud, Shield, Users } from 'lucide-react'
 import { resumeData } from '@/content/resume'
+import { withTrailingSlash } from '@/lib/utils'
 
 const skillCategories = [
   { name: 'Languages', icon: Code, skills: resumeData.skills.languages },
@@ -45,7 +46,7 @@ export default function SkillsPreview() {
 
         <div className="text-center">
           <Link
-            href="/skills"
+            href={withTrailingSlash('/skills')}
             className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 bg-white/[0.05] text-white rounded-xl font-medium transition-all duration-200 hover:bg-white/[0.1] hover:border-white/30 hover:scale-[1.02]"
           >
             View all skills

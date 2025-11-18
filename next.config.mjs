@@ -2,21 +2,17 @@
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx'],
   output: 'export',
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
   reactStrictMode: true,
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  // Performance optimizations
   compress: true,
   poweredByHeader: false,
-  // Optimize production builds
   swcMinify: true,
-  // Webpack configuration to fix module loading issues
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
@@ -30,5 +26,5 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+export default nextConfig
 

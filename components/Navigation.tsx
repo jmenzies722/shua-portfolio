@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
+import { stripTrailingSlash, withTrailingSlash } from '@/lib/utils'
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -18,7 +19,7 @@ const navItems = [
 ]
 
 export default function Navigation() {
-  const pathname = usePathname()
+  const pathname = usePathname() || '/'
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -70,11 +71,13 @@ export default function Navigation() {
 
             <div className="hidden lg:flex items-center gap-1 rounded-full bg-white/5 px-2 py-1 border border-white/5">
               {navItems.map((item) => {
-                const active = pathname === item.href
+                const normalizedHref = withTrailingSlash(item.href)
+                const active =
+                  stripTrailingSlash(pathname) === stripTrailingSlash(item.href)
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={normalizedHref}
                     className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                       active ? 'bg-white text-black' : 'text-white/70 hover:text-white'
                     }`}
@@ -128,11 +131,13 @@ export default function Navigation() {
           <div className="mt-10 flex-1 overflow-y-auto px-6 pb-8">
             <div className="glass-card p-6 space-y-2">
               {navItems.map((item) => {
-                const active = pathname === item.href
+                const normalizedHref = withTrailingSlash(item.href)
+                const active =
+                  stripTrailingSlash(pathname) === stripTrailingSlash(item.href)
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={normalizedHref}
                     onClick={() => setIsMenuOpen(false)}
                     className={`block w-full rounded-2xl px-4 py-3 text-lg font-medium transition-colors ${
                       active ? 'bg-white text-black' : 'text-white/80 hover:bg-white/10'

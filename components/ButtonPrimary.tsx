@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 import Link from 'next/link'
+import { withTrailingSlash } from '@/lib/utils'
 
 interface ButtonPrimaryProps {
   children: ReactNode
@@ -41,13 +42,14 @@ export default function ButtonPrimary({
   )
 
   if (href) {
+    const normalizedHref = withTrailingSlash(href)
     return (
       <motion.div
         whileHover={disabled ? {} : { scale: 1.02, y: -2 }}
         whileTap={disabled ? {} : { scale: 0.98 }}
         transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
       >
-        <Link href={href} className={baseClasses}>
+        <Link href={normalizedHref} className={baseClasses}>
           {content}
         </Link>
       </motion.div>

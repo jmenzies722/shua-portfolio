@@ -1,8 +1,10 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { X, ChevronRight } from 'lucide-react'
+import { stripTrailingSlash, withTrailingSlash } from '@/lib/utils'
 
 interface MobileMenuProps {
   isOpen: boolean
@@ -11,22 +13,7 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProps) {
-  const pathname = usePathname()
-  const router = useRouter()
-  
-  const handleLinkClick = (href: string) => {
-    onClose()
-    // Use setTimeout to ensure menu closes before navigation
-    setTimeout(() => {
-      if (href === '/') {
-        // For home page, scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-        router.push(href)
-      } else {
-        router.push(href)
-      }
-    }, 100)
-  }
+  const pathname = usePathname() || '/'
 
   return (
     <AnimatePresence>
@@ -97,28 +84,26 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
 
               {/* Menu Items */}
               <nav className="px-2 py-2">
-                {navItems.map((item) => {
-                  const isActive = pathname === item.href
-                  return (
-                    <button
-                      key={item.name}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        handleLinkClick(item.href)
-                      }}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-colors text-left ${
-                        isActive
-                          ? 'bg-white/[0.12] text-white'
-                          : 'text-white/80 hover:bg-white/[0.12] hover:text-white'
-                      }`}
-                      type="button"
-                    >
-                      <span className="text-base font-medium">{item.name}</span>
-                      <ChevronRight className="w-5 h-5 text-white/40" />
-                    </button>
-                  )
-                })}
+              {navItems.map((item) => {
+                const normalizedHref = withTrailingSlash(item.href)
+                const isActive =
+                  stripTrailingSlash(pathname) === stripTrailingSlash(item.href)
+                return (
+                  <Link
+                    key={item.name}
+                    href={normalizedHref}
+                    onClick={onClose}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-colors text-left ${
+                      isActive
+                        ? 'bg-white/[0.12] text-white'
+                        : 'text-white/80 hover:bg-white/[0.12] hover:text-white'
+                    }`}
+                  >
+                    <span className="text-base font-medium">{item.name}</span>
+                    <ChevronRight className="w-5 h-5 text-white/40" />
+                  </Link>
+                )
+              })}
               </nav>
 
               {/* Bottom Spacing */}

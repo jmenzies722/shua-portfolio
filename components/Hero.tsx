@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, MessageSquare } from 'lucide-react'
 import AnimatedText from './AnimatedText'
+import { withTrailingSlash } from '@/lib/utils'
 
 export default function Hero() {
   return (
@@ -35,14 +36,14 @@ export default function Hero() {
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
                 <Link
-                  href="/projects"
+                  href={withTrailingSlash('/projects')}
                   className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded-xl font-medium text-sm sm:text-base transition-all duration-200 hover:bg-white/90 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-white/50"
                 >
                   View Projects
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
                 <Link
-                  href="/chat"
+                  href={withTrailingSlash('/chat')}
                   className="group inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 bg-white/[0.05] text-white rounded-xl font-medium text-sm sm:text-base transition-all duration-200 hover:bg-white/[0.1] hover:border-white/30 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-white/30"
                 >
                   <MessageSquare className="w-4 h-4" />

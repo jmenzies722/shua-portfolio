@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { resumeData } from '@/content/resume'
+import { withTrailingSlash } from '@/lib/utils'
 
 export default function ProjectsPreview() {
   const featured = resumeData.projects.slice(0, 2)
@@ -21,7 +22,7 @@ export default function ProjectsPreview() {
           {featured.map((project, index) => (
             <Link 
               key={index} 
-              href={`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`}
+              href={withTrailingSlash(`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`)}
               className="glass-card p-8 block hover:bg-white/[0.06] transition-all duration-200"
             >
               <div className="h-full flex flex-col">
@@ -47,7 +48,7 @@ export default function ProjectsPreview() {
 
         <div className="text-center">
           <Link
-            href="/projects"
+            href={withTrailingSlash('/projects')}
             className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 bg-white/[0.05] text-white rounded-xl font-medium transition-all duration-200 hover:bg-white/[0.1] hover:border-white/30 hover:scale-[1.02]"
           >
             View all projects

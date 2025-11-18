@@ -1,6 +1,7 @@
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { BlogPost } from '@/types'
+import { withTrailingSlash } from '@/lib/utils'
 
 interface BlogPostContentProps {
   post: BlogPost
@@ -11,7 +12,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
     <section className="py-20 md:py-28 lg:py-32">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
-          href="/blog"
+          href={withTrailingSlash('/blog')}
           className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-12"
         >
           <ArrowLeft className="w-5 h-5" />

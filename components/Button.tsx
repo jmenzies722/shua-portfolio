@@ -3,6 +3,7 @@
 import { motion, MotionProps } from 'framer-motion'
 import { ReactNode } from 'react'
 import Link from 'next/link'
+import { withTrailingSlash } from '@/lib/utils'
 
 interface ButtonProps {
   children: ReactNode
@@ -57,9 +58,10 @@ export default function Button({
         </motion.a>
       )
     }
+    const normalizedHref = withTrailingSlash(href)
     return (
       <motion.div {...motionProps}>
-        <Link href={href} className={classes}>
+        <Link href={normalizedHref} className={classes}>
           {children}
         </Link>
       </motion.div>

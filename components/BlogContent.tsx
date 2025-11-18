@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Calendar, Clock } from 'lucide-react'
+import { withTrailingSlash } from '@/lib/utils'
 
 const blogPosts = [
   {
@@ -45,7 +46,7 @@ export default function BlogContent() {
           {blogPosts.map((post) => (
             <Link
               key={post.slug}
-              href={`/blog/${post.slug}`}
+              href={withTrailingSlash(`/blog/${post.slug}`)}
               className="glass-card p-6 block hover:bg-white/[0.06] transition-all duration-200"
             >
               <div className="h-full flex flex-col">

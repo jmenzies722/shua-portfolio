@@ -2,9 +2,11 @@
  * Projects Page - Case Study Cards
  * Each project: Title, Description, Stack, Metrics, Link to case study
  */
+import Link from 'next/link'
 import { resumeData } from '@/content/resume'
 import SectionShell from '@/components/SectionShell'
 import Card from '@/components/ui/Card'
+import { withTrailingSlash } from '@/lib/utils'
 
 export default function Page() {
   return (
@@ -42,12 +44,12 @@ export default function Page() {
                 </li>
               ))}
             </ul>
-            <a
-              href={`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`}
+            <Link
+              href={withTrailingSlash(`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`)}
               className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white"
             >
               View details →
-            </a>
+            </Link>
           </Card>
         ))}
       </div>

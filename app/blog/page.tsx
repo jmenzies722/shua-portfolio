@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Calendar, Clock } from 'lucide-react'
 import SectionShell from '@/components/SectionShell'
 import Card from '@/components/ui/Card'
+import { withTrailingSlash } from '@/lib/utils'
 
 const posts = [
   {
@@ -52,7 +53,7 @@ export default function Page() {
       <div className="grid gap-6 md:grid-cols-2">
         {posts.map((post) => (
           <Card key={post.slug} className="flex flex-col space-y-4">
-            <Link href={`/blog/${post.slug}`} className="flex flex-col h-full space-y-4">
+            <Link href={withTrailingSlash(`/blog/${post.slug}`)} className="flex flex-col h-full space-y-4">
               <div className="flex items-center justify-between text-xs text-white/60 uppercase tracking-[0.3em]">
                 <span>{post.category}</span>
                 <span>{post.readTime}</span>

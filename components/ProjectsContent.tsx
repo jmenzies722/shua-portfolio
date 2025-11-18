@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { resumeData } from '@/content/resume'
+import { withTrailingSlash } from '@/lib/utils'
 
 export default function ProjectsContent() {
   return (
@@ -19,7 +20,7 @@ export default function ProjectsContent() {
           {resumeData.projects.map((project, index) => (
             <Link
               key={index}
-              href={`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`}
+              href={withTrailingSlash(`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`)}
               className="glass-card p-8 block hover:bg-white/[0.06] transition-all duration-200"
             >
               <div className="h-full flex flex-col">
