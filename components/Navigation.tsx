@@ -177,8 +177,8 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* Mobile Bottom Sheet Menu - iOS Style */}
-      <AnimatePresence>
+      {/* Mobile Bottom Sheet Menu - iOS Style - Only shows when menu button is clicked */}
+      <AnimatePresence mode="wait">
         {isMenuOpen && (
           <>
             {/* Backdrop */}
@@ -189,13 +189,17 @@ export default function Navigation() {
               transition={{ duration: 0.2 }}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] lg:hidden"
               onClick={() => setIsMenuOpen(false)}
+              style={{ top: 0, left: 0, right: 0, bottom: 0 }}
             />
 
-            {/* Bottom Sheet */}
+            {/* Bottom Sheet - Slides up from bottom when menu is opened */}
             <motion.div
               {...bottomSheetMotion}
-              className="fixed bottom-0 left-0 right-0 z-[9999] lg:hidden"
+              className="fixed bottom-0 left-0 right-0 z-[10000] lg:hidden"
               style={{
+                top: 'auto',
+                bottom: 0,
+                position: 'fixed',
                 paddingBottom: 'max(1rem, calc(1rem + env(safe-area-inset-bottom)))',
                 paddingLeft: 'max(0px, env(safe-area-inset-left))',
                 paddingRight: 'max(0px, env(safe-area-inset-right))',
