@@ -44,7 +44,7 @@ export default function Navigation() {
     <>
       {/* Top Navigation Bar - Mobile-First - Always Pinned at Top */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[9999] transition-colors duration-300 ${
           isScrolled
             ? 'bg-[#050608]/98 backdrop-blur-xl border-b border-white/[0.08]'
             : pathname === '/' ? 'bg-transparent' : 'bg-[#050608]/95 backdrop-blur-xl border-b border-white/[0.06]'
@@ -57,6 +57,10 @@ export default function Navigation() {
           top: 0,
           left: 0,
           right: 0,
+          bottom: 'auto',
+          transform: 'translateY(0)',
+          marginTop: 0,
+          marginBottom: 0,
         }}
       >
         <div className="max-w-7xl mx-auto">
