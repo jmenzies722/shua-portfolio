@@ -12,7 +12,11 @@ export default function PageTransition({ children }: { children: ReactNode }) {
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
-        {...pageTransition}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
+        style={{ position: 'relative', zIndex: 1 }}
       >
         {children}
       </motion.div>

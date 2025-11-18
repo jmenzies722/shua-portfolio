@@ -37,9 +37,10 @@ export default function RootLayout({
         <Spotlight />
         <Navigation />
         <main 
-          className="min-h-screen relative z-10"
+          className="min-h-screen relative"
           style={{
             paddingTop: 'calc(4rem + env(safe-area-inset-top))',
+            zIndex: 10,
           }}
         >
           <PageTransition>{children}</PageTransition>

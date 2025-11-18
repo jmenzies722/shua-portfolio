@@ -73,8 +73,16 @@ button:focus-visible,
 }
 
 
-nav,
-main,
+nav {
+  position: relative;
+  z-index: 20;
+}
+
+main {
+  position: relative;
+  z-index: 10;
+}
+
 footer {
   position: relative;
   z-index: 1;

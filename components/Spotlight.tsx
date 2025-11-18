@@ -1,12 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 export default function Spotlight() {
   const [isVisible, setIsVisible] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [isMobile, setIsMobile] = useState(true)
+  const pathname = usePathname()
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   
@@ -24,6 +26,11 @@ export default function Spotlight() {
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Reset visibility on route change
+  useEffect(() => {
+    setIsVisible(false)
+  }, [pathname])
 
   useEffect(() => {
     if (!mounted || typeof window === 'undefined') return
@@ -75,7 +82,7 @@ export default function Spotlight() {
 
   return (
     <motion.div
-      className="fixed inset-0 pointer-events-none z-[1]"
+      className="fixed inset-0 pointer-events-none z-0"
       initial={{ opacity: 0 }}
       animate={{ opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
