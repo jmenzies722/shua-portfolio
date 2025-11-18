@@ -58,12 +58,17 @@ export default function Navigation() {
           paddingTop: 'max(0px, env(safe-area-inset-top))',
           paddingLeft: 'max(0px, env(safe-area-inset-left))',
           paddingRight: 'max(0px, env(safe-area-inset-right))',
+          pointerEvents: 'auto',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={{ pointerEvents: 'auto' }}>
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Left: Avatar + Name + Role - ALL IN ONE ROW */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group">
+            <Link 
+              href="/" 
+              className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group"
+              style={{ pointerEvents: 'auto', zIndex: 10000 }}
+            >
               <div className="relative w-8 h-8 sm:w-9 md:w-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
                 <Image
                   src="/IMG_2897.jpg"
@@ -85,7 +90,10 @@ export default function Navigation() {
             </Link>
 
             {/* Desktop Nav - Right */}
-            <div className="hidden lg:flex items-center gap-1">
+            <div 
+              className="hidden lg:flex items-center gap-1"
+              style={{ pointerEvents: 'auto', zIndex: 10000, position: 'relative' }}
+            >
               {navItems.map((item) => {
                 const isActive = pathname === item.href
                 return (
@@ -97,6 +105,12 @@ export default function Navigation() {
                         ? 'text-white bg-white/[0.12]'
                         : 'text-white/70 hover:text-white hover:bg-white/[0.08]'
                     }`}
+                    style={{
+                      pointerEvents: 'auto',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      zIndex: 10001,
+                    }}
                   >
                     {item.name}
                   </Link>
@@ -110,6 +124,7 @@ export default function Navigation() {
               className="lg:hidden p-2 -mr-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Open menu"
               type="button"
+              style={{ pointerEvents: 'auto', zIndex: 10000 }}
             >
               <Menu className="w-6 h-6" />
             </button>
