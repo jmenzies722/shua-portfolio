@@ -77,10 +77,10 @@ export default function Navigation() {
             prefetch={true}
             className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group"
             onClick={(e) => {
-              // If already on home page, scroll to top and prevent navigation
+              // Force reload when clicking profile pic to refresh content
               if (pathname === '/') {
                 e.preventDefault()
-                window.scrollTo({ top: 0, behavior: 'smooth' })
+                window.location.href = '/'
               }
             }}
           >
