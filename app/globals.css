@@ -75,23 +75,17 @@ nav:not(footer nav) {
   top: 0;
   left: 0;
   right: 0;
-  pointer-events: auto !important;
 }
 
-nav:not(footer nav) a,
-nav:not(footer nav) Link {
+nav:not(footer nav) a {
   pointer-events: auto !important;
   cursor: pointer !important;
   text-decoration: none !important;
   display: inline-block !important;
-  position: relative !important;
-  z-index: 10000 !important;
 }
 
 nav:not(footer nav) > div {
   pointer-events: auto !important;
-  position: relative;
-  z-index: 10000;
 }
 
 /* Ensure all content renders immediately - NO BLUR */

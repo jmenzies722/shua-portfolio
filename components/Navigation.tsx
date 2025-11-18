@@ -90,7 +90,7 @@ export default function Navigation() {
             </Link>
 
             {/* Desktop Nav - Right */}
-            <nav className="hidden lg:flex items-center gap-1 relative z-[10000]">
+            <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
                 const isActive = pathname === item.href
                 return (
@@ -107,7 +107,7 @@ export default function Navigation() {
                   </Link>
                 )
               })}
-            </nav>
+            </div>
 
             {/* Mobile Menu Button - SAME ROW */}
             <button
