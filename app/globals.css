@@ -258,14 +258,30 @@ html > body > nav:not(footer nav) {
     display: block !important;
   }
   
-  /* Force navbar to top even if body is flex */
-  body > nav:not(footer nav) {
-    position: fixed !important;
-    top: 0 !important;
-    align-self: flex-start !important;
-    order: -9999 !important;
-  }
-}
+      /* Force navbar to top even if body is flex */
+      body > nav:not(footer nav) {
+        position: fixed !important;
+        top: 0 !important;
+        align-self: flex-start !important;
+        order: -9999 !important;
+      }
+      
+      /* Ensure navbar stays at top */
+      [data-navbar="top"] {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: auto !important;
+      }
+      
+      /* Full-screen mobile menu overlay - ensure it covers entire viewport */
+      .fixed.inset-0.z-40 {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+      }
+    }
 
 /* Mobile-First Typography System */
 h1 {
