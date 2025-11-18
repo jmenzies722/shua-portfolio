@@ -10,6 +10,7 @@ type Props = {
   className?: string
   delay?: number
   as?: 'div' | 'section'
+  style?: React.CSSProperties
 }
 
 export default function SectionShell({
@@ -17,6 +18,7 @@ export default function SectionShell({
   className,
   delay = 0,
   as: Tag = 'section',
+  style,
 }: Props) {
   const MotionTag = motion(Tag)
   return (
@@ -26,6 +28,7 @@ export default function SectionShell({
       whileInView="animate"
       viewport={{ once: true, amount: 0.35, margin: '-80px' }}
       className={cn('space-y-6', className)}
+      style={style}
     >
       {children}
     </MotionTag>

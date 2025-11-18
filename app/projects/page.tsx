@@ -13,7 +13,7 @@ export default function Page() {
     <SectionShell 
       className="space-y-8 sm:space-y-10"
       style={{
-        paddingTop: 'calc(5rem + env(safe-area-inset-top))',
+        paddingTop: '1rem',
         paddingBottom: 'calc(3rem + env(safe-area-inset-bottom))',
         paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
         paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',

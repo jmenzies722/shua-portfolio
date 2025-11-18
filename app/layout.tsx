@@ -36,7 +36,12 @@ export default function RootLayout({
       <body className="antialiased bg-[#050608] text-white">
         <Spotlight />
         <Navigation />
-        <main className="min-h-screen relative z-10">
+        <main 
+          className="min-h-screen relative z-10"
+          style={{
+            paddingTop: 'calc(4rem + env(safe-area-inset-top))',
+          }}
+        >
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
