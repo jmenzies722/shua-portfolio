@@ -89,12 +89,7 @@ nav:not(footer nav) > div {
 }
 
 /* Ensure all content renders immediately - NO BLUR */
-section,
-div,
-main {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
+/* Removed blanket opacity rules that might interfere with page rendering */
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
