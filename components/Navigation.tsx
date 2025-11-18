@@ -2,8 +2,7 @@
 
 /**
  * Apple-style Navigation Bar
- * Desktop: Avatar + Name | Nav Links (centered/right)
- * Mobile: Avatar + Name + Menu Button in ONE ROW | Bottom Sheet Menu
+ * Pure Next.js Link components - NO event handlers or interceptors
  */
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -58,17 +57,12 @@ export default function Navigation() {
           paddingTop: 'max(0px, env(safe-area-inset-top))',
           paddingLeft: 'max(0px, env(safe-area-inset-left))',
           paddingRight: 'max(0px, env(safe-area-inset-right))',
-          pointerEvents: 'auto',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={{ pointerEvents: 'auto' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
-            {/* Left: Avatar + Name + Role - ALL IN ONE ROW */}
-            <Link 
-              href="/" 
-              className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group"
-              style={{ pointerEvents: 'auto', zIndex: 10000 }}
-            >
+            {/* Left: Avatar + Name */}
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group">
               <div className="relative w-8 h-8 sm:w-9 md:w-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
                 <Image
                   src="/IMG_2897.jpg"
@@ -89,7 +83,7 @@ export default function Navigation() {
               </div>
             </Link>
 
-            {/* Desktop Nav - Right */}
+            {/* Desktop Nav - Pure Link components */}
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
                 const isActive = pathname === item.href
@@ -109,13 +103,12 @@ export default function Navigation() {
               })}
             </div>
 
-            {/* Mobile Menu Button - SAME ROW */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileOpen(true)}
               className="lg:hidden p-2 -mr-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Open menu"
               type="button"
-              style={{ pointerEvents: 'auto', zIndex: 10000 }}
             >
               <Menu className="w-6 h-6" />
             </button>

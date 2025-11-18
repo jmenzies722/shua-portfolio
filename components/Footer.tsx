@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * Footer - Minimal Apple-style Footer
  * Simple links and copyright
