@@ -7,87 +7,57 @@ import { resumeData } from '@/content/resume'
 
 export default function Page() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-      {/* Header */}
-      <div className="text-center mb-12 md:mb-16">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight">
-          Contact
+    <div className="section-wrapper space-y-10">
+      <div className="text-center space-y-4">
+        <p className="text-sm uppercase tracking-[0.3em] text-white/60">Contact</p>
+        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
+          Let's build calmer, faster infrastructure together.
         </h1>
-        <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
-          Interested in discussing infrastructure challenges, opportunities, or just want to connect? Let's talk.
+        <p className="text-white/70 max-w-3xl mx-auto">
+          I partner with teams on platform strategy, AWS automation, and observability programs. If that sounds familiar,
+          I’d love to hear from you.
         </p>
       </div>
 
-      {/* Contact Card */}
-      <div className="glass-card p-8 md:p-10">
-        <div className="space-y-6">
-          {/* Email */}
-          <a
-            href={`mailto:${resumeData.email}`}
-            className="flex items-center gap-4 p-4 bg-white/[0.03] rounded-xl hover:bg-white/[0.05] transition-colors group"
-          >
-            <div className="p-3 bg-white/[0.05] rounded-xl group-hover:bg-white/[0.08] transition-colors">
-              <Mail className="w-5 h-5 text-[#007AFF]" />
-            </div>
+      <div className="glass-card p-8 space-y-6">
+        <div className="space-y-3">
+          <a href={`mailto:${resumeData.email}`} className="flex items-center gap-4 rounded-2xl border border-white/10 p-4 hover:border-white/25 transition-colors">
+            <Mail className="h-5 w-5 text-[#5ac8fa]" />
             <div>
-              <div className="text-sm text-white/60 mb-1">Email</div>
-              <div className="text-base md:text-lg text-white/90">{resumeData.email}</div>
+              <p className="text-sm text-white/60">Email</p>
+              <p className="text-lg">{resumeData.email}</p>
             </div>
           </a>
-
-          {/* LinkedIn */}
-          <a
-            href={resumeData.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-4 p-4 bg-white/[0.03] rounded-xl hover:bg-white/[0.05] transition-colors group"
-          >
-            <div className="p-3 bg-white/[0.05] rounded-xl group-hover:bg-white/[0.08] transition-colors">
-              <Linkedin className="w-5 h-5 text-[#007AFF]" />
-            </div>
+          <a href={resumeData.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/10 p-4 hover:border-white/25 transition-colors">
+            <Linkedin className="h-5 w-5 text-[#5ac8fa]" />
             <div>
-              <div className="text-sm text-white/60 mb-1">LinkedIn</div>
-              <div className="text-base md:text-lg text-white/90">Connect on LinkedIn</div>
+              <p className="text-sm text-white/60">LinkedIn</p>
+              <p className="text-lg">Connect with me</p>
             </div>
           </a>
-
-          {/* GitHub */}
-          <a
-            href="https://github.com/joshmenzies"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-4 p-4 bg-white/[0.03] rounded-xl hover:bg-white/[0.05] transition-colors group"
-          >
-            <div className="p-3 bg-white/[0.05] rounded-xl group-hover:bg-white/[0.08] transition-colors">
-              <Github className="w-5 h-5 text-[#007AFF]" />
-            </div>
+          <a href="https://github.com/joshmenzies" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/10 p-4 hover:border-white/25 transition-colors">
+            <Github className="h-5 w-5 text-[#5ac8fa]" />
             <div>
-              <div className="text-sm text-white/60 mb-1">GitHub</div>
-              <div className="text-base md:text-lg text-white/90">View my code</div>
+              <p className="text-sm text-white/60">GitHub</p>
+              <p className="text-lg">View engineering work</p>
             </div>
           </a>
         </div>
 
-        {/* What I'm Open To */}
-        <div className="mt-8 pt-8 border-t border-white/[0.08]">
-          <h2 className="text-xl font-semibold mb-4">What I'm Open To</h2>
-          <ul className="space-y-2 text-white/70">
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Platform Engineering roles</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>DevOps and Infrastructure positions</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Internal platform teams</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Cloud infrastructure and automation</span>
-            </li>
+        <div className="pt-6 border-t border-white/10 space-y-3">
+          <h2 className="text-xl font-semibold">What I’m open to</h2>
+          <ul className="grid gap-2 text-white/75 text-sm sm:grid-cols-2">
+            {[
+              'Platform engineering leadership',
+              'DevOps / infrastructure consulting',
+              'AWS cost and observability programs',
+              'Internal developer platform initiatives',
+            ].map((item) => (
+              <li key={item} className="flex gap-3">
+                <span className="text-[#5ac8fa]">•</span>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

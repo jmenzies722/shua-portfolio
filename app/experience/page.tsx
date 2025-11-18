@@ -2,110 +2,56 @@
  * Experience Page - Clean Stack of Role Cards
  * Each role shows: Title, Company, Location, Dates, Tech Chips, Metrics, Highlights
  */
-import { MapPin, Calendar } from 'lucide-react'
 import { resumeData } from '@/content/resume'
 
 export default function Page() {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-      {/* Header */}
-      <div className="text-center mb-12 md:mb-16">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight">
-          Experience
+    <div className="section-wrapper space-y-10">
+      <div className="text-center space-y-4">
+        <p className="text-sm uppercase tracking-[0.3em] text-white/60">Experience</p>
+        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
+          Infrastructure and platform work with measurable outcomes.
         </h1>
-        <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
-          Building infrastructure systems at scale with measurable impact
+        <p className="text-white/70 max-w-3xl mx-auto">
+          Every engagement aligns reliability, automation, and developer experience to reduce
+          operational drag for engineering teams.
         </p>
       </div>
 
-      {/* Experience Cards */}
       <div className="space-y-8">
-        {resumeData.experience.map((exp, index) => {
-          // Extract tech stack from highlights
-          const techStack = [
-            'AWS Glue', 'Lambda', 'S3', 'Athena', 'Macie', 'Terraform', 
-            'Datadog', 'OpenTelemetry', 'EKS', 'Python', 'Go', 'GitLab CI/CD'
-          ].filter(tech => 
-            exp.highlights.some(h => h.toLowerCase().includes(tech.toLowerCase()))
-          )
-
-          // Extract metrics from highlights
-          const metrics = exp.highlights
-            .filter(h => /\d+%/.test(h) || /\d+\+/.test(h) || /\d+K/.test(h))
-            .map(h => {
-              const match = h.match(/(\d+[%+K]?)\s+([^,]+)/)
-              return match ? { value: match[1], label: match[2].trim() } : null
-            })
-            .filter(Boolean)
-            .slice(0, 4)
-
-          return (
-            <div key={index} className="glass-card p-8 md:p-10">
-              {/* Header */}
-              <div className="mb-6">
-                <h2 className="text-2xl md:text-3xl font-semibold mb-3 gradient-text">
-                  {exp.role}
-                </h2>
-                <div className="flex flex-wrap items-center gap-4 text-white/70 mb-4">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[#007AFF]" />
-                    <span className="text-sm md:text-base">{exp.company}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[#007AFF]" />
-                    <span className="text-sm md:text-base">{exp.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-[#007AFF]" />
-                    <span className="text-sm md:text-base">{exp.period}</span>
-                  </div>
-                </div>
+        {resumeData.experience.map((experience) => (
+          <article key={experience.role} className="glass-card p-8 space-y-6">
+            <header className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p className="text-sm text-white/60 uppercase tracking-[0.2em]">
+                  {experience.company}
+                </p>
+                <h2 className="text-2xl sm:text-3xl font-semibold">{experience.role}</h2>
               </div>
-
-              {/* Tech Stack */}
-              {techStack.length > 0 && (
-                <div className="mb-6">
-                  <div className="flex flex-wrap gap-2">
-                    {techStack.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1.5 text-xs bg-white/[0.05] border border-white/[0.10] rounded-lg text-white/80"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Metrics */}
-              {metrics.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                  {metrics.map((metric, i) => (
-                    <div key={i} className="text-center p-4 bg-white/[0.03] rounded-xl">
-                      <div className="text-2xl md:text-3xl font-bold gradient-text mb-1">
-                        {metric?.value}
-                      </div>
-                      <div className="text-xs text-white/60">{metric?.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Highlights */}
-              <div className="pt-6 border-t border-white/[0.08]">
-                <ul className="space-y-3">
-                  {exp.highlights.map((highlight, i) => (
-                    <li key={i} className="text-white/70 leading-relaxed flex items-start gap-3 text-sm md:text-base">
-                      <span className="text-[#007AFF] mt-1.5 flex-shrink-0">•</span>
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="text-right text-sm text-white/60">
+                <p>{experience.location}</p>
+                <p>{experience.period}</p>
               </div>
+            </header>
+
+            <div className="flex flex-wrap gap-2">
+              {['AWS', 'Terraform', 'Datadog', 'GitLab CI/CD', 'OpenTelemetry'].map((tech) => (
+                <span key={tech} className="pill">
+                  {tech}
+                </span>
+              ))}
             </div>
-          )
-        })}
+
+            <ul className="space-y-3 text-white/75">
+              {experience.highlights.map((line) => (
+                <li key={line} className="flex items-start gap-3">
+                  <span className="text-[#5ac8fa] mt-[0.35rem]">•</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
       </div>
     </div>
   )

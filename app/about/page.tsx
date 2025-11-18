@@ -3,150 +3,86 @@
  * Avatar + Summary + Glass Cards (What I Build, How I Work, Principles, Background)
  */
 import Image from 'next/image'
-import { Code, Zap, Target, BookOpen } from 'lucide-react'
 import { resumeData } from '@/content/resume'
+
+const aboutSections = [
+  {
+    title: 'What I build',
+    bullets: [
+      'AWS-native platforms for data, AI, and internal tooling',
+      'Serverless workflows with Glue, Lambda, and event-driven orchestration',
+      'Observability foundations with Datadog + OpenTelemetry',
+      'Resilient CI/CD pipelines using Terraform + GitLab',
+    ],
+  },
+  {
+    title: 'How I work',
+    bullets: [
+      'Automation-first mindset to remove repetitive toil',
+      'Security and compliance built into every environment',
+      'Opinionated IaC modules for consistency and velocity',
+      'Tight feedback loops with engineers and leadership',
+    ],
+  },
+  {
+    title: 'Principles',
+    bullets: [
+      'Ship measurable value every sprint',
+      'Design for clarity, not heroics',
+      'Invest in observability before scaling',
+      'Create platforms teams love to use',
+    ],
+  },
+  {
+    title: 'Background',
+    bullets: [
+      'B.S. Computer Engineering, University of Hartford',
+      'Experience across DevOps, platform, and support roles',
+      'Focused on AWS, Kubernetes, and serverless ecosystems',
+      'Based in New York, partnering with globally distributed teams',
+    ],
+  },
+]
 
 export default function Page() {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-      {/* Header */}
-      <div className="text-center mb-12 md:mb-16">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight">
-          About Josh
-        </h1>
-        <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
-          {resumeData.summary}
-        </p>
+    <div className="section-wrapper space-y-10">
+      <div className="text-center space-y-6">
+        <p className="text-sm uppercase tracking-[0.3em] text-white/60">About</p>
+        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">Shaping resilient cloud platforms.</h1>
+        <p className="text-white/70 text-lg max-w-3xl mx-auto">{resumeData.summary}</p>
       </div>
 
-      {/* Avatar */}
-      <div className="flex justify-center mb-12 md:mb-16">
-        <div className="h-32 w-32 md:h-40 md:w-40 rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04]">
-          <Image
-            src="/IMG_2897.jpg"
-            alt="Josh Menzies"
-            width={160}
-            height={160}
-            className="w-full h-full object-cover rounded-full"
-          />
-        </div>
-      </div>
-
-      {/* Cards Grid */}
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
-        {/* What I Build */}
-        <div className="glass-card p-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 bg-white/[0.05] rounded-xl">
-              <Code className="w-6 h-6 text-[#007AFF]" />
-            </div>
-            <h2 className="text-2xl font-semibold">What I Build</h2>
+      <div className="flex justify-center">
+        <div className="relative h-36 w-36 sm:h-44 sm:w-44">
+          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#5ac8fa]/30 to-[#7f7bff]/30 blur-2xl" />
+          <div className="relative h-full w-full rounded-full overflow-hidden border border-white/15">
+            <Image
+              src="/IMG_2897.jpg"
+              alt="Josh Menzies"
+              fill
+              sizes="180px"
+              className="object-cover"
+              priority
+            />
           </div>
-          <ul className="space-y-3 text-white/70">
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Secure, automated infrastructure on AWS and Kubernetes</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Serverless platforms for AI and data workloads</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Observability systems with Datadog and OpenTelemetry</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>CI/CD pipelines with Terraform and GitLab</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* How I Work */}
-        <div className="glass-card p-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 bg-white/[0.05] rounded-xl">
-              <Zap className="w-6 h-6 text-[#007AFF]" />
-            </div>
-            <h2 className="text-2xl font-semibold">How I Work</h2>
-          </div>
-          <ul className="space-y-3 text-white/70">
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Infrastructure as Code with Terraform</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Automation-first approach to reduce manual tasks</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Data-driven optimization and cost management</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Focus on reliability, security, and developer experience</span>
-            </li>
-          </ul>
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Principles */}
-        <div className="glass-card p-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 bg-white/[0.05] rounded-xl">
-              <Target className="w-6 h-6 text-[#007AFF]" />
-            </div>
-            <h2 className="text-2xl font-semibold">Principles</h2>
+      <div className="grid gap-6 md:grid-cols-2">
+        {aboutSections.map((section) => (
+          <div key={section.title} className="glass-card p-6 sm:p-8 flex flex-col">
+            <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
+            <ul className="space-y-3 text-white/70 text-base">
+              {section.bullets.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span className="text-[#5ac8fa] mt-[0.4rem]">•</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="space-y-3 text-white/70">
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Empower teams to ship faster with confidence</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Build platforms that scale reliably</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Reduce operational burden through automation</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Security and compliance by design</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Background */}
-        <div className="glass-card p-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 bg-white/[0.05] rounded-xl">
-              <BookOpen className="w-6 h-6 text-[#007AFF]" />
-            </div>
-            <h2 className="text-2xl font-semibold">Background</h2>
-          </div>
-          <ul className="space-y-3 text-white/70">
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>B.S. Computer Engineering, University of Hartford (2023)</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Minor in Computer Science</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Platform Engineer at Nectar Services Corp</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#007AFF] mt-1">•</span>
-              <span>Specialized in AWS, Kubernetes, and observability</span>
-            </li>
-          </ul>
-        </div>
+        ))}
       </div>
     </div>
   )

@@ -8,132 +8,116 @@ import { resumeData } from '@/content/resume'
 
 export default function Page() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-      {/* Header */}
-      <div className="text-center mb-12 md:mb-16">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-2 tracking-tight">
-          {resumeData.name}
-        </h1>
-        <p className="text-lg sm:text-xl text-white/70 mb-6">{resumeData.title}</p>
-        
-        {/* Contact Info */}
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/70 mb-8">
-          <a href={`mailto:${resumeData.email}`} className="flex items-center gap-2 hover:text-[#007AFF] transition-colors">
-            <Mail className="w-4 h-4" />
-            <span className="text-sm">{resumeData.email}</span>
+    <div className="section-wrapper space-y-8">
+      <div className="glass-card p-8 space-y-6 text-center">
+        <div className="space-y-2">
+          <p className="text-sm uppercase tracking-[0.3em] text-white/60">Résumé</p>
+          <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">{resumeData.name}</h1>
+          <p className="text-white/70">{resumeData.title}</p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-4 text-sm text-white/70">
+          <a href={`mailto:${resumeData.email}`} className="hover:text-white inline-flex items-center gap-2">
+            <Mail className="h-4 w-4" />
+            {resumeData.email}
           </a>
-          <a href={`tel:${resumeData.phone}`} className="flex items-center gap-2 hover:text-[#007AFF] transition-colors">
-            <Phone className="w-4 h-4" />
-            <span className="text-sm">{resumeData.phone}</span>
+          <a href={`tel:${resumeData.phone}`} className="hover:text-white inline-flex items-center gap-2">
+            <Phone className="h-4 w-4" />
+            {resumeData.phone}
           </a>
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4" />
-            <span className="text-sm">{resumeData.location}</span>
-          </div>
-          <a
-            href={resumeData.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-[#007AFF] transition-colors"
-          >
-            <Linkedin className="w-4 h-4" />
-            <span className="text-sm">LinkedIn</span>
+          <span className="inline-flex items-center gap-2">
+            <MapPin className="h-4 w-4" />
+            {resumeData.location}
+          </span>
+          <a href={resumeData.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white inline-flex items-center gap-2">
+            <Linkedin className="h-4 w-4" />
+            LinkedIn
           </a>
-          <a
-            href="https://github.com/joshmenzies"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-[#007AFF] transition-colors"
-          >
-            <Github className="w-4 h-4" />
-            <span className="text-sm">GitHub</span>
+          <a href="https://github.com/joshmenzies" target="_blank" rel="noopener noreferrer" className="hover:text-white inline-flex items-center gap-2">
+            <Github className="h-4 w-4" />
+            GitHub
           </a>
         </div>
-
-        {/* Download Button */}
-        <Link
-          href="/resume.pdf"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-xl font-medium transition-all duration-200 hover:bg-white/90 hover:scale-[1.02]"
-        >
-          <Download className="w-4 h-4" />
-          Download PDF
-        </Link>
+        <div>
+          <Link href="/resume.pdf" className="inline-flex items-center gap-2 rounded-2xl border border-white/20 px-5 py-3 text-sm font-medium hover:border-white/40">
+            <Download className="h-4 w-4" />
+            Download PDF
+          </Link>
+        </div>
       </div>
 
-      {/* Summary */}
-      <div className="glass-card p-8 mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Summary</h2>
-        <p className="text-white/80 leading-relaxed">{resumeData.summary}</p>
-      </div>
+      <section className="glass-card p-8 space-y-4">
+        <h2 className="text-2xl font-semibold">Summary</h2>
+        <p className="text-white/75">{resumeData.summary}</p>
+      </section>
 
-      {/* Experience */}
-      <div className="glass-card p-8 mb-8">
-        <h2 className="text-2xl font-semibold mb-6">Experience</h2>
-        <div className="space-y-8">
-          {resumeData.experience.map((exp, index) => (
-            <div key={index} className={index > 0 ? 'pt-8 border-t border-white/[0.08]' : ''}>
-              <h3 className="text-xl font-semibold mb-2">{exp.role}</h3>
-              <p className="text-white/70 text-sm mb-2">{exp.company} • {exp.location}</p>
-              <p className="text-white/60 text-xs mb-4">{exp.period}</p>
-              <ul className="space-y-2">
-                {exp.highlights.map((highlight, i) => (
-                  <li key={i} className="text-white/70 leading-relaxed flex items-start gap-3 text-sm">
-                    <span className="text-[#007AFF] mt-1.5">•</span>
-                    <span>{highlight}</span>
+      <section className="glass-card p-8 space-y-6">
+        <h2 className="text-2xl font-semibold">Experience</h2>
+        <div className="space-y-6">
+          {resumeData.experience.map((experience) => (
+            <div key={experience.role} className="space-y-2 border-b border-white/10 pb-6 last:border-0 last:pb-0">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div>
+                  <h3 className="text-xl font-semibold">{experience.role}</h3>
+                  <p className="text-white/60 text-sm">
+                    {experience.company} · {experience.location}
+                  </p>
+                </div>
+                <p className="text-xs text-white/60">{experience.period}</p>
+              </div>
+              <ul className="space-y-2 text-white/75 text-sm">
+                {experience.highlights.map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="text-[#5ac8fa]">•</span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Projects */}
-      <div className="glass-card p-8 mb-8">
-        <h2 className="text-2xl font-semibold mb-6">Projects</h2>
+      <section className="glass-card p-8 space-y-6">
+        <h2 className="text-2xl font-semibold">Projects</h2>
         <div className="space-y-6">
-          {resumeData.projects.map((project, index) => (
-            <div key={index} className={index > 0 ? 'pt-6 border-t border-white/[0.08]' : ''}>
-              <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
-              <p className="text-white/70 text-sm mb-2">{project.description}</p>
-              <div className="flex flex-wrap gap-2 mb-3">
-                {project.tech.map((tech, i) => (
-                  <span
-                    key={i}
-                    className="px-2 py-1 text-xs bg-white/[0.05] border border-white/[0.10] rounded text-white/70"
-                  >
+          {resumeData.projects.map((project) => (
+            <div key={project.name} className="space-y-3 border-b border-white/10 pb-6 last:border-0 last:pb-0">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h3 className="text-xl font-semibold">{project.name}</h3>
+                <span className="text-xs text-white/60">{project.period}</span>
+              </div>
+              <p className="text-white/70">{project.description}</p>
+              <div className="flex flex-wrap gap-2">
+                {project.tech.slice(0, 8).map((tech) => (
+                  <span key={tech} className="pill">
                     {tech}
                   </span>
                 ))}
               </div>
-              <ul className="space-y-1">
-                {project.highlights.map((highlight, i) => (
-                  <li key={i} className="text-white/70 text-sm flex items-start gap-2">
-                    <span className="text-[#007AFF] mt-1">•</span>
-                    <span>{highlight}</span>
+              <ul className="space-y-2 text-white/75 text-sm">
+                {project.highlights.slice(0, 3).map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="text-[#5ac8fa]">•</span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Skills */}
-      <div className="glass-card p-8 mb-8">
-        <h2 className="text-2xl font-semibold mb-6">Skills</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <section className="glass-card p-8 space-y-6">
+        <h2 className="text-2xl font-semibold">Skills</h2>
+        <div className="grid gap-6 sm:grid-cols-2">
           {Object.entries(resumeData.skills).map(([category, skills]) => (
-            <div key={category}>
-              <h3 className="text-lg font-semibold mb-3 capitalize">
+            <div key={category} className="space-y-3">
+              <p className="text-sm uppercase tracking-[0.3em] text-white/60">
                 {category.replace(/_/g, ' ')}
-              </h3>
+              </p>
               <div className="flex flex-wrap gap-2">
-                {skills.map((skill, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1.5 text-sm bg-white/[0.05] border border-white/[0.10] rounded-lg text-white/80"
-                  >
+                {skills.map((skill) => (
+                  <span key={skill} className="pill">
                     {skill}
                   </span>
                 ))}
@@ -141,20 +125,19 @@ export default function Page() {
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Education */}
-      <div className="glass-card p-8">
-        <h2 className="text-2xl font-semibold mb-6">Education</h2>
-        <div className="space-y-4">
-          {resumeData.education.map((edu, index) => (
-            <div key={index}>
-              <h3 className="text-xl font-semibold mb-1">{edu.degree}</h3>
-              <p className="text-white/70 text-sm">{edu.school} • {edu.year}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <section className="glass-card p-8 space-y-4">
+        <h2 className="text-2xl font-semibold">Education</h2>
+        {resumeData.education.map((edu) => (
+          <div key={edu.degree} className="space-y-1">
+            <h3 className="text-xl font-semibold">{edu.degree}</h3>
+            <p className="text-white/70 text-sm">
+              {edu.school} · {edu.year}
+            </p>
+          </div>
+        ))}
+      </section>
     </div>
   )
 }

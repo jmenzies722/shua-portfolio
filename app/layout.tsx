@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -7,13 +7,6 @@ export const metadata: Metadata = {
   title: 'Josh Menzies | Platform Engineer',
   description: 'Platform Engineer building secure, automated, and observable infrastructure on AWS and Kubernetes.',
   keywords: ['DevOps', 'AWS', 'Platform Engineering', 'Cloud Engineering', 'Automation', 'Kubernetes'],
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    viewportFit: 'cover',
-  },
-  themeColor: '#050608',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -21,6 +14,14 @@ export const metadata: Metadata = {
   other: {
     'mobile-web-app-capable': 'yes',
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: 'cover',
+  themeColor: '#050608',
 }
 
 export default function RootLayout({
