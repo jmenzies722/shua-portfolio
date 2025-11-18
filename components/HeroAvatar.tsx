@@ -30,14 +30,14 @@ export default function HeroAvatar({ src, alt }: Props) {
 
   return (
     <motion.div
-      className="relative mx-auto h-48 w-48 sm:h-56 sm:w-56 md:h-64 md:w-64"
+      className="relative mx-auto h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-56 lg:w-56"
       style={{ x: springX, y: springY }}
       onPointerMove={handlePointer}
       onPointerLeave={reset}
     >
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#5ac8fa]/30 to-[#7f7bff]/30 blur-3xl" />
-      <div className="relative h-full w-full rounded-full overflow-hidden border border-white/15 shadow-2xl">
-        <Image src={src} alt={alt} fill sizes="260px" className="object-cover" priority />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#5ac8fa]/30 to-[#7f7bff]/30 blur-3xl opacity-60" />
+      <div className="relative h-full w-full rounded-full overflow-hidden border-2 border-white/[0.12] shadow-2xl bg-white/[0.04]">
+        <Image src={src} alt={alt} fill sizes="(max-width: 640px) 128px, (max-width: 1024px) 192px, 224px" className="object-cover" priority />
       </div>
     </motion.div>
   )

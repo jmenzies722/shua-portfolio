@@ -31,19 +31,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" style={{
-      paddingTop: 'env(safe-area-inset-top)',
-      paddingBottom: 'env(safe-area-inset-bottom)',
-    }}>
-      <body className="antialiased bg-[#050608] text-white" style={{
-        paddingLeft: 'env(safe-area-inset-left)',
-        paddingRight: 'env(safe-area-inset-right)',
-      }}>
+    <html lang="en" className="scroll-smooth">
+      <body className="antialiased bg-[#050608] text-white">
         <Navigation />
-        <main
-          className="min-h-screen relative z-10"
-          style={{ paddingTop: 'calc(3.5rem + env(safe-area-inset-top))' }}
-        >
+        <main className="min-h-screen relative z-10">
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />

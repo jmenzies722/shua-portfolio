@@ -26,7 +26,7 @@ export default function Button({
   disabled = false,
 }: ButtonProps) {
   const baseClasses =
-    'inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5ac8fa]/70 disabled:opacity-60 disabled:cursor-not-allowed'
+    'inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5ac8fa]/70 disabled:opacity-60 disabled:cursor-not-allowed min-h-[48px] sm:min-h-[52px]'
 
 const variantClasses = {
   primary: 'bg-white text-black hover:bg-white/90',

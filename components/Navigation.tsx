@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
 import { stripTrailingSlash, withTrailingSlash } from '@/lib/utils'
+import { bottomSheetMotion } from '@/lib/motion'
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -24,7 +26,9 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 16)
+    const handleScroll = () => setIsScrolled(window.scrollY > 8)
+    // Set initial state
+    handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -38,22 +42,27 @@ export default function Navigation() {
 
   return (
     <>
+      {/* Top Navigation Bar - Mobile-First */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
           isScrolled
-            ? 'bg-black/60 backdrop-blur-lg border-b border-white/5'
-            : 'bg-transparent'
+            ? 'bg-[#050608]/98 backdrop-blur-xl border-b border-white/[0.08]'
+            : pathname === '/' ? 'bg-transparent' : 'bg-[#050608]/95 backdrop-blur-xl border-b border-white/[0.06]'
         }`}
         style={{
-          paddingTop: 'max(0px, env(safe-area-inset-top))',
-          paddingLeft: 'max(0px, env(safe-area-inset-left))',
-          paddingRight: 'max(0px, env(safe-area-inset-right))',
+          paddingTop: 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))',
+          paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
+          paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
         }}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative h-10 w-10 rounded-full overflow-hidden border border-white/15">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between h-14 md:h-16">
+            {/* Left: Avatar + Name + Role - ALL IN ONE ROW */}
+            <Link 
+              href="/" 
+              className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group"
+            >
+              <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
                 <Image
                   src="/IMG_2897.jpg"
                   alt="Josh Menzies"
@@ -63,13 +72,14 @@ export default function Navigation() {
                   priority
                 />
               </div>
-              <div className="flex flex-col leading-tight">
-                <span className="text-sm font-semibold tracking-tight">Josh M.</span>
-                <span className="text-xs text-white/60">Platform Engineer</span>
+              <div className="flex flex-col leading-tight min-w-0">
+                <span className="text-sm font-semibold tracking-tight text-white truncate">Josh M.</span>
+                <span className="text-xs text-white/60 truncate hidden sm:inline">Platform Engineer</span>
               </div>
             </Link>
 
-            <div className="hidden lg:flex items-center gap-1 rounded-full bg-white/5 px-2 py-1 border border-white/5">
+            {/* Desktop Nav - Centered Links */}
+            <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
                 const normalizedHref = withTrailingSlash(item.href)
                 const active =
@@ -78,8 +88,10 @@ export default function Navigation() {
                   <Link
                     key={item.href}
                     href={normalizedHref}
-                    className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
-                      active ? 'bg-white text-black' : 'text-white/70 hover:text-white'
+                    className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
+                      active
+                        ? 'text-white bg-white/[0.12]'
+                        : 'text-white/70 hover:text-white hover:bg-white/[0.08]'
                     }`}
                   >
                     {item.label}
@@ -88,69 +100,111 @@ export default function Navigation() {
               })}
             </div>
 
+            {/* Mobile Menu Button - SAME ROW */}
             <button
-              className="lg:hidden rounded-full border border-white/15 p-2 text-white/80"
               onClick={() => setIsMenuOpen(true)}
-              aria-label="Open navigation menu"
+              className="lg:hidden p-2 -mr-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label="Open menu"
               type="button"
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
       </nav>
 
-      {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-30 bg-black/70 backdrop-blur-md flex flex-col">
-          <div className="flex items-center justify-between px-6 pt-6">
-            <div className="flex items-center gap-3">
-              <div className="relative h-10 w-10 rounded-full overflow-hidden border border-white/15">
-                <Image
-                  src="/IMG_2897.jpg"
-                  alt="Josh Menzies"
-                  fill
-                  sizes="40px"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span className="text-sm font-semibold tracking-tight">Josh M.</span>
-                <span className="text-xs text-white/60">Platform Engineer</span>
-              </div>
-            </div>
-            <button
-              className="rounded-full border border-white/15 p-2 text-white/80"
+      {/* Mobile Bottom Sheet Menu - iOS Style */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] lg:hidden"
               onClick={() => setIsMenuOpen(false)}
-              aria-label="Close navigation menu"
-              type="button"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+            />
 
-          <div className="mt-10 flex-1 overflow-y-auto px-6 pb-8">
-            <div className="glass-card p-6 space-y-2">
-              {navItems.map((item) => {
-                const normalizedHref = withTrailingSlash(item.href)
-                const active =
-                  stripTrailingSlash(pathname) === stripTrailingSlash(item.href)
-                return (
-                  <Link
-                    key={item.href}
-                    href={normalizedHref}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`block w-full rounded-2xl px-4 py-3 text-lg font-medium transition-colors ${
-                      active ? 'bg-white text-black' : 'text-white/80 hover:bg-white/10'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      )}
+            {/* Bottom Sheet */}
+            <motion.div
+              {...bottomSheetMotion}
+              className="fixed bottom-0 left-0 right-0 z-[9999] lg:hidden"
+              style={{
+                paddingBottom: 'max(1rem, calc(1rem + env(safe-area-inset-bottom)))',
+                paddingLeft: 'max(0px, env(safe-area-inset-left))',
+                paddingRight: 'max(0px, env(safe-area-inset-right))',
+              }}
+            >
+              <div className="bg-white/[0.08] border-t border-white/[0.12] backdrop-blur-xl rounded-t-3xl shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
+                {/* Handle Bar */}
+                <div className="flex justify-center pt-3 pb-2">
+                  <div className="w-12 h-1 bg-white/30 rounded-full" />
+                </div>
+
+                {/* Profile Header */}
+                <div className="px-6 py-4 border-b border-white/[0.08]">
+                  <div className="flex items-center gap-3">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
+                      <Image
+                        src="/IMG_2897.jpg"
+                        alt="Josh Menzies"
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base font-semibold text-white/90 truncate">
+                        Josh M.
+                      </h3>
+                      <p className="text-xs text-white/60 truncate">
+                        Platform Engineer
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setIsMenuOpen(false)}
+                      className="p-2 -mr-2 rounded-full hover:bg-white/[0.12] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                      aria-label="Close menu"
+                      type="button"
+                    >
+                      <X className="w-5 h-5 text-white/80" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Menu Items */}
+                <nav className="px-2 py-2">
+                  {navItems.map((item) => {
+                    const normalizedHref = withTrailingSlash(item.href)
+                    const isActive =
+                      stripTrailingSlash(pathname) === stripTrailingSlash(item.href)
+                    return (
+                      <Link
+                        key={item.href}
+                        href={normalizedHref}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`block w-full px-4 py-3.5 rounded-xl transition-colors text-left min-h-[56px] flex items-center justify-between ${
+                          isActive
+                            ? 'bg-white/[0.12] text-white'
+                            : 'text-white/80 active:bg-white/[0.12] active:text-white'
+                        }`}
+                      >
+                        <span className="text-base font-medium">{item.label}</span>
+                        {isActive && <ChevronRight className="w-5 h-5 text-white/40" />}
+                      </Link>
+                    )
+                  })}
+                </nav>
+
+                {/* Bottom Spacing */}
+                <div className="h-2" />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   )
 }

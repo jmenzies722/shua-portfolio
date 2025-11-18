@@ -48,43 +48,60 @@ const aboutSections = [
 
 export default function Page() {
   return (
-    <SectionShell className="section-wrapper space-y-10">
-      <div className="text-center space-y-6">
-        <p className="text-sm uppercase tracking-[0.3em] text-white/60">About</p>
-        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">Shaping resilient cloud platforms.</h1>
-        <p className="text-white/70 text-lg max-w-3xl mx-auto">{resumeData.summary}</p>
-      </div>
+    <SectionShell 
+      className="space-y-8 sm:space-y-10"
+      style={{
+        paddingTop: 'calc(5rem + env(safe-area-inset-top))',
+        paddingBottom: 'calc(3rem + env(safe-area-inset-bottom))',
+        paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
+        paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
+      }}
+    >
+      <div className="max-w-5xl mx-auto px-4 space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-4 sm:space-y-6">
+          <p className="text-xs sm:text-sm uppercase tracking-[0.3em] text-white/60">About</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
+            Shaping resilient cloud platforms.
+          </h1>
+          <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
+            {resumeData.summary}
+          </p>
+        </div>
 
-      <div className="flex justify-center">
-        <div className="relative h-36 w-36 sm:h-44 sm:w-44">
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#5ac8fa]/30 to-[#7f7bff]/30 blur-2xl" />
-          <div className="relative h-full w-full rounded-full overflow-hidden border border-white/15">
-            <Image
-              src="/IMG_2897.jpg"
-              alt="Josh Menzies"
-              fill
-              sizes="180px"
-              className="object-cover"
-              priority
-            />
+        {/* Avatar - Centered */}
+        <div className="flex justify-center">
+          <div className="relative h-28 w-28 sm:h-36 sm:w-36 md:h-44 md:w-44">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#5ac8fa]/30 to-[#7f7bff]/30 blur-2xl opacity-60" />
+            <div className="relative h-full w-full rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04]">
+              <Image
+                src="/IMG_2897.jpg"
+                alt="Josh Menzies"
+                fill
+                sizes="(max-width: 640px) 112px, (max-width: 768px) 144px, 176px"
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {aboutSections.map((section) => (
-          <Card key={section.title} className="flex flex-col space-y-3">
-            <h2 className="text-2xl font-semibold">{section.title}</h2>
-            <ul className="space-y-3 text-white/70 text-base">
-              {section.bullets.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="text-[#5ac8fa] mt-[0.4rem]">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
-        ))}
+        {/* Cards - Mobile: 1 column, Desktop: 2 columns */}
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+          {aboutSections.map((section) => (
+            <Card key={section.title} className="flex flex-col space-y-3 sm:space-y-4">
+              <h2 className="text-xl sm:text-2xl font-semibold">{section.title}</h2>
+              <ul className="space-y-2.5 sm:space-y-3 text-white/70 text-sm sm:text-base leading-relaxed">
+                {section.bullets.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="text-[#5ac8fa] mt-[0.4rem] flex-shrink-0">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          ))}
+        </div>
       </div>
     </SectionShell>
   )

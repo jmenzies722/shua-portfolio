@@ -137,15 +137,60 @@ nav:not(footer nav) {
   right: 0;
 }
 
+/* Mobile-First Typography System */
+h1 {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600; /* font-semibold */
+  letter-spacing: -0.025em; /* tracking-tight */
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 2rem; /* text-3xl */
+  }
+  h2 {
+    font-size: 1.5rem; /* text-2xl */
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.5rem; /* text-4xl */
+  }
+  h2 {
+    font-size: 2rem; /* text-3xl */
+  }
+}
+
+/* Mobile-Optimized Glass Cards */
 @media (max-width: 768px) {
   .glass-card {
     border-radius: 1.25rem;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    padding: 1rem 1rem; /* px-4 py-5 */
   }
 
   body {
     background-image: radial-gradient(circle at 15% 0%, rgba(92, 200, 255, 0.18), transparent 55%);
+  }
+
+  /* Ensure no horizontal overflow */
+  * {
+    max-width: 100%;
   }
 }
