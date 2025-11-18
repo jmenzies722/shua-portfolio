@@ -3,7 +3,7 @@
 /**
  * Apple-style Navigation Bar
  * Desktop: Avatar + Name | Nav Links (centered/right)
- * Mobile: Avatar + Name + Menu Button | Bottom Sheet Menu
+ * Mobile: Avatar + Name + Menu Button in ONE ROW | Bottom Sheet Menu
  */
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -62,7 +62,7 @@ export default function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
-            {/* Left: Avatar + Name + Role */}
+            {/* Left: Avatar + Name + Role - ALL IN ONE ROW */}
             <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group">
               <div className="relative w-8 h-8 sm:w-9 md:w-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
                 <Image
@@ -74,11 +74,11 @@ export default function Navigation() {
                   priority
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="text-sm sm:text-base md:text-lg font-semibold text-white/90 leading-tight">
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm sm:text-base md:text-lg font-semibold text-white/90 leading-tight truncate">
                   Josh M.
                 </span>
-                <span className="text-xs text-white/60 leading-tight hidden sm:block">
+                <span className="text-xs text-white/60 leading-tight hidden sm:block truncate">
                   Platform Engineer
                 </span>
               </div>
@@ -104,10 +104,10 @@ export default function Navigation() {
               })}
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - SAME ROW */}
             <button
               onClick={() => setIsMobileOpen(true)}
-              className="lg:hidden p-2 -mr-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors"
+              className="lg:hidden p-2 -mr-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Open menu"
               type="button"
             >
@@ -135,7 +135,7 @@ export default function Navigation() {
             </div>
             <div className="px-6 py-4 border-b border-white/[0.08] flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04]">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
                   <Image
                     src="/IMG_2897.jpg"
                     alt="Josh Menzies"
@@ -144,15 +144,16 @@ export default function Navigation() {
                     className="w-full h-full object-cover rounded-full"
                   />
                 </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-white/90">Josh M.</h3>
-                  <p className="text-xs text-white/60">Platform Engineer</p>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-semibold text-white/90 truncate">Josh M.</h3>
+                  <p className="text-xs text-white/60 truncate">Platform Engineer</p>
                 </div>
               </div>
               <button
                 onClick={() => setIsMobileOpen(false)}
-                className="p-2 rounded-full hover:bg-white/[0.12] transition-colors"
+                className="p-2 rounded-full hover:bg-white/[0.12] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Close menu"
+                type="button"
               >
                 <X className="w-5 h-5 text-white/80" />
               </button>
@@ -165,10 +166,10 @@ export default function Navigation() {
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMobileOpen(false)}
-                    className={`block w-full px-4 py-3 rounded-xl transition-colors text-left ${
+                    className={`block w-full px-4 py-3 rounded-xl transition-colors text-left min-h-[44px] flex items-center ${
                       isActive
                         ? 'bg-white/[0.12] text-white'
-                        : 'text-white/80 hover:bg-white/[0.12] hover:text-white'
+                        : 'text-white/80 active:bg-white/[0.12] active:text-white'
                     }`}
                   >
                     <span className="text-base font-medium">{item.name}</span>

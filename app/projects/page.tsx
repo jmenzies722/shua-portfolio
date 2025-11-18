@@ -8,7 +8,7 @@ import { resumeData } from '@/content/resume'
 
 export default function ProjectsPage() {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
       {/* Header */}
       <div className="text-center mb-12 md:mb-16">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight">

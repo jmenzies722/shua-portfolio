@@ -8,7 +8,7 @@ import { ArrowRight, MessageSquare, FileText } from 'lucide-react'
 
 export default function Home() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
+    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 md:py-20">
       <div className="max-w-5xl mx-auto w-full">
         {/* Hero Card */}
         <div className="glass-card p-8 sm:p-10 md:p-12 lg:p-16">
@@ -51,21 +51,15 @@ export default function Home() {
 
             {/* Right: Avatar */}
             <div className="relative flex items-center justify-center order-1 md:order-2">
-              <div className="relative">
-                {/* Subtle glow ring */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/30 via-blue-300/8 to-transparent rounded-full blur-2xl opacity-40" />
-                
-                {/* Avatar */}
-                <div className="relative h-40 w-40 sm:h-44 sm:w-44 md:h-48 md:w-48 rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04]">
-                  <Image
-                    src="/IMG_2897.jpg"
-                    alt="Josh Menzies"
-                    width={192}
-                    height={192}
-                    className="w-full h-full object-cover rounded-full"
-                    priority
-                  />
-                </div>
+              <div className="relative h-40 w-40 sm:h-44 sm:w-44 md:h-48 md:w-48 rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04]">
+                <Image
+                  src="/IMG_2897.jpg"
+                  alt="Josh Menzies"
+                  width={192}
+                  height={192}
+                  className="w-full h-full object-cover rounded-full"
+                  priority
+                />
               </div>
             </div>
           </div>

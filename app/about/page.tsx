@@ -8,7 +8,7 @@ import { resumeData } from '@/content/resume'
 
 export default function AboutPage() {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
       {/* Header */}
       <div className="text-center mb-12 md:mb-16">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight">
@@ -21,17 +21,14 @@ export default function AboutPage() {
 
       {/* Avatar */}
       <div className="flex justify-center mb-12 md:mb-16">
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/30 via-blue-300/8 to-transparent rounded-full blur-2xl opacity-40" />
-          <div className="relative h-32 w-32 md:h-40 md:w-40 rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04]">
-            <Image
-              src="/IMG_2897.jpg"
-              alt="Josh Menzies"
-              width={160}
-              height={160}
-              className="w-full h-full object-cover rounded-full"
-            />
-          </div>
+        <div className="h-32 w-32 md:h-40 md:w-40 rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04]">
+          <Image
+            src="/IMG_2897.jpg"
+            alt="Josh Menzies"
+            width={160}
+            height={160}
+            className="w-full h-full object-cover rounded-full"
+          />
         </div>
       </div>
 
