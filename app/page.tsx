@@ -6,8 +6,8 @@ const orbitTech = ['AWS', 'Terraform', 'Kubernetes', 'Lambda', 'Python', 'Datado
 
 export default function Page() {
   return (
-    <SectionShell className="section-wrapper min-h-screen flex items-center pt-24 pb-24">
-      <div className="glass-card p-8 sm:p-12 w-full">
+    <SectionShell className="section-wrapper pt-28 pb-20">
+      <div className="glass-card p-8 sm:p-12 w-full max-w-5xl mx-auto">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-center">
           <div className="space-y-6">
             <p className="text-sm uppercase tracking-[0.3em] text-white/60">Platform Engineering</p>

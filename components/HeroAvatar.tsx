@@ -30,7 +30,7 @@ export default function HeroAvatar({ src, alt }: Props) {
 
   return (
     <motion.div
-      className="relative mx-auto h-60 w-60 sm:h-64 sm:w-64"
+      className="relative mx-auto h-48 w-48 sm:h-56 sm:w-56 md:h-64 md:w-64"
       style={{ x: springX, y: springY }}
       onPointerMove={handlePointer}
       onPointerLeave={reset}
