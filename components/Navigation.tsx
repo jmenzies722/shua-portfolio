@@ -34,7 +34,15 @@ export default function Navigation() {
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : ''
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Delay restoring overflow to allow menu close animation
+      const timer = setTimeout(() => {
+        document.body.style.overflow = ''
+      }, 200)
+      return () => clearTimeout(timer)
+    }
     return () => {
       document.body.style.overflow = ''
     }
@@ -43,12 +51,9 @@ export default function Navigation() {
   return (
     <>
       {/* Top Navigation Bar - Mobile-First - Always Pinned at Top */}
+      {/* CRITICAL: This nav must NEVER be at bottom - always top-0 */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-[9999] transition-colors duration-300 ${
-          isScrolled
-            ? 'bg-[#050608]/98 backdrop-blur-xl border-b border-white/[0.08]'
-            : pathname === '/' ? 'bg-transparent' : 'bg-[#050608]/95 backdrop-blur-xl border-b border-white/[0.06]'
-        }`}
+        className="fixed top-0 left-0 right-0 z-[9999] transition-colors duration-300"
         style={{
           paddingTop: 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))',
           paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
@@ -61,8 +66,18 @@ export default function Navigation() {
           transform: 'translateY(0)',
           marginTop: 0,
           marginBottom: 0,
+          marginLeft: 0,
+          marginRight: 0,
           zIndex: 9999,
           overflow: 'visible',
+          backgroundColor: isScrolled
+            ? 'rgba(5, 6, 8, 0.98)'
+            : pathname === '/' ? 'transparent' : 'rgba(5, 6, 8, 0.95)',
+          backdropFilter: isScrolled || pathname !== '/' ? 'blur(24px)' : 'none',
+          WebkitBackdropFilter: isScrolled || pathname !== '/' ? 'blur(24px)' : 'none',
+          borderBottom: isScrolled
+            ? '1px solid rgba(255, 255, 255, 0.08)'
+            : pathname === '/' ? 'none' : '1px solid rgba(255, 255, 255, 0.06)',
         }}
       >
         <div className="max-w-7xl mx-auto">
@@ -194,7 +209,11 @@ export default function Navigation() {
                       <Link
                         key={item.href}
                         href={normalizedHref}
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={(e) => {
+                          // Close menu immediately, let Link handle navigation
+                          setIsMenuOpen(false)
+                          // Don't prevent default - let Next.js handle routing
+                        }}
                         className={`block w-full px-4 py-3.5 rounded-xl transition-colors text-left min-h-[56px] flex items-center justify-between ${
                           isActive
                             ? 'bg-white/[0.12] text-white'

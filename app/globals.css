@@ -41,6 +41,8 @@ body {
   overflow-x: hidden;
   position: relative;
   width: 100%;
+  /* Ensure navbar children are positioned correctly */
+  display: block;
 }
 
 /* Ensure main content is always visible and properly positioned */
@@ -149,11 +151,12 @@ button {
   color: var(--text-secondary);
 }
 
-/* Navigation positioning - ensure it stays at top on all devices */
-/* CRITICAL: This must override any other nav rules */
+/* Navigation positioning - CRITICAL: Force navbar to top, NEVER bottom */
+/* This must override ALL other rules including any parent containers */
 nav:not(footer nav),
 body > nav:not(footer nav),
-html body nav:not(footer nav) {
+html body nav:not(footer nav),
+body > * > nav:not(footer nav) {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -163,15 +166,22 @@ html body nav:not(footer nav) {
   transform: translateY(0) !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   padding-top: max(0.5rem, calc(0.5rem + env(safe-area-inset-top))) !important;
   will-change: auto;
+  /* Explicitly prevent any bottom positioning */
+  align-self: flex-start !important;
+  align-items: flex-start !important;
 }
 
-/* Mobile-specific navbar fixes - enforce top positioning */
+/* Mobile-specific navbar fixes - enforce top positioning with maximum specificity */
 @media (max-width: 1023px) {
+  /* Base mobile rule - MUST be at top */
   nav:not(footer nav),
   body > nav:not(footer nav),
-  html body nav:not(footer nav) {
+  html body nav:not(footer nav),
+  body > * > nav:not(footer nav) {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
@@ -180,7 +190,13 @@ html body nav:not(footer nav) {
     transform: translateY(0) !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     padding-top: max(0.5rem, calc(0.5rem + env(safe-area-inset-top))) !important;
+    /* Prevent any flex/grid positioning that could push it down */
+    align-self: flex-start !important;
+    align-items: flex-start !important;
+    order: -9999 !important;
   }
   
   /* Ensure hamburger button is properly positioned */
@@ -198,6 +214,16 @@ html body nav:not(footer nav) {
   nav:not(footer nav) > div > div {
     overflow: visible !important;
     max-height: none !important;
+  }
+  
+  /* Prevent parent containers from affecting navbar */
+  body {
+    display: block !important;
+  }
+  
+  body > nav:not(footer nav) {
+    position: fixed !important;
+    top: 0 !important;
   }
 }
 

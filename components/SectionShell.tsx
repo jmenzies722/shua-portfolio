@@ -1,8 +1,7 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { fadeInUp } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 
 type Props = {
@@ -20,13 +19,31 @@ export default function SectionShell({
   as: Tag = 'section',
   style,
 }: Props) {
+  const [isMounted, setIsMounted] = useState(false)
   const MotionTag = motion(Tag)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // Simple fade-in that always renders (no viewport dependency)
+  const variants = {
+    initial: { opacity: 0 },
+    animate: { 
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        delay,
+        ease: [0.4, 0, 0.2, 1],
+      },
+    },
+  }
+
   return (
     <MotionTag
-      variants={fadeInUp(delay)}
+      variants={variants}
       initial="initial"
-      whileInView="animate"
-      viewport={{ once: true, amount: 0.1, margin: '0px' }} // Reduced margin to ensure content renders on mobile
+      animate={isMounted ? "animate" : "initial"}
       className={cn('space-y-6 w-full', className)}
       style={style}
     >
