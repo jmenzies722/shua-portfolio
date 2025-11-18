@@ -37,9 +37,9 @@ export default function RootLayout({
         <Spotlight />
         <Navigation />
         <main 
-          className="min-h-screen relative w-full"
+          className="min-h-screen relative w-full pt-16 md:pt-20"
           style={{
-            paddingTop: 'calc(3.5rem + 0.5rem + env(safe-area-inset-top))', // h-14 (3.5rem) + padding (0.5rem) + safe area
+            paddingTop: 'calc(4rem + env(safe-area-inset-top))', // h-16 (4rem) + safe area
             zIndex: 10,
           }}
         >
