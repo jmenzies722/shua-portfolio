@@ -76,6 +76,13 @@ export default function Navigation() {
             href="/"
             prefetch={true}
             className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group"
+            onClick={(e) => {
+              // If already on home page, scroll to top and prevent navigation
+              if (pathname === '/') {
+                e.preventDefault()
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }
+            }}
           >
             <motion.div
               whileHover={{ scale: 1.05 }}

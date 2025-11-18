@@ -16,11 +16,18 @@ export default function PageTransition({ children }: { children: ReactNode }) {
   return (
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
-        key={pathname}
+        key={pathname || 'home'}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={transition}
+        onAnimationComplete={() => {
+          // Ensure content is visible after animation
+          if (pathname === '/') {
+            // Scroll to top when navigating to home
+            window.scrollTo({ top: 0, behavior: 'instant' })
+          }
+        }}
         style={{ 
           position: 'relative', 
           zIndex: 1,

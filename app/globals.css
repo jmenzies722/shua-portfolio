@@ -54,6 +54,7 @@ main {
   overflow-x: hidden;
   overflow-y: visible;
   background: transparent;
+  isolation: isolate; /* Create new stacking context */
 }
 
 /* Blue gradient background streaks - animated */

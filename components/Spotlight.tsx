@@ -27,10 +27,15 @@ export default function Spotlight() {
     setMounted(true)
   }, [])
 
-  // Reset visibility on route change
+  // Reset visibility on route change - ensure it's hidden on home page initially
   useEffect(() => {
     setIsVisible(false)
-  }, [pathname])
+    // Reset mouse position to center on route change
+    if (typeof window !== 'undefined') {
+      mouseX.set(window.innerWidth / 2)
+      mouseY.set(window.innerHeight / 2)
+    }
+  }, [pathname, mouseX, mouseY])
 
   useEffect(() => {
     if (!mounted || typeof window === 'undefined') return
