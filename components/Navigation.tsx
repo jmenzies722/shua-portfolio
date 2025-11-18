@@ -61,6 +61,8 @@ export default function Navigation() {
           transform: 'translateY(0)',
           marginTop: 0,
           marginBottom: 0,
+          zIndex: 9999,
+          overflow: 'visible',
         }}
       >
         <div className="max-w-7xl mx-auto">

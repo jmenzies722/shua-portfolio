@@ -82,10 +82,7 @@ button:focus-visible,
 }
 
 
-nav {
-  position: relative;
-  z-index: 20;
-}
+/* Removed generic nav rule - using specific nav:not(footer nav) below */
 
 main {
   position: relative;
@@ -93,6 +90,11 @@ main {
 }
 
 footer {
+  position: relative;
+  z-index: 1;
+}
+
+footer nav {
   position: relative;
   z-index: 1;
 }
@@ -148,7 +150,10 @@ button {
 }
 
 /* Navigation positioning - ensure it stays at top on all devices */
-nav:not(footer nav) {
+/* CRITICAL: This must override any other nav rules */
+nav:not(footer nav),
+body > nav:not(footer nav),
+html body nav:not(footer nav) {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -158,12 +163,15 @@ nav:not(footer nav) {
   transform: translateY(0) !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+  padding-top: max(0.5rem, calc(0.5rem + env(safe-area-inset-top))) !important;
   will-change: auto;
 }
 
 /* Mobile-specific navbar fixes - enforce top positioning */
 @media (max-width: 1023px) {
-  nav:not(footer nav) {
+  nav:not(footer nav),
+  body > nav:not(footer nav),
+  html body nav:not(footer nav) {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
@@ -171,11 +179,13 @@ nav:not(footer nav) {
     bottom: auto !important;
     transform: translateY(0) !important;
     margin-top: 0 !important;
+    margin-bottom: 0 !important;
     padding-top: max(0.5rem, calc(0.5rem + env(safe-area-inset-top))) !important;
   }
   
   /* Ensure hamburger button is properly positioned */
-  nav:not(footer nav) button[aria-label="Open menu"] {
+  nav:not(footer nav) button[aria-label="Open menu"],
+  body > nav:not(footer nav) button[aria-label="Open menu"] {
     position: relative !important;
     top: auto !important;
     bottom: auto !important;
@@ -183,10 +193,11 @@ nav:not(footer nav) {
     margin: 0 !important;
   }
   
-  /* Prevent any parent from affecting navbar position */
-  body > nav:not(footer nav) {
-    position: fixed !important;
-    top: 0 !important;
+  /* Ensure menu items are visible and not clipped */
+  nav:not(footer nav) > div,
+  nav:not(footer nav) > div > div {
+    overflow: visible !important;
+    max-height: none !important;
   }
 }
 
