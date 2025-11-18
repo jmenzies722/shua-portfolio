@@ -16,7 +16,13 @@ export default function PageTransition({ children }: { children: ReactNode }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -6 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        style={{ position: 'relative', zIndex: 1 }}
+        style={{ 
+          position: 'relative', 
+          zIndex: 1,
+          width: '100%',
+          minHeight: '100%',
+        }}
+        className="w-full"
       >
         {children}
       </motion.div>

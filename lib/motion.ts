@@ -70,4 +70,30 @@ export const subtlePresence = {
   },
 }
 
+// Enhanced card with parallax and glow
+export const enhancedCardInteraction = {
+  whileHover: {
+    scale: 1.02,
+    y: -3,
+    transition: { duration: 0.2, ease: softEase },
+  },
+  whileTap: { scale: 0.98 },
+  transition: { duration: 0.15, ease: softEase },
+}
+
+// Scroll-triggered fade in
+export const scrollFadeIn = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: softEase,
+      delay,
+    },
+  },
+  viewport: { once: true, margin: '-50px' },
+})
+
 

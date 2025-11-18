@@ -42,7 +42,7 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Top Navigation Bar - Mobile-First */}
+      {/* Top Navigation Bar - Mobile-First - Always Pinned at Top */}
       <nav
         className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
           isScrolled
@@ -53,10 +53,14 @@ export default function Navigation() {
           paddingTop: 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))',
           paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
           paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
         }}
       >
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between h-14 md:h-16">
+          <div className="flex items-center justify-between h-14 md:h-16 px-0">
             {/* Left: Avatar + Name + Role - ALL IN ONE ROW */}
             <Link 
               href="/" 
@@ -100,10 +104,10 @@ export default function Navigation() {
               })}
             </div>
 
-            {/* Mobile Menu Button - SAME ROW */}
+            {/* Mobile Menu Button - SAME ROW - Properly Aligned */}
             <button
               onClick={() => setIsMenuOpen(true)}
-              className="lg:hidden p-2 -mr-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="lg:hidden p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] active:bg-white/[0.12] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
               aria-label="Open menu"
               type="button"
             >

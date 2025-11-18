@@ -26,8 +26,8 @@ export default function SectionShell({
       variants={fadeInUp(delay)}
       initial="initial"
       whileInView="animate"
-      viewport={{ once: true, amount: 0.35, margin: '-80px' }}
-      className={cn('space-y-6', className)}
+      viewport={{ once: true, amount: 0.1, margin: '0px' }} // Reduced margin to ensure content renders on mobile
+      className={cn('space-y-6 w-full', className)}
       style={style}
     >
       {children}
