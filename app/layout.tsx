@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="antialiased bg-[#050608] text-white bg-transparent">
+      <body className="antialiased bg-[#050608] text-white">
         <Spotlight />
         <Navigation />
         <main 
