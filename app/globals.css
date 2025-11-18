@@ -55,6 +55,19 @@ main {
   overflow-y: visible;
   background: transparent;
 }
+
+/* Blue gradient background streaks - animated */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 80% -10%, rgba(90, 120, 255, 0.25), transparent 50%);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientGlow 80s ease-in-out infinite;
+}
+
 a:focus-visible,
 button:focus-visible,
 [role='button']:focus-visible {
