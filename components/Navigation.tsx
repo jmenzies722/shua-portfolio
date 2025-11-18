@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronRight } from 'lucide-react'
@@ -24,6 +24,7 @@ export default function Navigation() {
   const pathname = usePathname() || '/'
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 8)
@@ -35,15 +36,33 @@ export default function Navigation() {
 
   // CRITICAL: Force navbar to top via JavaScript as fallback
   useEffect(() => {
-    const nav = document.querySelector('nav:not(footer nav)') as HTMLElement
-    if (nav) {
+    if (navRef.current) {
+      const nav = navRef.current
       // Force position via inline styles (highest priority)
-      nav.style.position = 'fixed'
-      nav.style.top = '0'
-      nav.style.bottom = 'auto'
-      nav.style.transform = 'translateY(0)'
-      nav.style.marginTop = '0'
-      nav.style.marginBottom = '0'
+      nav.style.setProperty('position', 'fixed', 'important')
+      nav.style.setProperty('top', '0', 'important')
+      nav.style.setProperty('bottom', 'auto', 'important')
+      nav.style.setProperty('transform', 'translateY(0)', 'important')
+      nav.style.setProperty('margin-top', '0', 'important')
+      nav.style.setProperty('margin-bottom', '0', 'important')
+      
+      // Use MutationObserver to watch for any style changes
+      const observer = new MutationObserver(() => {
+        if (nav.style.top !== '0px' || nav.style.position !== 'fixed') {
+          nav.style.setProperty('position', 'fixed', 'important')
+          nav.style.setProperty('top', '0', 'important')
+          nav.style.setProperty('bottom', 'auto', 'important')
+        }
+      })
+      
+      observer.observe(nav, {
+        attributes: true,
+        attributeFilter: ['style', 'class'],
+        childList: false,
+        subtree: false,
+      })
+      
+      return () => observer.disconnect()
     }
   }, [])
 
@@ -67,6 +86,7 @@ export default function Navigation() {
       {/* Top Navigation Bar - Mobile-First - Always Pinned at Top */}
       {/* CRITICAL: This nav must NEVER be at bottom - always top-0 */}
       <nav
+        ref={navRef}
         data-navbar="top"
         className="fixed top-0 left-0 right-0 z-[9999] transition-colors duration-300"
         style={{
