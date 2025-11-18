@@ -49,12 +49,13 @@ const aboutSections = [
 export default function Page() {
   return (
     <SectionShell 
-      className="space-y-8 sm:space-y-10"
+      className="space-y-8 sm:space-y-10 bg-transparent"
       style={{
         paddingTop: '1rem',
         paddingBottom: 'calc(3rem + env(safe-area-inset-bottom))',
         paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
         paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
+        background: 'transparent',
       }}
     >
       <div className="max-w-5xl mx-auto px-4 space-y-8">
@@ -72,7 +73,7 @@ export default function Page() {
         {/* Avatar - Centered */}
         <div className="flex justify-center">
           <div className="relative h-28 w-28 sm:h-36 sm:w-36 md:h-44 md:w-44">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#5ac8fa]/30 to-[#7f7bff]/30 blur-2xl opacity-60" />
+            {/* Removed gradient background - using global background only */}
             <div className="relative h-full w-full rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04]">
               <Image
                 src="/IMG_2897.jpg"

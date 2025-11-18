@@ -35,7 +35,7 @@ export default function HeroAvatar({ src, alt }: Props) {
       onPointerMove={handlePointer}
       onPointerLeave={reset}
     >
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#5ac8fa]/30 to-[#7f7bff]/30 blur-3xl opacity-60" />
+      {/* Removed gradient background - using global background only */}
       <div className="relative h-full w-full rounded-full overflow-hidden border-2 border-white/[0.12] shadow-2xl bg-white/[0.04]">
         <Image src={src} alt={alt} fill sizes="(max-width: 640px) 128px, (max-width: 1024px) 192px, 224px" className="object-cover" priority />
       </div>

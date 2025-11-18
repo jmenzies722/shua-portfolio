@@ -42,12 +42,13 @@ const posts = [
 export default function Page() {
   return (
     <SectionShell 
-      className="space-y-8 sm:space-y-10"
+      className="space-y-8 sm:space-y-10 bg-transparent"
       style={{
         paddingTop: '1rem',
         paddingBottom: 'calc(3rem + env(safe-area-inset-bottom))',
         paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
         paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
+        background: 'transparent',
       }}
     >
       <div className="max-w-5xl mx-auto px-4 space-y-8">

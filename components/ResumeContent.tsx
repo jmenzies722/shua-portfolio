@@ -5,12 +5,12 @@ import Link from 'next/link'
 
 export default function ResumeContent() {
   return (
-    <section className="py-20 md:py-28 lg:py-32">
+    <section className="py-20 md:py-28 lg:py-32 bg-transparent">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="flex justify-center mb-8">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-blue-300/5 to-transparent rounded-full blur-xl opacity-30" />
+              {/* Removed gradient background - using global background only */}
               <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04] glass-profile">
                 <Image
                   src="/IMG_2897.jpg"

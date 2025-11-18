@@ -8,11 +8,12 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent"
       style={{
         paddingTop: 'max(4rem, calc(4rem + env(safe-area-inset-top)))',
         paddingBottom: 'max(4rem, calc(4rem + env(safe-area-inset-bottom)))',
         minHeight: '-webkit-fill-available',
+        background: 'transparent',
       }}
     >
       <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -55,9 +56,7 @@ export default function Hero() {
             {/* Right: Avatar - Centered */}
             <div className="relative flex items-center justify-center order-1 md:order-2">
               <div className="relative">
-                {/* Subtle Tahoe glass ring */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/30 via-blue-300/8 to-transparent rounded-full blur-2xl opacity-40" />
-                
+                {/* Removed gradient background - using global background only */}
                 {/* Avatar */}
                 <div className="relative h-40 w-40 sm:h-44 sm:w-44 md:h-48 md:w-48 rounded-full overflow-hidden border-2 border-white/[0.12] bg-white/[0.04] glass-profile">
                   <Image

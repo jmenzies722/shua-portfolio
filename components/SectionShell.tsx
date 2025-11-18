@@ -39,10 +39,11 @@ export default function SectionShell({
       variants={variants}
       initial="initial"
       animate="animate"
-      className={cn('space-y-6 w-full', className)}
+      className={cn('space-y-6 w-full bg-transparent', className)}
       style={{
         ...style,
         overflow: 'visible', // Ensure content is never clipped
+        background: 'transparent', // Ensure no section-level backgrounds
       }}
     >
       {children}
