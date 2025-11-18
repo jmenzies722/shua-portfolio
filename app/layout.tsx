@@ -3,6 +3,7 @@ import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import PageTransition from '@/components/PageTransition'
+import Spotlight from '@/components/Spotlight'
 
 export const metadata: Metadata = {
   title: 'Josh Menzies | Platform Engineer',
@@ -33,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="antialiased bg-[#050608] text-white">
+        <Spotlight />
         <Navigation />
         <main className="min-h-screen relative z-10">
           <PageTransition>{children}</PageTransition>

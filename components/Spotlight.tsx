@@ -6,17 +6,19 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 export default function Spotlight() {
   const [isVisible, setIsVisible] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const [isMobile, setIsMobile] = useState(true) // Default to mobile
+  const [isMobile, setIsMobile] = useState(true)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  const springConfig = { damping: 30, stiffness: 150 }
+  
+  // Apple-style smooth spring animation
+  const springConfig = { damping: 25, stiffness: 200 }
   const x = useSpring(mouseX, springConfig)
   const y = useSpring(mouseY, springConfig)
   
-  // Always call useTransform - hooks must be called unconditionally
+  // Apple-style spotlight: larger, softer gradient
   const background = useTransform(
     [x, y],
-    ([xVal, yVal]) => `radial-gradient(400px circle at ${xVal}px ${yVal}px, rgba(0, 122, 255, 0.15), transparent 50%)`
+    ([xVal, yVal]) => `radial-gradient(600px circle at ${xVal}px ${yVal}px, rgba(90, 200, 250, 0.12) 0%, rgba(0, 122, 255, 0.08) 30%, transparent 70%)`
   )
 
   useEffect(() => {
@@ -73,10 +75,10 @@ export default function Spotlight() {
 
   return (
     <motion.div
-      className="fixed inset-0 pointer-events-none z-0"
+      className="fixed inset-0 pointer-events-none z-[1]"
       initial={{ opacity: 0 }}
       animate={{ opacity: isVisible ? 1 : 0 }}
-      transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
     >
       <motion.div
         className="absolute inset-0"

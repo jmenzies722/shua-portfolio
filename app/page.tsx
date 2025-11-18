@@ -14,7 +14,7 @@ export default function Page() {
     <SectionShell 
       className="min-h-[70vh] md:min-h-[75vh] flex items-center justify-center"
       style={{
-        paddingTop: 'calc(3rem + env(safe-area-inset-top))',
+        paddingTop: 'calc(5rem + env(safe-area-inset-top))',
         paddingBottom: 'calc(3rem + env(safe-area-inset-bottom))',
         paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
         paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
