@@ -56,7 +56,7 @@ export default function Navigation() {
           fixed top-0 left-0 right-0 z-50
           h-16 px-4
           flex items-center justify-between
-          backdrop-blur-xl
+          backdrop-blur-md
           border-b border-white/5
           transition-all duration-300
           ${isScrolled || pathname !== '/' 
@@ -73,7 +73,8 @@ export default function Navigation() {
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           {/* Left: Avatar + Name + Role */}
           <Link 
-            href="/" 
+            href="/"
+            prefetch={true}
             className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group"
           >
             <motion.div
@@ -107,6 +108,7 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={normalizedHref}
+                  prefetch={true}
                   className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
                     active
                       ? 'text-white bg-white/[0.12]'
@@ -144,56 +146,65 @@ export default function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-black/50 lg:hidden"
               onClick={handleLinkClick}
             />
 
-            {/* Bottom Sheet */}
+            {/* Centered Glassy Modal Sheet - Dynamic Island Inspired */}
             <motion.div
-              {...bottomSheetMotion}
-              className="fixed bottom-0 left-0 right-0 z-50 lg:hidden"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ 
+                type: 'spring', 
+                damping: 25, 
+                stiffness: 200,
+                duration: 0.3
+              }}
+              className="fixed inset-0 z-50 flex items-center justify-center lg:hidden px-4"
               style={{
                 paddingTop: 'env(safe-area-inset-top)',
-                paddingBottom: 'max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom)))',
-                paddingLeft: 'max(0px, env(safe-area-inset-left))',
-                paddingRight: 'max(0px, env(safe-area-inset-right))',
+                paddingBottom: 'env(safe-area-inset-bottom)',
+                paddingLeft: 'max(1rem, env(safe-area-inset-left))',
+                paddingRight: 'max(1rem, env(safe-area-inset-right))',
+              }}
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  handleLinkClick()
+                }
               }}
             >
               <div
-                className="w-full rounded-t-3xl"
+                className="w-full max-w-sm rounded-3xl"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.10)',
-                  backdropFilter: 'blur(24px)',
-                  WebkitBackdropFilter: 'blur(24px)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderBottom: 'none',
-                  boxShadow: '0 -4px 30px rgba(0, 0, 0, 0.5)',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)',
                 }}
               >
-                {/* Handle Bar */}
-                <div className="flex justify-center pt-4 pb-2">
-                  <div className="w-12 h-1 bg-white/30 rounded-full" />
-                </div>
-
                 {/* Profile Header */}
-                <div className="px-4 sm:px-6 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
-                      <Image
-                        src="/IMG_2897.jpg"
-                        alt="Josh Menzies"
-                        fill
-                        sizes="40px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold tracking-tight text-white truncate">
-                        Josh M.
-                      </h3>
-                      <p className="text-xs text-white/60 truncate">
-                        Platform Engineer
-                      </p>
+                <div className="px-6 pt-6 pb-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
+                        <Image
+                          src="/IMG_2897.jpg"
+                          alt="Josh Menzies"
+                          fill
+                          sizes="40px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-semibold tracking-tight text-white truncate">
+                          Josh M.
+                        </h3>
+                        <p className="text-xs text-white/60 truncate">
+                          Platform Engineer
+                        </p>
+                      </div>
                     </div>
                     <motion.button
                       onClick={handleLinkClick}
@@ -210,10 +221,10 @@ export default function Navigation() {
                 </div>
 
                 {/* Divider */}
-                <div className="h-px bg-white/10 mx-4 sm:mx-6 mb-4" />
+                <div className="h-px bg-white/10 mx-6 mb-4" />
 
                 {/* Navigation Links */}
-                <nav className="px-4 sm:px-6 pb-6 space-y-2">
+                <nav className="px-6 pb-6 space-y-2">
                   {navItems.map((item, index) => {
                     const normalizedHref = withTrailingSlash(item.href)
                     const isActive =
@@ -230,6 +241,7 @@ export default function Navigation() {
                         >
                           <Link
                             href={normalizedHref}
+                            prefetch={true}
                             onClick={handleLinkClick}
                             className={`
                               block w-full px-4 py-3 rounded-2xl
@@ -241,8 +253,8 @@ export default function Navigation() {
                               background: isActive
                                 ? 'rgba(255, 255, 255, 0.15)'
                                 : 'rgba(255, 255, 255, 0.08)',
-                              backdropFilter: 'blur(12px)',
-                              WebkitBackdropFilter: 'blur(12px)',
+                              backdropFilter: 'blur(8px)',
+                              WebkitBackdropFilter: 'blur(8px)',
                               border: '1px solid rgba(255, 255, 255, 0.10)',
                             }}
                           >

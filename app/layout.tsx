@@ -33,13 +33,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="antialiased bg-[#050608] text-white">
+      <body className="antialiased bg-[#050608] text-white bg-transparent">
         <Spotlight />
         <Navigation />
         <main 
-          className="min-h-screen relative w-full pt-16 md:pt-20"
+          className="min-h-screen relative w-full pt-16 md:pt-20 bg-transparent"
           style={{
-            paddingTop: 'calc(4rem + env(safe-area-inset-top))', // h-16 (4rem) + safe area
+            paddingTop: 'calc(4rem + env(safe-area-inset-top))',
             zIndex: 10,
           }}
         >

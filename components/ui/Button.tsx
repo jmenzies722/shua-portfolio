@@ -47,6 +47,7 @@ const MotionButton = motion.button
     return (
       <MotionLink
         href={href}
+        prefetch={true}
         className={`${baseClasses} ${variantClasses[variant]} ${className}`}
         whileHover={{ scale: 1.015 }}
         whileTap={{ scale: 0.98 }}

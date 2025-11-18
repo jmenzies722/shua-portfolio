@@ -12,19 +12,19 @@ const orbitTech = ['AWS', 'Terraform', 'Kubernetes', 'Lambda', 'Python', 'Datado
 export default function Page() {
   return (
     <SectionShell 
-      className="min-h-[70vh] md:min-h-[75vh] flex items-center justify-center"
+      className="min-h-[70vh] md:min-h-[75vh] flex items-center justify-center bg-transparent"
       style={{
-        paddingTop: '1rem',
+        paddingTop: '2rem',
         paddingBottom: 'calc(3rem + env(safe-area-inset-bottom))',
         paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
         paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
-        overflow: 'visible', // Ensure Hero is never clipped
+        overflow: 'visible',
       }}
     >
       <div className="w-full max-w-6xl mx-auto px-4" style={{ overflow: 'visible' }}>
         <div className="glass-card p-6 sm:p-8 md:p-10 lg:p-12" style={{ overflow: 'visible' }}>
-          {/* Mobile: Vertical Stack | Desktop: Two-Column Layout */}
-          <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16" style={{ overflow: 'visible' }}>
+          {/* Mobile: Vertical Stack | Desktop: Two-Column Layout - Perfectly Centered */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-center md:gap-12 lg:gap-16" style={{ overflow: 'visible' }}>
             {/* Left: Text Content */}
             <div className="flex-1 text-center md:text-left space-y-6 md:space-y-5 lg:space-y-6">
               {/* Headline */}
