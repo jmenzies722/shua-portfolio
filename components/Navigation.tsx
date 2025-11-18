@@ -77,11 +77,9 @@ export default function Navigation() {
             prefetch={true}
             className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group"
             onClick={(e) => {
-              // Force reload when clicking profile pic to refresh content
-              if (pathname === '/') {
-                e.preventDefault()
-                window.location.href = '/'
-              }
+              // Always force reload on single click to refresh content
+              e.preventDefault()
+              window.location.href = '/'
             }}
           >
             <motion.div
