@@ -84,3 +84,4 @@ echo "3. terraform apply (create infrastructure)"
 echo "4. Copy outputs to GitHub Secrets"
 echo "5. git push origin main (trigger deployment)"
 
+

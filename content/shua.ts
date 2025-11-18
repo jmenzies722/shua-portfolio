@@ -33,3 +33,4 @@ export const shuaResponses: Record<string, string> = {
   default: "I'm here to help! Ask me about Josh's experience, projects, skills, or how to get in touch. What interests you most?",
 }
 
+

@@ -23,3 +23,4 @@ export default function SectionDivider({ className = '', delay = 0 }: SectionDiv
   )
 }
 
+

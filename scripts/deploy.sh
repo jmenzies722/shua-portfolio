@@ -76,3 +76,4 @@ echo "2. Go to: https://github.com/jmenzies722/shua-portfolio/settings/secrets/a
 echo "3. Add the 4 secrets listed above"
 echo "4. Push to main: git push origin main"
 
+

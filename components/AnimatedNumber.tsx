@@ -61,3 +61,4 @@ export default function AnimatedNumber({ value, duration = 1.5, className = '' }
   )
 }
 
+

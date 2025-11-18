@@ -73,3 +73,4 @@ Check performance after deployment:
 3. Monitor Core Web Vitals
 4. Check CloudFront metrics
 
+
