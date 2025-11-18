@@ -18,16 +18,21 @@ export default function Page() {
         paddingBottom: 'calc(3rem + env(safe-area-inset-bottom))',
         paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
         paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
+        overflow: 'visible', // Ensure Hero is never clipped
       }}
     >
-      <div className="w-full max-w-6xl mx-auto px-4">
-        <div className="glass-card p-6 sm:p-8 md:p-10 lg:p-12">
+      <div className="w-full max-w-6xl mx-auto px-4" style={{ overflow: 'visible' }}>
+        <div className="glass-card p-6 sm:p-8 md:p-10 lg:p-12" style={{ overflow: 'visible' }}>
           {/* Mobile: Vertical Stack | Desktop: Two-Column Layout */}
-          <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16">
+          <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16" style={{ overflow: 'visible' }}>
             {/* Left: Text Content */}
             <div className="flex-1 text-center md:text-left space-y-6 md:space-y-5 lg:space-y-6">
               {/* Headline */}
-              <motion.div {...fadeInUp(0.1)} className="space-y-3 md:space-y-4">
+              <motion.div 
+                {...fadeInUp(0.1)} 
+                className="space-y-3 md:space-y-4"
+                style={{ overflow: 'visible' }}
+              >
                 <p className="text-xs sm:text-sm uppercase tracking-[0.3em] text-white/60">
                   Platform Engineering
                 </p>
@@ -37,7 +42,10 @@ export default function Page() {
               </motion.div>
 
               {/* Subheadline */}
-              <motion.div {...fadeInUp(0.2)}>
+              <motion.div 
+                {...fadeInUp(0.2)}
+                style={{ overflow: 'visible' }}
+              >
                 <p className="text-base sm:text-lg text-white/70 max-w-2xl md:max-w-none mx-auto md:mx-0 leading-relaxed">
                   I design AWS-native automation, serverless data flows, and observability layers that keep engineering
                   velocity high without trading away reliability or trust.
@@ -48,6 +56,7 @@ export default function Page() {
               <motion.div 
                 {...fadeInUp(0.3)} 
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start"
+                style={{ overflow: 'visible' }}
               >
                 <Button href={withTrailingSlash('/projects')} variant="primary" className="w-full sm:w-auto min-h-[48px]">
                   View projects
@@ -64,6 +73,7 @@ export default function Page() {
               <motion.div 
                 {...fadeInUp(0.4)} 
                 className="flex flex-wrap gap-2 justify-center md:justify-start pt-2"
+                style={{ overflow: 'visible' }}
               >
                 {orbitTech.map((tech) => (
                   <span key={tech} className="pill text-xs sm:text-sm">
@@ -77,6 +87,7 @@ export default function Page() {
             <motion.div
               {...avatarParallax}
               className="flex justify-center md:flex-shrink-0 order-first md:order-last mb-6 md:mb-0"
+              style={{ overflow: 'visible' }}
             >
               <HeroAvatar src="/IMG_2897.jpg" alt="Josh Menzies" />
             </motion.div>

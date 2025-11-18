@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -19,14 +19,9 @@ export default function SectionShell({
   as: Tag = 'section',
   style,
 }: Props) {
-  const [isMounted, setIsMounted] = useState(false)
   const MotionTag = motion(Tag)
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  // Simple fade-in that always renders (no viewport dependency)
+  // Simple fade-in that always renders immediately (no mount guard)
   const variants = {
     initial: { opacity: 0 },
     animate: { 
@@ -43,9 +38,12 @@ export default function SectionShell({
     <MotionTag
       variants={variants}
       initial="initial"
-      animate={isMounted ? "animate" : "initial"}
+      animate="animate"
       className={cn('space-y-6 w-full', className)}
-      style={style}
+      style={{
+        ...style,
+        overflow: 'visible', // Ensure content is never clipped
+      }}
     >
       {children}
     </MotionTag>

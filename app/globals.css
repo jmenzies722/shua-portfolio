@@ -29,6 +29,8 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  display: block;
 }
 
 body {
@@ -41,8 +43,12 @@ body {
   overflow-x: hidden;
   position: relative;
   width: 100%;
-  /* Ensure navbar children are positioned correctly */
+  /* CRITICAL: Ensure navbar children are positioned correctly */
   display: block;
+  /* Prevent any flex/grid that could push nav to bottom */
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
 }
 
 /* Ensure main content is always visible and properly positioned */
@@ -51,6 +57,8 @@ main {
   width: 100%;
   min-height: 100vh;
   display: block;
+  overflow-x: hidden;
+  overflow-y: visible; /* Allow content to be visible */
 }
 
 body::before {
@@ -153,10 +161,13 @@ button {
 
 /* Navigation positioning - CRITICAL: Force navbar to top, NEVER bottom */
 /* This must override ALL other rules including any parent containers */
+/* Using maximum specificity to override everything */
+nav[data-navbar="top"],
 nav:not(footer nav),
 body > nav:not(footer nav),
 html body nav:not(footer nav),
-body > * > nav:not(footer nav) {
+body > * > nav:not(footer nav),
+html > body > nav:not(footer nav) {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -164,48 +175,67 @@ body > * > nav:not(footer nav) {
   bottom: auto !important;
   z-index: 9999 !important;
   transform: translateY(0) !important;
+  translate: 0 0 !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
   padding-top: max(0.5rem, calc(0.5rem + env(safe-area-inset-top))) !important;
+  padding-bottom: 0 !important;
   will-change: auto;
   /* Explicitly prevent any bottom positioning */
   align-self: flex-start !important;
   align-items: flex-start !important;
+  justify-self: flex-start !important;
+  /* Prevent any parent flex/grid from affecting position */
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  order: -9999 !important;
 }
 
 /* Mobile-specific navbar fixes - enforce top positioning with maximum specificity */
 @media (max-width: 1023px) {
-  /* Base mobile rule - MUST be at top */
+  /* CRITICAL: Force navbar to top on mobile - override EVERYTHING */
+  nav[data-navbar="top"],
   nav:not(footer nav),
   body > nav:not(footer nav),
   html body nav:not(footer nav),
-  body > * > nav:not(footer nav) {
+  body > * > nav:not(footer nav),
+  html > body > nav:not(footer nav) {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     bottom: auto !important;
     transform: translateY(0) !important;
+    translate: 0 0 !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
     padding-top: max(0.5rem, calc(0.5rem + env(safe-area-inset-top))) !important;
+    padding-bottom: 0 !important;
     /* Prevent any flex/grid positioning that could push it down */
     align-self: flex-start !important;
     align-items: flex-start !important;
+    justify-self: flex-start !important;
     order: -9999 !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    /* Force it to stay at top even if parent is flex/grid */
+    align-content: flex-start !important;
+    justify-content: flex-start !important;
   }
   
   /* Ensure hamburger button is properly positioned */
   nav:not(footer nav) button[aria-label="Open menu"],
-  body > nav:not(footer nav) button[aria-label="Open menu"] {
+  body > nav:not(footer nav) button[aria-label="Open menu"],
+  html body nav:not(footer nav) button[aria-label="Open menu"] {
     position: relative !important;
     top: auto !important;
     bottom: auto !important;
     transform: none !important;
+    translate: none !important;
     margin: 0 !important;
   }
   
@@ -216,14 +246,24 @@ body > * > nav:not(footer nav) {
     max-height: none !important;
   }
   
-  /* Prevent parent containers from affecting navbar */
+  /* CRITICAL: Prevent parent containers from affecting navbar */
   body {
+    display: block !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+  }
+  
+  html {
     display: block !important;
   }
   
+  /* Force navbar to top even if body is flex */
   body > nav:not(footer nav) {
     position: fixed !important;
     top: 0 !important;
+    align-self: flex-start !important;
+    order: -9999 !important;
   }
 }
 

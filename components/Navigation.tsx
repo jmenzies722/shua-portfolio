@@ -33,6 +33,20 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // CRITICAL: Force navbar to top via JavaScript as fallback
+  useEffect(() => {
+    const nav = document.querySelector('nav:not(footer nav)') as HTMLElement
+    if (nav) {
+      // Force position via inline styles (highest priority)
+      nav.style.position = 'fixed'
+      nav.style.top = '0'
+      nav.style.bottom = 'auto'
+      nav.style.transform = 'translateY(0)'
+      nav.style.marginTop = '0'
+      nav.style.marginBottom = '0'
+    }
+  }, [])
+
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden'
@@ -53,23 +67,28 @@ export default function Navigation() {
       {/* Top Navigation Bar - Mobile-First - Always Pinned at Top */}
       {/* CRITICAL: This nav must NEVER be at bottom - always top-0 */}
       <nav
+        data-navbar="top"
         className="fixed top-0 left-0 right-0 z-[9999] transition-colors duration-300"
         style={{
           paddingTop: 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))',
           paddingLeft: 'max(1rem, calc(1rem + env(safe-area-inset-left)))',
           paddingRight: 'max(1rem, calc(1rem + env(safe-area-inset-right)))',
+          paddingBottom: 0,
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
           bottom: 'auto',
           transform: 'translateY(0)',
+          translate: '0 0',
           marginTop: 0,
           marginBottom: 0,
           marginLeft: 0,
           marginRight: 0,
           zIndex: 9999,
           overflow: 'visible',
+          alignSelf: 'flex-start',
+          order: -9999,
           backgroundColor: isScrolled
             ? 'rgba(5, 6, 8, 0.98)'
             : pathname === '/' ? 'transparent' : 'rgba(5, 6, 8, 0.95)',
