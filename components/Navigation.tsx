@@ -90,14 +90,14 @@ export default function Navigation() {
             </Link>
 
             {/* Desktop Nav - Right */}
-            <div className="hidden lg:flex items-center gap-1 relative z-[10000]">
+            <nav className="hidden lg:flex items-center gap-1 relative z-[10000]">
               {navItems.map((item) => {
                 const isActive = pathname === item.href
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 relative z-[10001] ${
+                    className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
                       isActive
                         ? 'text-white bg-white/[0.12]'
                         : 'text-white/70 hover:text-white hover:bg-white/[0.08]'
@@ -107,7 +107,7 @@ export default function Navigation() {
                   </Link>
                 )
               })}
-            </div>
+            </nav>
 
             {/* Mobile Menu Button - SAME ROW */}
             <button
