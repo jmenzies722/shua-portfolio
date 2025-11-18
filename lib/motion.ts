@@ -15,8 +15,20 @@ export const bottomSheetMotion = {
   initial: { y: '100%' },
   animate: { y: 0 },
   exit: { y: '100%' },
-  transition: { type: 'spring', damping: 20, stiffness: 200 },
+  transition: { type: 'spring', damping: 20, stiffness: 180 },
 }
+
+// Menu item animation for bottom sheet
+export const menuItemMotion = (index: number) => ({
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 },
+  transition: {
+    duration: 0.3,
+    delay: index * 0.03,
+    ease: [0.22, 1, 0.36, 1],
+  },
+})
 
 // Card hover/tap feedback
 export const cardInteraction = {
