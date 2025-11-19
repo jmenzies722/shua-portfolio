@@ -115,13 +115,6 @@ export default function Navigation() {
                   key={item.href}
                   href={normalizedHref}
                   prefetch={true}
-                  onClick={(e) => {
-                    // Force reload when clicking Home link
-                    if (isHome) {
-                      e.preventDefault()
-                      window.location.href = '/'
-                    }
-                  }}
                   className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
                     active
                       ? 'text-white bg-white/[0.12]'
