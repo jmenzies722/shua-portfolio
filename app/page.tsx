@@ -1,16 +1,22 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import SectionShell from '@/components/SectionShell'
 import HeroAvatar from '@/components/HeroAvatar'
+import AskShuaModal from '@/components/AskShuaModal'
 import { fadeInUp, avatarParallax } from '@/lib/motion'
 import { withTrailingSlash } from '@/lib/utils'
 
 const orbitTech = ['AWS', 'Terraform', 'Kubernetes', 'Lambda', 'Python', 'Datadog']
 
 export default function Page() {
+  const [isShuaOpen, setIsShuaOpen] = useState(false)
+
   return (
+    <>
+      <AskShuaModal isOpen={isShuaOpen} onClose={() => setIsShuaOpen(false)} />
     <SectionShell 
       className="min-h-[70vh] md:min-h-[75vh] flex items-center justify-center bg-transparent"
       style={{
@@ -61,9 +67,14 @@ export default function Page() {
                 <Button href={withTrailingSlash('/projects')} variant="primary" className="w-full sm:w-auto min-h-[48px]">
                   View projects
                 </Button>
-                <Button href={withTrailingSlash('/resume')} variant="secondary" className="w-full sm:w-auto min-h-[48px]">
-                  View résumé
-                </Button>
+                <motion.button
+                  onClick={() => setIsShuaOpen(true)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full sm:w-auto min-h-[48px] px-6 py-3 rounded-2xl border border-white/20 bg-white/[0.05] text-white font-medium text-sm sm:text-base transition-all duration-200 hover:bg-white/[0.1] hover:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/30"
+                >
+                  Ask Shua
+                </motion.button>
                 <Button href={withTrailingSlash('/contact')} variant="secondary" className="w-full sm:w-auto min-h-[48px]">
                   Contact
                 </Button>
@@ -95,5 +106,6 @@ export default function Page() {
         </div>
       </div>
     </SectionShell>
+    </>
   )
 }
