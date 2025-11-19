@@ -35,6 +35,15 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Build artifacts
+out/
+.next/
+dist/
+
+# PDF files in root (should be in public/)
+*.pdf
+!public/*.pdf
+
 # Terraform
 terraform/.terraform/
 terraform/.terraform.lock.hcl

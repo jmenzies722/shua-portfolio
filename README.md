@@ -1,6 +1,8 @@
-# Josh Menzies – Shua Portfolio Platform
+# Josh Menzies – Portfolio
 
-A premium, Apple-grade portfolio platform built with Next.js 14, TypeScript, TailwindCSS, and Framer Motion. Designed to impress employers, recruiters, and senior engineers.
+A professional portfolio platform showcasing platform engineering expertise. Built with Next.js 14, TypeScript, TailwindCSS, and Framer Motion.
+
+**Live Site:** [https://dp5tjfz6rf4o2.cloudfront.net](https://dp5tjfz6rf4o2.cloudfront.net)
 
 ## 🎯 Features
 
@@ -163,8 +165,6 @@ This project includes Terraform infrastructure and GitHub Actions CI/CD for auto
    git push origin main
    ```
    GitHub Actions will automatically build and deploy!
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
 
 #### Manual Deployment
 
