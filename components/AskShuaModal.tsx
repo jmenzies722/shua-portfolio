@@ -17,6 +17,8 @@ const suggestedQuestions = [
   "Which project shows his strongest skills?",
   "Give me a quick intro.",
   "What tech does he work with?",
+  "What's his experience?",
+  "How can I contact him?",
 ]
 
 const welcomeMessage = "Hey, I'm Shua — ask me anything about Josh, his projects, experience, or how he builds cloud systems."
@@ -97,9 +99,9 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
     }
   }, [])
 
-  // Keyboard detection and handling for mobile
+  // Keyboard detection only for desktop (mobile uses pre-prompt buttons)
   useEffect(() => {
-    if (!isOpen || !isMobile || typeof window === 'undefined') return
+    if (!isOpen || isMobile || typeof window === 'undefined') return
 
     const handleViewportResize = () => {
       if (window.visualViewport) {
@@ -117,41 +119,15 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
       }
     }
 
-    const handleViewportScroll = () => {
-      if (window.visualViewport && messagesContainerRef.current) {
-        // Scroll messages container to keep input visible
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
-      }
-    }
-
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleViewportResize)
-      window.visualViewport.addEventListener('scroll', handleViewportScroll)
       handleViewportResize() // Initial check
     }
-
-    // Fallback for browsers without visualViewport
-    const handleResize = () => {
-      if (!window.visualViewport) {
-        const windowHeight = window.innerHeight
-        const documentHeight = document.documentElement.clientHeight
-        const heightDiff = documentHeight - windowHeight
-        if (heightDiff > 150) {
-          setKeyboardHeight(heightDiff)
-        } else {
-          setKeyboardHeight(0)
-        }
-      }
-    }
-
-    window.addEventListener('resize', handleResize)
 
     return () => {
       if (window.visualViewport) {
         window.visualViewport.removeEventListener('resize', handleViewportResize)
-        window.visualViewport.removeEventListener('scroll', handleViewportScroll)
       }
-      window.removeEventListener('resize', handleResize)
     }
   }, [isOpen, isMobile])
 
@@ -395,9 +371,7 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
                 : '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)',
               paddingTop: isMobile ? 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))' : '0',
               paddingBottom: isMobile 
-                ? (keyboardHeight > 0 
-                    ? `calc(${keyboardHeight}px + 80px + env(safe-area-inset-bottom))` 
-                    : 'calc(80px + env(safe-area-inset-bottom))')
+                ? '0' // No keyboard padding needed on mobile
                 : '0',
               top: isMobile ? 'max(3rem, calc(3rem + env(safe-area-inset-top)))' : '50%',
               left: isMobile ? 'auto' : '50%',
@@ -495,15 +469,21 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Suggested Questions */}
-            {messages.length <= 1 && (
+            {/* Suggested Questions - Always visible on mobile, conditional on desktop */}
+            {(isMobile || messages.length <= 1) && (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="px-4 sm:px-6 py-3 border-t border-white/10 flex-shrink-0 bg-transparent"
+                className={`px-4 sm:px-6 py-4 border-t border-white/10 flex-shrink-0 bg-transparent ${isMobile ? 'pb-6' : ''}`}
+                style={{
+                  paddingBottom: isMobile ? `calc(1.5rem + env(safe-area-inset-bottom))` : undefined,
+                }}
               >
-                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                {isMobile && messages.length > 1 && (
+                  <p className="text-xs text-white/60 mb-3 text-center">Tap a question below:</p>
+                )}
+                <div className={`flex gap-2 ${isMobile ? 'flex-wrap justify-center' : 'overflow-x-auto pb-2 scrollbar-hide'}`}>
                   {suggestedQuestions.map((question, index) => (
                     <motion.button
                       key={index}
@@ -513,7 +493,9 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + index * 0.05 }}
-                      className="px-4 py-2 text-xs sm:text-sm text-white/80 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full whitespace-nowrap transition-colors flex-shrink-0"
+                      className={`px-4 py-2.5 text-sm text-white/90 bg-white/8 hover:bg-white/12 border border-white/15 rounded-full transition-colors flex-shrink-0 ${
+                        isMobile ? 'text-base py-3 px-5' : 'text-xs sm:text-sm'
+                      }`}
                     >
                       {question}
                     </motion.button>
@@ -522,62 +504,41 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               </motion.div>
             )}
 
-            {/* Input Bar - Fixed at bottom with keyboard handling */}
-            <div 
-              ref={inputBarRef}
-              className="px-4 sm:px-6 py-4 border-t border-white/10 flex-shrink-0 bg-transparent"
-              style={{
-                position: isMobile ? 'fixed' : 'relative',
-                bottom: isMobile ? (keyboardHeight > 0 ? `${keyboardHeight}px` : 0) : 'auto',
-                left: isMobile ? 0 : 'auto',
-                right: isMobile ? 0 : 'auto',
-                width: isMobile ? '100%' : 'auto',
-                paddingBottom: isMobile 
-                  ? `calc(12px + env(safe-area-inset-bottom))` 
-                  : '1rem',
-                paddingTop: isMobile ? '12px' : '1rem',
-                background: isMobile 
-                  ? 'rgba(0, 0, 0, 0.35)' 
-                  : 'transparent',
-                backdropFilter: isMobile ? 'blur(20px)' : 'none',
-                WebkitBackdropFilter: isMobile ? 'blur(20px)' : 'none',
-                boxShadow: isMobile 
-                  ? '0 -4px 20px rgba(0, 0, 0, 0.3)' 
-                  : '0 -4px 20px rgba(0, 0, 0, 0.3)',
-                transition: isMobile 
-                  ? 'bottom 160ms cubic-bezier(0.25, 0.1, 0.25, 1), padding-bottom 160ms cubic-bezier(0.25, 0.1, 0.25, 1)' 
-                  : 'none',
-                zIndex: isMobile ? 10000 : 'auto',
-              }}
-            >
-              <div className="flex gap-3 items-end">
-                <div className="flex-1 relative">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Ask me anything..."
-                    className="w-full px-4 py-3 pr-12 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#5ac8fa]/50 focus:border-[#5ac8fa]/50 transition-all"
-                    style={{
-                      fontSize: '16px', // Prevents iOS zoom
-                      WebkitTextSizeAdjust: '100%',
-                    }}
-                  />
+            {/* Input Bar - Desktop only */}
+            {!isMobile && (
+              <div 
+                ref={inputBarRef}
+                className="px-4 sm:px-6 py-4 border-t border-white/10 flex-shrink-0 bg-transparent"
+              >
+                <div className="flex gap-3 items-end">
+                  <div className="flex-1 relative">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="Ask me anything..."
+                      className="w-full px-4 py-3 pr-12 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#5ac8fa]/50 focus:border-[#5ac8fa]/50 transition-all"
+                      style={{
+                        fontSize: '16px',
+                        WebkitTextSizeAdjust: '100%',
+                      }}
+                    />
+                  </div>
+                  <motion.button
+                    onClick={() => handleSend()}
+                    disabled={!input.trim() || isTyping}
+                    whileHover={{ scale: input.trim() && !isTyping ? 1.05 : 1 }}
+                    whileTap={{ scale: input.trim() && !isTyping ? 0.95 : 1 }}
+                    className="p-3 rounded-2xl bg-[#5ac8fa] text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all min-w-[48px] min-h-[48px] flex items-center justify-center"
+                    aria-label="Send message"
+                  >
+                    <Send className="w-5 h-5" strokeWidth={2} />
+                  </motion.button>
                 </div>
-                <motion.button
-                  onClick={() => handleSend()}
-                  disabled={!input.trim() || isTyping}
-                  whileHover={{ scale: input.trim() && !isTyping ? 1.05 : 1 }}
-                  whileTap={{ scale: input.trim() && !isTyping ? 0.95 : 1 }}
-                  className="p-3 rounded-2xl bg-[#5ac8fa] text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all min-w-[48px] min-h-[48px] flex items-center justify-center"
-                  aria-label="Send message"
-                >
-                  <Send className="w-5 h-5" strokeWidth={2} />
-                </motion.button>
               </div>
-            </div>
+            )}
           </motion.div>
         </>
       )}
