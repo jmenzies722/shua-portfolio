@@ -246,17 +246,44 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
     }
   }
 
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open (but allow modal content to scroll)
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden'
+      // Only prevent body scroll on mobile to allow modal scrolling
+      if (isMobile) {
+        document.body.classList.add('modal-open')
+        document.body.style.overflow = 'hidden'
+        document.body.style.position = 'fixed'
+        document.body.style.width = '100%'
+        // Store scroll position to restore later
+        const scrollY = window.scrollY
+        document.body.style.top = `-${scrollY}px`
+      } else {
+        document.body.style.overflow = 'hidden'
+      }
     } else {
-      document.body.style.overflow = ''
+      if (isMobile) {
+        document.body.classList.remove('modal-open')
+        const scrollY = document.body.style.top
+        document.body.style.overflow = ''
+        document.body.style.position = ''
+        document.body.style.width = ''
+        document.body.style.top = ''
+        if (scrollY) {
+          window.scrollTo(0, parseInt(scrollY || '0') * -1)
+        }
+      } else {
+        document.body.style.overflow = ''
+      }
     }
     return () => {
+      document.body.classList.remove('modal-open')
       document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
     }
-  }, [isOpen])
+  }, [isOpen, isMobile])
 
   // Reset drag position when modal closes or opens
   useEffect(() => {
@@ -376,8 +403,9 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               left: isMobile ? 'auto' : '50%',
               height: isMobile ? 'auto' : undefined,
               maxHeight: isMobile ? 'calc(100vh - max(3rem, calc(3rem + env(safe-area-inset-top))))' : undefined,
-              y: isMobile ? dragYSpring : undefined,
-              x: isMobile ? undefined : undefined,
+              y: isMobile ? dragYSpring : desktopY,
+              x: isMobile ? undefined : desktopX,
+              touchAction: isMobile ? 'none' : undefined, // Prevent default touch on container, allow in children
               ...(isMobile ? {} : {
                 top: '50%',
                 left: '50%',
