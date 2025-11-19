@@ -3,15 +3,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import { X, Send, MessageSquare } from 'lucide-react'
-import { resumeData } from '@/content/resume'
-import { generateShuaResponse } from '@/lib/shua-knowledge'
-
-interface Message {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-  timestamp: number
-}
+import { useShua } from '@/contexts/ShuaContext'
+import { generateShuaReply } from '@/lib/shua-nlp'
 
 interface AskShuaModalProps {
   isOpen: boolean
@@ -19,21 +12,24 @@ interface AskShuaModalProps {
 }
 
 const suggestedQuestions = [
-  "Tell me about Josh's experience.",
-  "Show me his best projects.",
-  "What is Josh strongest at?",
-  "Summarize his résumé.",
-  "What tech does Josh work with?",
+  "What's Josh best at?",
+  "Tell me about his recent work.",
+  "Which project shows his strongest skills?",
+  "Give me a quick intro.",
+  "What tech does he work with?",
 ]
 
 const welcomeMessage = "Hey, I'm Shua — ask me anything about Josh, his projects, experience, or how he builds cloud systems."
 
 export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
-  const [messages, setMessages] = useState<Message[]>([])
+  const { messages, addMessage, clearMessages, getRecentHistory } = useShua()
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [typingContent, setTypingContent] = useState('')
+  const [isInitialized, setIsInitialized] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
   const dragY = useMotionValue(0)
   const dragYSpring = useSpring(dragY, { damping: 25, stiffness: 200 })
   const [isDragging, setIsDragging] = useState(false)
@@ -41,38 +37,64 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
 
   // Initialize with welcome message
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      setMessages([{
-        id: 'welcome',
+    if (isOpen && !isInitialized && messages.length === 0) {
+      addMessage({
         role: 'assistant',
         content: welcomeMessage,
-        timestamp: Date.now(),
-      }])
+      })
+      setIsInitialized(true)
     }
-  }, [isOpen, messages.length])
+  }, [isOpen, isInitialized, messages.length, addMessage])
 
-  // Auto-scroll to bottom
+  // Reset initialization when modal closes
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (!isOpen) {
+      setIsInitialized(false)
+    }
+  }, [isOpen])
+
+  // Auto-scroll to bottom with smooth behavior
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      const timer = setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      }, 100)
+      return () => clearTimeout(timer)
+    }
   }, [messages, isTyping])
 
   // Focus input when opened
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300)
+      const timer = setTimeout(() => {
+        inputRef.current?.focus()
+      }, 400)
+      return () => clearTimeout(timer)
     }
   }, [isOpen])
 
+  // Desktop: Floating glass card, Mobile: Full-height slide-up modal
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+      checkMobile()
+      window.addEventListener('resize', checkMobile)
+      return () => window.removeEventListener('resize', checkMobile)
+    }
+  }, [])
+
   // Mobile swipe to close
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (window.innerWidth <= 768) {
+    if (isMobile) {
       setIsDragging(true)
       setStartY(e.touches[0].clientY)
     }
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (isDragging && window.innerWidth <= 768) {
+    if (isDragging && isMobile) {
       const currentY = e.touches[0].clientY
       const deltaY = currentY - startY
       if (deltaY > 0) {
@@ -96,50 +118,43 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
     const text = messageText || input.trim()
     if (!text) return
 
-    const userMessage: Message = {
-      id: `user-${Date.now()}`,
+    // Add user message
+    addMessage({
       role: 'user',
       content: text,
-      timestamp: Date.now(),
-    }
-
-    setMessages((prev) => [...prev, userMessage])
+    })
     setInput('')
     setIsTyping(true)
+    setTypingContent('')
 
-    // Simulate typing delay
-    await new Promise((resolve) => setTimeout(resolve, 800))
+    // Simulate thinking delay for natural feel
+    await new Promise((resolve) => setTimeout(resolve, 600 + Math.random() * 400))
 
-    const response = generateShuaResponse(text)
+    // Get conversation history for context (including the message we just added)
+    const history = getRecentHistory(8)
+    
+    // Generate natural response
+    const response = generateShuaReply(text, history)
     
     // Type out response character by character for human-like effect
-    const assistantMessage: Message = {
-      id: `assistant-${Date.now()}`,
-      role: 'assistant',
-      content: '',
-      timestamp: Date.now(),
-    }
-
-    setMessages((prev) => [...prev, assistantMessage])
-    setIsTyping(false)
-
-    // Type out response
     let currentIndex = 0
+    const typingSpeed = 20 + Math.random() * 15 // Variable typing speed (20-35ms per char)
+    
     const typingInterval = setInterval(() => {
       if (currentIndex < response.length) {
-        setMessages((prev) => {
-          const updated = [...prev]
-          const lastMsg = updated[updated.length - 1]
-          if (lastMsg.role === 'assistant') {
-            lastMsg.content = response.substring(0, currentIndex + 1)
-          }
-          return updated
-        })
+        setTypingContent(response.substring(0, currentIndex + 1))
         currentIndex++
       } else {
         clearInterval(typingInterval)
+        setIsTyping(false)
+        // Add the complete message to context
+        addMessage({
+          role: 'assistant',
+          content: response,
+        })
+        setTypingContent('')
       }
-    }, 20)
+    }, typingSpeed)
   }
 
   const handleSuggestionClick = (question: string) => {
@@ -147,12 +162,11 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
   }
 
   const handleClearChat = () => {
-    setMessages([{
-      id: 'welcome',
+    clearMessages()
+    addMessage({
       role: 'assistant',
       content: welcomeMessage,
-      timestamp: Date.now(),
-    }])
+    })
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -162,17 +176,17 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
     }
   }
 
-  // Desktop: Floating glass card, Mobile: Full-height slide-up modal
-  const [isMobile, setIsMobile] = useState(false)
-
+  // Prevent body scroll when modal is open
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const checkMobile = () => setIsMobile(window.innerWidth <= 768)
-      checkMobile()
-      window.addEventListener('resize', checkMobile)
-      return () => window.removeEventListener('resize', checkMobile)
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
     }
-  }, [])
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
 
   return (
     <AnimatePresence>
@@ -227,7 +241,7 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
           >
             {/* Header */}
             <div 
-              className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/10 flex-shrink-0"
+              className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/10 flex-shrink-0 bg-transparent"
               style={{
                 paddingTop: isMobile ? 'max(1rem, calc(1rem + env(safe-area-inset-top)))' : '1rem',
               }}
@@ -264,7 +278,13 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
             </div>
 
             {/* Messages Container */}
-            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
+            <div 
+              ref={messagesContainerRef}
+              className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 scroll-smooth"
+              style={{
+                scrollBehavior: 'smooth',
+              }}
+            >
               {messages.map((message, index) => (
                 <MessageBubble
                   key={message.id}
@@ -272,13 +292,28 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
                   index={index}
                 />
               ))}
-              {isTyping && <TypingIndicator />}
+              {isTyping && typingContent && (
+                <MessageBubble
+                  message={{
+                    id: 'typing',
+                    role: 'assistant',
+                    content: typingContent,
+                  }}
+                  index={messages.length}
+                />
+              )}
+              {isTyping && !typingContent && <TypingIndicator />}
               <div ref={messagesEndRef} />
             </div>
 
             {/* Suggested Questions */}
             {messages.length <= 1 && (
-              <div className="px-4 sm:px-6 py-3 border-t border-white/10 flex-shrink-0">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="px-4 sm:px-6 py-3 border-t border-white/10 flex-shrink-0 bg-transparent"
+              >
                 <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
                   {suggestedQuestions.map((question, index) => (
                     <motion.button
@@ -286,13 +321,16 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
                       onClick={() => handleSuggestionClick(question)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 + index * 0.05 }}
                       className="px-4 py-2 text-xs sm:text-sm text-white/80 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full whitespace-nowrap transition-colors flex-shrink-0"
                     >
                       {question}
                     </motion.button>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Input Bar */}
@@ -300,6 +338,7 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               className="px-4 sm:px-6 py-4 border-t border-white/10 flex-shrink-0 bg-transparent"
               style={{
                 paddingBottom: isMobile ? 'max(1rem, calc(1rem + env(safe-area-inset-bottom)))' : '1rem',
+                boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.3)',
               }}
             >
               <div className="flex gap-3 items-end">
@@ -316,9 +355,9 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
                 </div>
                 <motion.button
                   onClick={() => handleSend()}
-                  disabled={!input.trim()}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  disabled={!input.trim() || isTyping}
+                  whileHover={{ scale: input.trim() && !isTyping ? 1.05 : 1 }}
+                  whileTap={{ scale: input.trim() && !isTyping ? 0.95 : 1 }}
                   className="p-3 rounded-2xl bg-[#5ac8fa] text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all min-w-[48px] min-h-[48px] flex items-center justify-center"
                   aria-label="Send message"
                 >
@@ -333,8 +372,8 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
   )
 }
 
-// Message Bubble Component
-function MessageBubble({ message, index }: { message: Message; index: number }) {
+// Message Bubble Component with improved animations
+function MessageBubble({ message, index }: { message: { id: string; role: 'user' | 'assistant'; content: string }; index: number }) {
   const isUser = message.role === 'user'
 
   return (
@@ -342,8 +381,8 @@ function MessageBubble({ message, index }: { message: Message; index: number }) 
       initial={{ opacity: 0, y: isUser ? 10 : 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{
-        duration: 0.3,
-        delay: index * 0.05,
+        duration: 0.25,
+        delay: index * 0.03,
         ease: [0.4, 0, 0.2, 1],
       }}
       className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
@@ -360,7 +399,7 @@ function MessageBubble({ message, index }: { message: Message; index: number }) 
             : '0 2px 8px rgba(0, 0, 0, 0.2)',
         }}
       >
-        <p className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap">
+        <p className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap break-words">
           {message.content}
         </p>
       </div>
@@ -368,7 +407,7 @@ function MessageBubble({ message, index }: { message: Message; index: number }) 
   )
 }
 
-// Typing Indicator Component
+// Typing Indicator Component with pulsing dots
 function TypingIndicator() {
   return (
     <motion.div
@@ -399,4 +438,3 @@ function TypingIndicator() {
     </motion.div>
   )
 }
-

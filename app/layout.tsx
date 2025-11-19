@@ -4,6 +4,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import PageTransition from '@/components/PageTransition'
 import Spotlight from '@/components/Spotlight'
+import { ShuaProvider } from '@/contexts/ShuaContext'
 
 export const metadata: Metadata = {
   title: 'Josh Menzies | Platform Engineer',
@@ -34,18 +35,20 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="antialiased bg-[#050608] text-white">
-        <Spotlight />
-        <Navigation />
-        <main 
-          className="min-h-screen relative w-full pt-16 md:pt-20 bg-transparent"
-          style={{
-            paddingTop: 'calc(4rem + env(safe-area-inset-top))',
-            zIndex: 10,
-          }}
-        >
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
+        <ShuaProvider>
+          <Spotlight />
+          <Navigation />
+          <main 
+            className="min-h-screen relative w-full pt-16 md:pt-20 bg-transparent"
+            style={{
+              paddingTop: 'calc(4rem + env(safe-area-inset-top))',
+              zIndex: 10,
+            }}
+          >
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <Footer />
+        </ShuaProvider>
       </body>
     </html>
   )
