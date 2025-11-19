@@ -114,18 +114,26 @@ function handler(event) {
   // Remove query string for processing
   var uriPath = uri.split('?')[0];
   
+  // Don't rewrite static assets - they should pass through unchanged
+  // Static assets include: /_next/, files with extensions, etc.
+  if (uriPath.startsWith('/_next/') || 
+      uriPath.startsWith('/static/') ||
+      uriPath.includes('/.') ||
+      uriPath.match(/\/[^\/]+\.[a-zA-Z0-9]+$/)) {
+    return request;
+  }
+  
   // If URI ends with /, serve index.html in that directory
   if (uriPath.endsWith('/')) {
     request.uri = uriPath + 'index.html';
     return request;
   }
   
-  // If URI doesn't have an extension, it's a route without trailing slash
+  // If URI doesn't have an extension and is a root-level route,
   // Next.js with trailingSlash: true generates /route/index.html
   // So /about should become /about/index.html
   if (!uriPath.includes('.')) {
-    // Skip if it's already a file path (has extension)
-    // Add trailing slash and index.html
+    // Only rewrite if it looks like a route (not a file)
     request.uri = uriPath + '/index.html';
     return request;
   }
