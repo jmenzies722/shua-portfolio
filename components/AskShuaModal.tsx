@@ -163,7 +163,16 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
   }
 
   // Desktop: Floating glass card, Mobile: Full-height slide-up modal
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+      checkMobile()
+      window.addEventListener('resize', checkMobile)
+      return () => window.removeEventListener('resize', checkMobile)
+    }
+  }, [])
 
   return (
     <AnimatePresence>
@@ -175,8 +184,9 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm"
             onClick={isMobile ? undefined : onClose}
+            style={{ zIndex: 9998 }}
           />
 
           {/* Chat Modal */}
@@ -189,7 +199,7 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               : { type: 'spring', damping: 25, stiffness: 200, duration: 0.3 }
             }
             className={`
-              fixed z-[100] 
+              fixed z-[9999] 
               ${isMobile 
                 ? 'inset-x-0 bottom-0 top-12 rounded-t-3xl' 
                 : 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[80vh] max-h-[700px] rounded-3xl'
@@ -198,6 +208,7 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               overflow-hidden
             `}
             style={{
+              zIndex: 9999,
               background: 'rgba(255, 255, 255, 0.08)',
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
