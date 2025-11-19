@@ -55,7 +55,7 @@ terraform/terraform.tfvars
 *.tfstate.*
 
 # IDE
-.vscode/
+# .vscode/  # Uncomment to ignore VS Code settings (currently committed for team consistency)
 .idea/
 *.swp
 *.swo
