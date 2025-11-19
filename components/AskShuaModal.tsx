@@ -43,8 +43,9 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
   const dragControls = useDragControls()
   const x = useMotionValue(0)
   const y = useMotionValue(0)
-  const xSpring = useSpring(x, { damping: 25, stiffness: 200 })
-  const ySpring = useSpring(y, { damping: 25, stiffness: 200 })
+  // Higher stiffness for snappier return to center
+  const xSpring = useSpring(x, { damping: 30, stiffness: 300 })
+  const ySpring = useSpring(y, { damping: 30, stiffness: 300 })
 
   // Initialize with welcome message
   useEffect(() => {
@@ -257,12 +258,20 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
     }
   }, [isOpen])
 
-  // Reset drag position when modal closes
+  // Reset drag position when modal closes or opens
   useEffect(() => {
-    if (!isOpen && !isMobile) {
-      x.set(0)
-      y.set(0)
-      setDragTransform('translate(-50%, -50%)')
+    if (!isMobile) {
+      if (!isOpen) {
+        // Reset when closing
+        x.set(0)
+        y.set(0)
+        setDragTransform('translate(-50%, -50%)')
+      } else {
+        // Ensure centered when opening
+        x.set(0)
+        y.set(0)
+        setDragTransform('translate(-50%, -50%)')
+      }
     }
   }, [isOpen, isMobile, x, y])
 
@@ -330,6 +339,13 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               if (!isMobile) {
                 x.set(info.offset.x)
                 y.set(info.offset.y)
+              }
+            }}
+            onDragEnd={() => {
+              if (!isMobile) {
+                // Snap back to center with smooth animation
+                x.set(0)
+                y.set(0)
               }
             }}
             className={`
