@@ -155,7 +155,7 @@ function generateNaturalResponse(
     }
     
     case 'contact': {
-      return `You can reach ${knowledge.name} at:\n\n**Email:** ${resumeData.email}\n**Phone:** ${resumeData.phone}\n**LinkedIn:** ${resumeData.linkedin}\n\nHe's based in ${knowledge.location} and is open to discussing platform engineering opportunities, infrastructure challenges, or collaboration.`
+      return `You can reach ${knowledge.name} at:\n\n**Email:** ${resumeData.email}\n**Phone:** ${resumeData.phone}\n**LinkedIn:** ${resumeData.linkedin}\n**GitHub:** ${resumeData.github}\n\nHe's based in ${knowledge.location} and is open to discussing platform engineering opportunities, infrastructure challenges, or collaboration.`
     }
     
     case 'general':
