@@ -58,7 +58,7 @@ export default function Page() {
               </div>
             </a>
             <a 
-              href="https://github.com/joshmenzies" 
+              href={resumeData.github} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="flex items-center gap-4 rounded-2xl border border-white/10 p-4 hover:border-white/25 transition-colors min-h-[56px]"

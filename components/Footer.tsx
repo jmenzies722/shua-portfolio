@@ -5,6 +5,7 @@
  * Simple links and copyright
  */
 import Link from 'next/link'
+import { Github, Linkedin, Mail } from 'lucide-react'
 import { resumeData } from '@/content/resume'
 import { withTrailingSlash } from '@/lib/utils'
 
@@ -25,29 +26,58 @@ export default function Footer() {
           <div className="text-sm text-white/60">
             © {currentYear} {resumeData.name}. All rights reserved.
           </div>
-          <nav className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6">
-            <Link href={withTrailingSlash('/about')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
-              About
-            </Link>
-            <Link href={withTrailingSlash('/experience')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
-              Experience
-            </Link>
-            <Link href={withTrailingSlash('/skills')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
-              Skills
-            </Link>
-            <Link href={withTrailingSlash('/projects')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
-              Projects
-            </Link>
-            <Link href={withTrailingSlash('/resume')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
-              Resume
-            </Link>
-            <Link href={withTrailingSlash('/blog')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
-              Blog
-            </Link>
-            <Link href={withTrailingSlash('/contact')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
-              Contact
-            </Link>
-          </nav>
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <nav className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6">
+              <Link href={withTrailingSlash('/about')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
+                About
+              </Link>
+              <Link href={withTrailingSlash('/experience')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
+                Experience
+              </Link>
+              <Link href={withTrailingSlash('/skills')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
+                Skills
+              </Link>
+              <Link href={withTrailingSlash('/projects')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
+                Projects
+              </Link>
+              <Link href={withTrailingSlash('/resume')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
+                Resume
+              </Link>
+              <Link href={withTrailingSlash('/blog')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
+                Blog
+              </Link>
+              <Link href={withTrailingSlash('/contact')} prefetch={true} className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center">
+                Contact
+              </Link>
+            </nav>
+            <div className="flex items-center gap-4">
+              <a 
+                href={resumeData.github} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-white/60 hover:text-white transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+              <a 
+                href={resumeData.linkedin} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-white/60 hover:text-white transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a 
+                href={`mailto:${resumeData.email}`} 
+                className="text-white/60 hover:text-white transition-colors"
+                aria-label="Email"
+              >
+                <Mail className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
