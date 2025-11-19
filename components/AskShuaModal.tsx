@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useMotionValue, useSpring, useDragControls } from 'framer-motion'
-import { X, Send, MessageSquare, GripVertical } from 'lucide-react'
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
+import { X, Send, MessageSquare } from 'lucide-react'
 import { useShua } from '@/contexts/ShuaContext'
 import { generateShuaReply } from '@/lib/shua-nlp'
 
@@ -30,7 +30,6 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
   const [typingContent, setTypingContent] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
   const [keyboardHeight, setKeyboardHeight] = useState(0)
-  const [dragTransform, setDragTransform] = useState('translate(-50%, -50%)')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
@@ -40,14 +39,6 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
   const dragYSpring = useSpring(dragY, { damping: 25, stiffness: 200 })
   const [isDragging, setIsDragging] = useState(false)
   const [startY, setStartY] = useState(0)
-  
-  // Desktop drag controls
-  const dragControls = useDragControls()
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  // Higher stiffness for snappier return to center
-  const xSpring = useSpring(x, { damping: 30, stiffness: 300 })
-  const ySpring = useSpring(y, { damping: 30, stiffness: 300 })
 
   // Initialize with welcome message
   useEffect(() => {
@@ -266,41 +257,6 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
     }
   }, [isOpen, isMobile])
 
-  // Reset drag position when modal closes or opens
-  useEffect(() => {
-    if (!isMobile) {
-      if (!isOpen) {
-        // Reset when closing
-        x.set(0)
-        y.set(0)
-        setDragTransform('translate(-50%, -50%)')
-      } else {
-        // Ensure centered when opening
-        x.set(0)
-        y.set(0)
-        setDragTransform('translate(-50%, -50%)')
-      }
-    }
-  }, [isOpen, isMobile, x, y])
-
-  // Update transform on drag for desktop
-  useEffect(() => {
-    if (!isMobile && isOpen) {
-      const updateTransform = () => {
-        const xVal = xSpring.get()
-        const yVal = ySpring.get()
-        setDragTransform(`translate(calc(-50% + ${xVal}px), calc(-50% + ${yVal}px))`)
-      }
-      
-      const unsubscribeX = xSpring.on('change', updateTransform)
-      const unsubscribeY = ySpring.on('change', updateTransform)
-      
-      return () => {
-        unsubscribeX()
-        unsubscribeY()
-      }
-    }
-  }, [isMobile, isOpen, xSpring, ySpring])
 
   return (
     <AnimatePresence>
@@ -328,39 +284,11 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               ? { type: 'spring', damping: 25, stiffness: 200 }
               : { type: 'spring', damping: 25, stiffness: 200, duration: 0.3 }
             }
-            drag={!isMobile}
-            dragControls={!isMobile ? dragControls : undefined}
-            dragMomentum={false}
-            dragElastic={0.1}
-            dragListener={false}
-            dragConstraints={
-              !isMobile && typeof window !== 'undefined'
-                ? {
-                    left: -(window.innerWidth / 2 - 300),
-                    right: window.innerWidth / 2 - 300,
-                    top: -(window.innerHeight / 2 - 350),
-                    bottom: window.innerHeight / 2 - 350,
-                  }
-                : false
-            }
-            onDrag={(event, info) => {
-              if (!isMobile) {
-                x.set(info.offset.x)
-                y.set(info.offset.y)
-              }
-            }}
-            onDragEnd={() => {
-              if (!isMobile) {
-                // Snap back to center with smooth animation
-                x.set(0)
-                y.set(0)
-              }
-            }}
             className={`
               fixed z-[9999] 
               ${isMobile 
                 ? 'inset-x-0 bottom-0 top-12 rounded-t-3xl' 
-                : 'w-full max-w-[600px] h-[80vh] max-h-[700px] rounded-3xl'
+                : 'w-full max-w-[600px] h-[85vh] max-h-[800px] rounded-3xl left-1/2 top-1/2'
               }
               flex flex-col
               overflow-hidden
@@ -380,49 +308,35 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
                 : '0',
               top: isMobile ? 'max(3rem, calc(3rem + env(safe-area-inset-top)))' : '50%',
               left: isMobile ? 'auto' : '50%',
+              transform: isMobile ? undefined : 'translate(-50%, -50%)',
               height: isMobile ? 'auto' : undefined,
               maxHeight: isMobile ? 'calc(100vh - max(3rem, calc(3rem + env(safe-area-inset-top))))' : undefined,
-              y: isMobile ? dragYSpring : ySpring,
-              x: isMobile ? undefined : xSpring,
+              y: isMobile ? dragYSpring : undefined,
               touchAction: isMobile ? 'none' : undefined, // Prevent default touch on container, allow in children
-              ...(!isMobile ? {
-                transform: dragTransform,
-              } : {}),
             }}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header - Drag handle for desktop */}
-            <div 
-              className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/10 flex-shrink-0 bg-transparent"
-              style={{
-                paddingTop: isMobile ? 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))' : '1rem',
-                cursor: !isMobile ? 'move' : 'default',
-              }}
-              onPointerDown={!isMobile ? (e) => dragControls.start(e) : undefined}
-            >
-              <div className="flex items-center gap-3">
-                {!isMobile && (
-                  <motion.div
-                    className="text-white/40 hover:text-white/60 transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+                  {/* Header */}
+                  <div 
+                    className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/10 flex-shrink-0 bg-transparent"
+                    style={{
+                      paddingTop: isMobile ? 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))' : '1rem',
+                    }}
                   >
-                    <GripVertical className="w-5 h-5" strokeWidth={1.5} />
-                  </motion.div>
-                )}
-                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <MessageSquare className="w-5 h-5 text-[#5ac8fa]" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-white">Shua</h3>
-                  <p className="text-xs text-white/60">AI Assistant</p>
-                </div>
-              </div>
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <MessageSquare className="w-5 h-5 text-[#5ac8fa]" />
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold text-white">Shua</h3>
+                        <p className="text-xs text-white/60">AI Assistant</p>
+                      </div>
+                    </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleClearChat}
