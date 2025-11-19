@@ -5,7 +5,7 @@ export const resumeData = {
   email: "jmenzies722@gmail.com",
   phone: "(631) 332-4945",
   linkedin: "https://www.linkedin.com/in/josh-m123456",
-  github: "https://github.com/joshmenzies",
+  github: "https://github.com/jmenzies722",
   summary: "Platform Engineer building secure, automated, and observable infrastructure on AWS and Kubernetes. Skilled in Terraform, Python, and Go; improving reliability and speed for AI and cloud workloads.",
   experience: [
     {

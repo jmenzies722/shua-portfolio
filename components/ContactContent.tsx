@@ -76,7 +76,7 @@ export default function ContactContent() {
                 <span className="text-base md:text-lg">LinkedIn</span>
               </a>
               <a
-                href="https://github.com/joshmenzies"
+                href={resumeData.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group"

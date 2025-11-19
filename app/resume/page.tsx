@@ -46,7 +46,7 @@ export default function Page() {
             <Linkedin className="h-4 w-4" />
             LinkedIn
           </a>
-          <a href="https://github.com/joshmenzies" target="_blank" rel="noopener noreferrer" className="hover:text-white inline-flex items-center gap-2 min-h-[44px] justify-center">
+          <a href={resumeData.github} target="_blank" rel="noopener noreferrer" className="hover:text-white inline-flex items-center gap-2 min-h-[44px] justify-center">
             <Github className="h-4 w-4" />
             GitHub
           </a>
