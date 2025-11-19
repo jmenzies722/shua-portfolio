@@ -109,11 +109,19 @@ export default function Navigation() {
               const normalizedHref = withTrailingSlash(item.href)
               const active =
                 stripTrailingSlash(pathname) === stripTrailingSlash(item.href)
+              const isHome = item.href === '/'
               return (
                 <Link
                   key={item.href}
                   href={normalizedHref}
                   prefetch={true}
+                  onClick={(e) => {
+                    // Force reload when clicking Home link
+                    if (isHome) {
+                      e.preventDefault()
+                      window.location.href = '/'
+                    }
+                  }}
                   className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
                     active
                       ? 'text-white bg-white/[0.12]'
@@ -234,6 +242,7 @@ export default function Navigation() {
                     const normalizedHref = withTrailingSlash(item.href)
                     const isActive =
                       stripTrailingSlash(pathname) === stripTrailingSlash(item.href)
+                    const isHome = item.href === '/'
                     return (
                       <motion.div
                         key={item.href}
@@ -247,7 +256,16 @@ export default function Navigation() {
                           <Link
                             href={normalizedHref}
                             prefetch={true}
-                            onClick={handleLinkClick}
+                            onClick={(e) => {
+                              // Force reload when clicking Home link
+                              if (isHome) {
+                                e.preventDefault()
+                                window.location.href = '/'
+                                handleLinkClick()
+                              } else {
+                                handleLinkClick()
+                              }
+                            }}
                             className={`
                               block w-full px-4 py-3 rounded-2xl
                               text-base font-medium tracking-tight
