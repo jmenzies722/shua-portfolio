@@ -401,6 +401,9 @@ function MessageBubble({ message, index }: { message: { id: string; role: 'user'
       >
         <p className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap break-words">
           {message.content}
+          {message.id === 'typing' && (
+            <span className="inline-block w-0.5 h-4 bg-white/60 ml-1 align-middle animate-pulse" />
+          )}
         </p>
       </div>
     </motion.div>
