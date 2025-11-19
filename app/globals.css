@@ -150,7 +150,9 @@ button {
 .gradient-text {
   background: linear-gradient(120deg, var(--accent-blue), var(--accent-indigo));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .pill {
