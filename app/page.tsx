@@ -40,10 +40,10 @@ export default function Page() {
                 style={{ overflow: 'visible' }}
               >
                 <p className="text-xs sm:text-sm uppercase tracking-[0.3em] text-white/60">
-                  Platform Engineering
+                  Platform Engineer | AWS, Serverless, Observability & Automation
                 </p>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
-                  Scaling secure, observable infrastructure for teams who cannot slow down.
+                  Architecting, optimizing, and automating cloud infrastructure at scale.
                 </h1>
               </motion.div>
 
@@ -53,8 +53,8 @@ export default function Page() {
                 style={{ overflow: 'visible' }}
               >
                 <p className="text-base sm:text-lg text-white/70 max-w-2xl md:max-w-none mx-auto md:mx-0 leading-relaxed">
-                  I design AWS-native automation, serverless data flows, and observability layers that keep engineering
-                  velocity high without trading away reliability or trust.
+                  I build secure, observable platforms that reduce deployment time by 40%, cut cloud costs by $300K annually, and improve MTTR by 25%. 
+                  Delivering measurable impact through AWS-native automation and infrastructure as code.
                 </p>
               </motion.div>
 

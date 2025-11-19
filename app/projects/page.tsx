@@ -3,7 +3,7 @@
  * Each project: Title, Description, Stack, Metrics, Link to case study
  */
 import Link from 'next/link'
-import { resumeData } from '@/content/resume'
+import { projects } from '@/content/projects'
 import SectionShell from '@/components/SectionShell'
 import Card from '@/components/ui/Card'
 import { withTrailingSlash } from '@/lib/utils'
@@ -34,34 +34,46 @@ export default function Page() {
 
         {/* Projects Grid - Mobile: 1 column, Desktop: 2 columns */}
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
-          {resumeData.projects.map((project) => (
-            <Card key={project.name} className="space-y-5 sm:space-y-6">
+          {projects.map((project) => (
+            <Card key={project.id} className="space-y-5 sm:space-y-6">
               <div>
                 <p className="text-xs uppercase tracking-[0.4em] text-white/60 mb-1">
-                  {project.company}
+                  Featured Project
                 </p>
-                <h2 className="text-xl sm:text-2xl font-semibold">{project.name}</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold">{project.title}</h2>
               </div>
               <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-                {project.description}
+                {project.shortDescription}
               </p>
               <div className="flex flex-wrap gap-2">
-                {project.tech.slice(0, 6).map((tech) => (
+                {project.technologies.slice(0, 6).map((tech) => (
                   <span key={tech} className="pill text-xs sm:text-sm">
                     {tech}
                   </span>
                 ))}
               </div>
+              {/* Metrics */}
+              {project.metrics && project.metrics.length > 0 && (
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                  {project.metrics.slice(0, 3).map((metric) => (
+                    <div key={metric.label} className="text-center p-2 rounded-lg bg-white/5 border border-white/10">
+                      <div className="text-lg font-semibold text-[#5ac8fa]">{metric.value}</div>
+                      <div className="text-xs text-white/60 mt-1">{metric.label}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
               <ul className="space-y-2 text-white/75 text-sm leading-relaxed">
-                {project.highlights.slice(0, 4).map((item) => (
-                  <li key={item} className="flex items-start gap-3">
+                {project.impact.slice(0, 3).map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
                     <span className="text-[#5ac8fa] mt-[0.3rem] flex-shrink-0">•</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
               <Link
-                href={withTrailingSlash(`/projects/${project.name.toLowerCase().replace(/\s+/g, '-')}`)}
+                href={withTrailingSlash(`/projects/${project.slug}`)}
                 className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors min-h-[44px]"
               >
                 View details →

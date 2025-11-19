@@ -13,20 +13,47 @@ import NetworkVisualization from '@/components/ui/NetworkVisualization'
 
 const categories = [
   {
-    title: 'Languages & scripting',
-    skills: resumeData.skills.languages,
+    title: 'Infrastructure',
+    description: 'AWS-native platforms, containers, and orchestration',
+    skills: [
+      { name: 'AWS (EKS, Lambda, S3, RDS, Glue, Athena, Macie, IAM, KMS)', experience: '3+ years' },
+      { name: 'Terraform', experience: '3+ years' },
+      { name: 'Kubernetes / EKS', experience: '2+ years' },
+      { name: 'Docker', experience: '3+ years' },
+      { name: 'Helm', experience: '2+ years' },
+    ],
   },
   {
-    title: 'Cloud & platforms',
-    skills: resumeData.skills.cloud_devops,
+    title: 'Automation',
+    description: 'CI/CD, IaC, and workflow orchestration',
+    skills: [
+      { name: 'GitLab CI/CD', experience: '3+ years' },
+      { name: 'Python', experience: '3+ years' },
+      { name: 'Go', experience: '1+ year' },
+      { name: 'Bash', experience: '3+ years' },
+      { name: 'CloudFormation', experience: '2+ years' },
+    ],
   },
   {
-    title: 'Observability & security',
-    skills: resumeData.skills.monitoring_security,
+    title: 'Observability',
+    description: 'Monitoring, tracing, and alerting at scale',
+    skills: [
+      { name: 'Datadog', experience: '2+ years' },
+      { name: 'OpenTelemetry', experience: '2+ years' },
+      { name: 'Prometheus', experience: '1+ year' },
+      { name: 'CloudWatch', experience: '3+ years' },
+    ],
   },
   {
-    title: 'Collaboration & delivery',
-    skills: resumeData.skills.collaboration,
+    title: 'Data & AI',
+    description: 'Data pipelines, analytics, and ML infrastructure',
+    skills: [
+      { name: 'AWS Glue', experience: '1+ year' },
+      { name: 'Amazon Athena', experience: '1+ year' },
+      { name: 'Amazon Macie', experience: '1+ year' },
+      { name: 'SageMaker', experience: '1+ year' },
+      { name: 'S3 Data Lakes', experience: '2+ years' },
+    ],
   },
 ]
 
@@ -66,11 +93,17 @@ export default function Page() {
                   <p className="text-xs sm:text-sm uppercase tracking-[0.3em] text-white/60 mb-1">
                     {category.title}
                   </p>
-                  <h2 className="text-xl sm:text-2xl font-semibold">Core tools</h2>
+                  <h2 className="text-xl sm:text-2xl font-semibold mb-2">{category.title}</h2>
+                  <p className="text-sm text-white/60">{category.description}</p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="space-y-2">
                   {category.skills.map((skill) => (
-                    <SkillTag key={skill} skill={skill} />
+                    <div key={skill.name} className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                      <span className="text-sm text-white/90 font-medium">{skill.name}</span>
+                      <span className="text-xs text-white/60 px-2 py-1 rounded-md bg-white/5">
+                        {skill.experience}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </ParallaxCard>

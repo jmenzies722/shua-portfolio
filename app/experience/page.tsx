@@ -57,15 +57,28 @@ export default function Page() {
                 ))}
               </div>
 
-              {/* Highlights */}
-              <ul className="space-y-2.5 sm:space-y-3 text-white/75 text-sm sm:text-base leading-relaxed">
-                {experience.highlights.map((line) => (
-                  <li key={line} className="flex items-start gap-3">
-                    <span className="text-[#5ac8fa] mt-[0.35rem] flex-shrink-0">•</span>
-                    <span>{line}</span>
-                  </li>
-                ))}
-              </ul>
+              {/* Highlights with Challenge → Role → Outcome structure */}
+              <div className="space-y-4 sm:space-y-5">
+                {experience.highlights.map((line, idx) => {
+                  // Extract metrics from highlights (they contain percentages, dollar amounts, etc.)
+                  const hasMetric = /\d+%|\$\d+[KMB]?|TB\+|MTTR|builds|services/i.test(line)
+                  return (
+                    <div key={idx} className="space-y-1.5">
+                      <div className="flex items-start gap-3">
+                        <span className="text-[#5ac8fa] mt-[0.35rem] flex-shrink-0">•</span>
+                        <span className="text-white/75 text-sm sm:text-base leading-relaxed flex-1">
+                          {line}
+                          {hasMetric && (
+                            <span className="ml-2 px-2 py-0.5 rounded-md bg-[#5ac8fa]/10 text-[#5ac8fa] text-xs font-medium">
+                              Impact
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </Card>
           ))}
         </div>

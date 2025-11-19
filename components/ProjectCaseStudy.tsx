@@ -2,6 +2,7 @@ import { ArrowLeft, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 import { Project } from '@/types'
 import { withTrailingSlash } from '@/lib/utils'
+import ArchitectureDiagram from './ArchitectureDiagram'
 
 interface ProjectCaseStudyProps {
   project: Project
@@ -66,18 +67,28 @@ export default function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         </div>
 
         {/* Architecture */}
-        <div className="glass-card p-8 mb-8">
-          <h2 className="text-2xl font-semibold mb-6 gradient-text">Architecture</h2>
-          <div className="space-y-4">
-            {project.architecture.map((item, index) => (
-              <div key={index} className="flex items-start gap-4">
-                <div className="p-2 glass-card rounded-lg mt-1 flex-shrink-0">
-                  <CheckCircle className="w-5 h-5 text-[#007AFF]" />
+        <div className="mb-8 space-y-6">
+          <div className="glass-card p-8">
+            <h2 className="text-2xl font-semibold mb-6 gradient-text">Architecture</h2>
+            <div className="space-y-4 mb-6">
+              {project.architecture.map((item, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="p-2 glass-card rounded-lg mt-1 flex-shrink-0">
+                    <CheckCircle className="w-5 h-5 text-[#5ac8fa]" />
+                  </div>
+                  <p className="text-white/70 leading-relaxed flex-1 text-sm md:text-base">{item}</p>
                 </div>
-                <p className="text-white/70 leading-relaxed flex-1 text-sm md:text-base">{item}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          
+          {/* Architecture Diagram */}
+          {project.slug === 'ai-data-pipeline-automation' && (
+            <ArchitectureDiagram type="data-pipeline" />
+          )}
+          {project.slug === 'serverless-distribution-platform' && (
+            <ArchitectureDiagram type="distribution-platform" />
+          )}
         </div>
 
         {/* Impact */}
