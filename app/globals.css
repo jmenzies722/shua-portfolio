@@ -7,7 +7,6 @@
 
 :root {
   --bg-base: #040608;
-  --bg-gradient: radial-gradient(circle at 25% 20%, rgba(90, 200, 250, 0.2), transparent 50%);
   --text-primary: #f7f8ff;
   --text-secondary: rgba(247, 248, 255, 0.75);
   --text-muted: rgba(247, 248, 255, 0.55);
@@ -36,7 +35,6 @@ html {
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
   background-color: var(--bg-base);
-  background-image: var(--bg-gradient);
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
@@ -57,24 +55,24 @@ main {
   isolation: isolate; /* Create new stacking context */
 }
 
-/* Blue gradient background streaks - animated */
+/* Blue gradient background streaks - animated (removed band effect) */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 80% -10%, rgba(90, 120, 255, 0.25), transparent 50%);
-  opacity: 0.65;
+  background: radial-gradient(circle at 80% -10%, rgba(90, 120, 255, 0.2), transparent 50%);
+  opacity: 0.5;
   pointer-events: none;
   z-index: 0;
   animation: ambientGlow 80s ease-in-out infinite;
 }
 
-/* Additional blue gradient layer for more visible streaks */
+/* Additional blue gradient layer - subtle, no band */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(90, 200, 250, 0.15), transparent 60%);
+  background: radial-gradient(circle at 20% 50%, rgba(90, 200, 250, 0.1), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
