@@ -403,8 +403,8 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               left: isMobile ? 'auto' : '50%',
               height: isMobile ? 'auto' : undefined,
               maxHeight: isMobile ? 'calc(100vh - max(3rem, calc(3rem + env(safe-area-inset-top))))' : undefined,
-              y: isMobile ? dragYSpring : desktopY,
-              x: isMobile ? undefined : desktopX,
+              y: isMobile ? dragYSpring : ySpring,
+              x: isMobile ? undefined : xSpring,
               touchAction: isMobile ? 'none' : undefined, // Prevent default touch on container, allow in children
               ...(isMobile ? {} : {
                 top: '50%',
