@@ -88,7 +88,12 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
   }, [isOpen])
 
   // Desktop: Floating glass card, Mobile: Full-height slide-up modal
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth <= 768
+    }
+    return false
+  })
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
