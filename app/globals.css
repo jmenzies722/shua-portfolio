@@ -286,4 +286,13 @@ textarea {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
   }
+  
+  /* Ensure mobile nav links are visible and clickable */
+  nav[class*="space-y"] a,
+  nav[class*="space-y"] button {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+  }
 }

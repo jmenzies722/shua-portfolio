@@ -188,7 +188,7 @@ export default function Navigation() {
               }}
             >
               <div
-                className="w-full max-w-sm rounded-3xl"
+                className="w-full max-w-sm rounded-3xl max-h-[85vh] flex flex-col overflow-hidden"
                 style={{
                   background: 'rgba(255, 255, 255, 0.08)',
                   backdropFilter: 'blur(16px)',
@@ -237,7 +237,7 @@ export default function Navigation() {
                 <div className="h-px bg-white/10 mx-6 mb-4" />
 
                 {/* Navigation Links */}
-                <nav className="px-6 pb-6 space-y-2">
+                <nav className="px-6 pb-6 space-y-2 max-h-[60vh] overflow-y-auto">
                   {navItems.map((item, index) => {
                     const normalizedHref = withTrailingSlash(item.href)
                     const isActive =
@@ -267,9 +267,10 @@ export default function Navigation() {
                               }
                             }}
                             className={`
-                              block w-full px-4 py-3 rounded-2xl
+                              block w-full px-4 py-3.5 rounded-2xl
                               text-base font-medium tracking-tight
                               transition-all duration-150
+                              touch-manipulation
                               ${isActive ? 'text-white' : 'text-white/90'}
                             `}
                             style={{
@@ -279,6 +280,11 @@ export default function Navigation() {
                               backdropFilter: 'blur(8px)',
                               WebkitBackdropFilter: 'blur(8px)',
                               border: '1px solid rgba(255, 255, 255, 0.10)',
+                              minHeight: '44px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              position: 'relative',
+                              zIndex: 1,
                             }}
                           >
                             {item.label}
