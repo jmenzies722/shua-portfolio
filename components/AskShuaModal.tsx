@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
-import { X, Send, MessageSquare } from 'lucide-react'
+import { motion, AnimatePresence, useMotionValue, useSpring, useDragControls } from 'framer-motion'
+import { X, Send, MessageSquare, GripVertical } from 'lucide-react'
 import { useShua } from '@/contexts/ShuaContext'
 import { generateShuaReply } from '@/lib/shua-nlp'
 
@@ -27,13 +27,24 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
   const [isTyping, setIsTyping] = useState(false)
   const [typingContent, setTypingContent] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
+  const [keyboardHeight, setKeyboardHeight] = useState(0)
+  const [dragTransform, setDragTransform] = useState('translate(-50%, -50%)')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const inputBarRef = useRef<HTMLDivElement>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
   const dragY = useMotionValue(0)
   const dragYSpring = useSpring(dragY, { damping: 25, stiffness: 200 })
   const [isDragging, setIsDragging] = useState(false)
   const [startY, setStartY] = useState(0)
+  
+  // Desktop drag controls
+  const dragControls = useDragControls()
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const xSpring = useSpring(x, { damping: 25, stiffness: 200 })
+  const ySpring = useSpring(y, { damping: 25, stiffness: 200 })
 
   // Initialize with welcome message
   useEffect(() => {
@@ -84,6 +95,64 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
       return () => window.removeEventListener('resize', checkMobile)
     }
   }, [])
+
+  // Keyboard detection and handling for mobile
+  useEffect(() => {
+    if (!isOpen || !isMobile || typeof window === 'undefined') return
+
+    const handleViewportResize = () => {
+      if (window.visualViewport) {
+        const viewport = window.visualViewport
+        const windowHeight = window.innerHeight
+        const viewportHeight = viewport.height
+        const heightDiff = windowHeight - viewportHeight
+        
+        // Keyboard is open if viewport is significantly smaller
+        if (heightDiff > 150) {
+          setKeyboardHeight(heightDiff)
+        } else {
+          setKeyboardHeight(0)
+        }
+      }
+    }
+
+    const handleViewportScroll = () => {
+      if (window.visualViewport && messagesContainerRef.current) {
+        // Scroll messages container to keep input visible
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      }
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleViewportResize)
+      window.visualViewport.addEventListener('scroll', handleViewportScroll)
+      handleViewportResize() // Initial check
+    }
+
+    // Fallback for browsers without visualViewport
+    const handleResize = () => {
+      if (!window.visualViewport) {
+        const windowHeight = window.innerHeight
+        const documentHeight = document.documentElement.clientHeight
+        const heightDiff = documentHeight - windowHeight
+        if (heightDiff > 150) {
+          setKeyboardHeight(heightDiff)
+        } else {
+          setKeyboardHeight(0)
+        }
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleViewportResize)
+        window.visualViewport.removeEventListener('scroll', handleViewportScroll)
+      }
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [isOpen, isMobile])
 
   // Mobile swipe to close
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -188,6 +257,34 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
     }
   }, [isOpen])
 
+  // Reset drag position when modal closes
+  useEffect(() => {
+    if (!isOpen && !isMobile) {
+      x.set(0)
+      y.set(0)
+      setDragTransform('translate(-50%, -50%)')
+    }
+  }, [isOpen, isMobile, x, y])
+
+  // Update transform on drag for desktop
+  useEffect(() => {
+    if (!isMobile && isOpen) {
+      const updateTransform = () => {
+        const xVal = xSpring.get()
+        const yVal = ySpring.get()
+        setDragTransform(`translate(calc(-50% + ${xVal}px), calc(-50% + ${yVal}px))`)
+      }
+      
+      const unsubscribeX = xSpring.on('change', updateTransform)
+      const unsubscribeY = ySpring.on('change', updateTransform)
+      
+      return () => {
+        unsubscribeX()
+        unsubscribeY()
+      }
+    }
+  }, [isMobile, isOpen, xSpring, ySpring])
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -205,6 +302,8 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
 
           {/* Chat Modal */}
           <motion.div
+            ref={modalRef}
+            data-chat-modal
             initial={isMobile ? { y: '100%' } : { opacity: 0, scale: 0.95, y: 20 }}
             animate={isMobile ? { y: 0 } : { opacity: 1, scale: 1, y: 0 }}
             exit={isMobile ? { y: '100%' } : { opacity: 0, scale: 0.95, y: 20 }}
@@ -212,11 +311,32 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               ? { type: 'spring', damping: 25, stiffness: 200 }
               : { type: 'spring', damping: 25, stiffness: 200, duration: 0.3 }
             }
+            drag={!isMobile}
+            dragControls={!isMobile ? dragControls : undefined}
+            dragMomentum={false}
+            dragElastic={0.1}
+            dragListener={false}
+            dragConstraints={
+              !isMobile && typeof window !== 'undefined'
+                ? {
+                    left: -(window.innerWidth / 2 - 300),
+                    right: window.innerWidth / 2 - 300,
+                    top: -(window.innerHeight / 2 - 350),
+                    bottom: window.innerHeight / 2 - 350,
+                  }
+                : false
+            }
+            onDrag={(event, info) => {
+              if (!isMobile) {
+                x.set(info.offset.x)
+                y.set(info.offset.y)
+              }
+            }}
             className={`
               fixed z-[9999] 
               ${isMobile 
                 ? 'inset-x-0 bottom-0 top-12 rounded-t-3xl' 
-                : 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[80vh] max-h-[700px] rounded-3xl'
+                : 'w-full max-w-[600px] h-[80vh] max-h-[700px] rounded-3xl'
               }
               flex flex-col
               overflow-hidden
@@ -230,23 +350,48 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               boxShadow: isMobile 
                 ? '0 -4px 30px rgba(0, 0, 0, 0.5)'
                 : '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-              paddingTop: isMobile ? 'max(1rem, env(safe-area-inset-top))' : '0',
-              paddingBottom: isMobile ? 'max(1rem, env(safe-area-inset-bottom))' : '0',
+              paddingTop: isMobile ? 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))' : '0',
+              paddingBottom: isMobile 
+                ? (keyboardHeight > 0 
+                    ? `calc(${keyboardHeight}px + 80px + env(safe-area-inset-bottom))` 
+                    : 'calc(80px + env(safe-area-inset-bottom))')
+                : '0',
+              top: isMobile ? 'max(3rem, calc(3rem + env(safe-area-inset-top)))' : '50%',
+              left: isMobile ? 'auto' : '50%',
+              height: isMobile ? 'auto' : undefined,
+              maxHeight: isMobile ? 'calc(100vh - max(3rem, calc(3rem + env(safe-area-inset-top))))' : undefined,
               y: isMobile ? dragYSpring : undefined,
+              x: isMobile ? undefined : undefined,
+              ...(isMobile ? {} : {
+                top: '50%',
+                left: '50%',
+                transform: dragTransform,
+              }),
             }}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
+            {/* Header - Drag handle for desktop */}
             <div 
               className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/10 flex-shrink-0 bg-transparent"
               style={{
-                paddingTop: isMobile ? 'max(1rem, calc(1rem + env(safe-area-inset-top)))' : '1rem',
+                paddingTop: isMobile ? 'max(0.5rem, calc(0.5rem + env(safe-area-inset-top)))' : '1rem',
+                cursor: !isMobile ? 'move' : 'default',
               }}
+              onPointerDown={!isMobile ? (e) => dragControls.start(e) : undefined}
             >
               <div className="flex items-center gap-3">
+                {!isMobile && (
+                  <motion.div
+                    className="text-white/40 hover:text-white/60 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <GripVertical className="w-5 h-5" strokeWidth={1.5} />
+                  </motion.div>
+                )}
                 <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/[0.12] bg-white/[0.04] flex-shrink-0">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <MessageSquare className="w-5 h-5 text-[#5ac8fa]" />
@@ -333,12 +478,32 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               </motion.div>
             )}
 
-            {/* Input Bar */}
+            {/* Input Bar - Fixed at bottom with keyboard handling */}
             <div 
+              ref={inputBarRef}
               className="px-4 sm:px-6 py-4 border-t border-white/10 flex-shrink-0 bg-transparent"
               style={{
-                paddingBottom: isMobile ? 'max(1rem, calc(1rem + env(safe-area-inset-bottom)))' : '1rem',
-                boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.3)',
+                position: isMobile ? 'fixed' : 'relative',
+                bottom: isMobile ? (keyboardHeight > 0 ? `${keyboardHeight}px` : 0) : 'auto',
+                left: isMobile ? 0 : 'auto',
+                right: isMobile ? 0 : 'auto',
+                width: isMobile ? '100%' : 'auto',
+                paddingBottom: isMobile 
+                  ? `calc(12px + env(safe-area-inset-bottom))` 
+                  : '1rem',
+                paddingTop: isMobile ? '12px' : '1rem',
+                background: isMobile 
+                  ? 'rgba(0, 0, 0, 0.35)' 
+                  : 'transparent',
+                backdropFilter: isMobile ? 'blur(20px)' : 'none',
+                WebkitBackdropFilter: isMobile ? 'blur(20px)' : 'none',
+                boxShadow: isMobile 
+                  ? '0 -4px 20px rgba(0, 0, 0, 0.3)' 
+                  : '0 -4px 20px rgba(0, 0, 0, 0.3)',
+                transition: isMobile 
+                  ? 'bottom 160ms cubic-bezier(0.25, 0.1, 0.25, 1), padding-bottom 160ms cubic-bezier(0.25, 0.1, 0.25, 1)' 
+                  : 'none',
+                zIndex: isMobile ? 10000 : 'auto',
               }}
             >
               <div className="flex gap-3 items-end">
@@ -350,7 +515,11 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
                     onChange={(e) => setInput(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Ask me anything..."
-                    className="w-full px-4 py-3 pr-12 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#5ac8fa]/50 focus:border-[#5ac8fa]/50 transition-all text-sm sm:text-base"
+                    className="w-full px-4 py-3 pr-12 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#5ac8fa]/50 focus:border-[#5ac8fa]/50 transition-all"
+                    style={{
+                      fontSize: '16px', // Prevents iOS zoom
+                      WebkitTextSizeAdjust: '100%',
+                    }}
                   />
                 </div>
                 <motion.button
