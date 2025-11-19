@@ -385,11 +385,9 @@ export default function AskShuaModal({ isOpen, onClose }: AskShuaModalProps) {
               y: isMobile ? dragYSpring : ySpring,
               x: isMobile ? undefined : xSpring,
               touchAction: isMobile ? 'none' : undefined, // Prevent default touch on container, allow in children
-              ...(isMobile ? {} : {
-                top: '50%',
-                left: '50%',
+              ...(!isMobile ? {
                 transform: dragTransform,
-              }),
+              } : {}),
             }}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
